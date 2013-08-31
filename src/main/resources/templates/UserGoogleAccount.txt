@@ -1,0 +1,11 @@
+Witaj $UserAccount.email.email$
+
+Właśnie zostało założone dla Ciebie konto w systemie ISOCOM.
+Konto to powiązanie jest z Twoim kontem Google.
+
+Pozdrawiamy,
+
+Zespół ISOCOM
+
+ID konta: $UserAccount.id$
+Google id: $UserAccount.userId$

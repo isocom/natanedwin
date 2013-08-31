@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>Natan i Edwin</display-name>
+    
+    <!-- ******************************************************************* -->
+    <filter>
+        <filter-name>ObjectifyFilter</filter-name>
+        <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ObjectifyFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- ******************************************************************* -->
+    <servlet>
+        <servlet-name>StatsServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.stats.StatsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StatsServlet</servlet-name>
+        <url-pattern>/stats</url-pattern>
+    </servlet-mapping>
+
+    <!-- ******************************************************************* -->
+    <servlet>
+        <servlet-name>SpringInformationServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.service.spring.SpringInformationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SpringInformationServlet</servlet-name>
+        <url-pattern>/info</url-pattern>
+    </servlet-mapping>
+
+    <!-- ********************************************************************-->
+    <!-- TR610 dedicated servlet -->
+    <servlet>
+        <servlet-name>TR610Servlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.tr610.TR610Servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TR610Servlet</servlet-name>
+        <url-pattern>/tr610</url-pattern>
+    </servlet-mapping>
+    
+    <!-- ********************************************************************-->
+    <!-- export data servlet -->
+    <servlet>
+        <servlet-name>ExportServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.export.ExportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExportServlet</servlet-name>
+        <url-pattern>/export</url-pattern>
+    </servlet-mapping>
+            
+    <!-- ********************************************************************-->
+    <!-- fixing data servlet -->
+    <servlet>
+        <servlet-name>FixServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.fix.FixServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FixServlet</servlet-name>
+        <url-pattern>/fix</url-pattern>
+    </servlet-mapping>
+            
+    <!-- ******************************************************************* -->
+    <!-- Vaadin configuration -->
+    <context-param>
+        <description>Vaadin production mode</description>
+        <param-name>productionMode</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <!-- Vaadin servlet -->
+    <servlet>
+        <servlet-name>VaadinApplication</servlet-name>
+        <servlet-class>com.vaadin.server.GAEVaadinServlet</servlet-class>
+        <init-param>
+            <description>Vaadin Application</description>
+            <param-name>UI</param-name>
+            <param-value>com.appspot.natanedwin.app.AppUI</param-value>
+        </init-param>
+    </servlet>
+    <!-- Vaadin application mapping -->
+    <servlet-mapping>
+        <servlet-name>VaadinApplication</servlet-name>
+        <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>
+    <!-- Vaadin CORE mapping -->
+    <servlet-mapping>
+        <servlet-name>VaadinApplication</servlet-name>
+        <url-pattern>/VAADIN/*</url-pattern>
+    </servlet-mapping>
+    <!-- ******************************************************************* -->
+</web-app>
