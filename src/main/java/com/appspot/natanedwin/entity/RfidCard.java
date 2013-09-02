@@ -64,11 +64,7 @@ public class RfidCard implements Serializable {
     ////////////////////////////////////////////////////////////////////////////
     // HIDING REF<?> ///////////////////////////////////////////////////////////    
     ////////////////////////////////////////////////////////////////////////////
-    public Human getHumanValue() {
-        return human.getValue();
-    }
-
-    public void setHumanValue(Human human) {
+    public void setHuman(Human human) {
         this.human = Ref.create(Key.create(Human.class, human.getId()));
     }
 

@@ -1,8 +1,14 @@
 package com.appspot.natanedwin.report;
 
-public interface Report {
+import java.io.Serializable;
 
+public interface Report extends Serializable {
+
+    public String getFileName();
+    
     public String asHTML();
 
-    public byte[] asPDF();
+    public ByteArrayStreamResource asPDF();
+
+    public ByteArrayStreamResource asXLS();
 }

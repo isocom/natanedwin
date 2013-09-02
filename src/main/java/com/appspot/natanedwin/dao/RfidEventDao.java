@@ -39,11 +39,11 @@ public class RfidEventDao implements Dao<RfidEvent> {
 
     public List<RfidEvent> findToday(Date date) {
         DateMidnight dm = new DateMidnight(date.getTime());
-        Date midnight1 = new Date(dm.getMillis());
-        Date midnight2 = new Date(dm.getMillis() + 24 * 60 * 60 * 1000);
+        Date from = new Date(dm.getMillis());
+        Date to = new Date(dm.getMillis() + 24 * 60 * 60 * 1000);
 
-        List<RfidEvent> list = ofy.ofy().load().type(RfidEvent.class).filter("eventDate > ", midnight1).filter("eventDate < ", midnight2).list();
-        list = new ArrayList<RfidEvent>(list);
+        List<RfidEvent> list = ofy.ofy().load().type(RfidEvent.class).filter("eventDate > ", from).filter("eventDate < ", to).list();
+        list = new ArrayList<>(list);
         return list;
     }
 

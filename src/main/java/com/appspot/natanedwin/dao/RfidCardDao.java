@@ -53,7 +53,7 @@ public class RfidCardDao implements Dao<RfidCard> {
         Objectify objectify = ofy.ofy();
         rfidCard = objectify.load().entity(rfidCard).get();
         human = objectify.load().entity(human).get();
-        rfidCard.setHumanValue(human);
+        rfidCard.setHuman(human);
         rfidCard.setRemarks("Karta MetalSprzęt");
         objectify.save().entity(rfidCard);
     }

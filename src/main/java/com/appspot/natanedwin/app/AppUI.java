@@ -111,7 +111,7 @@ public class AppUI extends UI {
         button.setWidth(buttonWidth, Unit.PIXELS);
         sideBar.addComponent(button);
 
-        button = new Button("RPC", new ClickListener() {
+        button = new Button("RCP", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 navigator.navigateTo(AppNavigator.RPC);
