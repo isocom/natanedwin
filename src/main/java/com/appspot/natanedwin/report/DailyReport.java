@@ -4,8 +4,7 @@ import com.appspot.natanedwin.dao.RfidEventDao;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.RfidCard;
 import com.appspot.natanedwin.entity.RfidEvent;
-import com.appspot.natanedwin.entity.UserAccountTools;
-import com.appspot.natanedwin.service.appsession.AppSession;
+import com.appspot.natanedwin.service.appsession.Formatters;
 import com.appspot.natanedwin.service.spring.SpringContext;
 import com.pdfjet.Page;
 import com.pdfjet.TextLine;
@@ -17,9 +16,9 @@ import java.util.List;
 import java.util.Set;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
+import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.PeriodFormatter;
 
 public class DailyReport implements Report {
 
@@ -42,13 +41,11 @@ public class DailyReport implements Report {
 
     @Override
     public String asHTML() {
-        Collection<DailyReportRow> reportRows = calcDailyReportRows();
-//        Ofy ofy = SpringContext.INSTANCE.getBean(Ofy.class);
-        AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
-        DateTimeFormatter mediumDateTime = DateTimeFormat.mediumDateTime();
-        mediumDateTime = mediumDateTime.withZone(DateTimeZone.forID(appSession.getUserCredentials().getUserAccount().getDateTimeZone()));
-        mediumDateTime = mediumDateTime.withLocale(UserAccountTools.getLocale(appSession.getUserCredentials().getUserAccount().getLocale()));
+        DateTimeFormatter mediumDateTime = Formatters.getMediumDateTime();
+        DateTimeFormatter mediumTime = Formatters.getMediumTime();
+        PeriodFormatter hms = Formatters.getHMS();
 
+        Collection<DailyReportRow> reportRows = calcDailyReportRows();
         StringBuilder sb = new StringBuilder();
         int rowNo = 0;
         sb.append("<body>");
@@ -69,9 +66,9 @@ public class DailyReport implements Report {
             sb.append("<tr>");
             sb.append("<td>").append(++rowNo).append("</td>");
             sb.append("<td>").append(row.human.getName()).append("</td>");
-            sb.append("<td>").append(row.from).append("</td>");
-            sb.append("<td>").append(row.to).append("</td>");
-            sb.append("<td>").append(row.duration() / 1000).append("</td>");
+            sb.append("<td>").append(mediumTime.print(row.from.getTime())).append("</td>");
+            sb.append("<td>").append(mediumTime.print(row.to.getTime())).append("</td>");
+            sb.append("<td>").append(hms.print(new Period(row.to.getTime() - row.from.getTime()))).append("</td>");
             sb.append("</tr>");
         }
         sb.append("</table>");
@@ -127,7 +124,7 @@ public class DailyReport implements Report {
     public ByteArrayStreamResource asXLS() {
         try {
             XLSReport xlsReport = new XLSReport();
-            
+
             WritableSheet writableSheet = xlsReport.getWritableWorkbook().createSheet("Zdarzenia", 0);
             int row = 0, col = 0;
             writableSheet.addCell(new Label(col++, row, "LP"));
@@ -145,7 +142,7 @@ public class DailyReport implements Report {
                 writableSheet.addCell(new Label(col++, row, event.getRfidCard().getCardNumber()));
                 row++;
             }
-            
+
             return xlsReport.getReport();
         } catch (Throwable t) {
             throw new RuntimeException(t);
