@@ -1,23 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.appsession;
 
 import com.appspot.natanedwin.entity.UserAccountTools;
 import com.appspot.natanedwin.service.spring.SpringContext;
-import java.util.Locale;
 import org.joda.time.DateTimeZone;
-import org.joda.time.Interval;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.PeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
 /**
  *
- * @author rr163240
+ * @author Bart Prokop
  */
 public class Formatters {
 
@@ -46,7 +39,7 @@ public class Formatters {
     }
 
     public static PeriodFormatter getHMS() {
-        return new PeriodFormatterBuilder()
+        return new PeriodFormatterBuilder().printZeroAlways().minimumPrintedDigits(2)
                 .appendHours().appendSuffix(":")
                 .appendMinutes().appendSuffix(":")
                 .appendSeconds().toFormatter();

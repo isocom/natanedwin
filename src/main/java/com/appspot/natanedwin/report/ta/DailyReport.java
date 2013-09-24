@@ -1,9 +1,13 @@
-package com.appspot.natanedwin.report;
+package com.appspot.natanedwin.report.ta;
 
 import com.appspot.natanedwin.dao.RfidEventDao;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.RfidCard;
 import com.appspot.natanedwin.entity.RfidEvent;
+import com.appspot.natanedwin.report.ByteArrayStreamResource;
+import com.appspot.natanedwin.report.PDFReport;
+import com.appspot.natanedwin.report.Report;
+import com.appspot.natanedwin.report.XLSReport;
 import com.appspot.natanedwin.service.appsession.Formatters;
 import com.appspot.natanedwin.service.spring.SpringContext;
 import com.pdfjet.Page;
@@ -123,26 +127,37 @@ public class DailyReport implements Report {
     @Override
     public ByteArrayStreamResource asXLS() {
         try {
+            Collection<DailyReportRow> reportRows = calcDailyReportRows();
             XLSReport xlsReport = new XLSReport();
 
             WritableSheet writableSheet = xlsReport.getWritableWorkbook().createSheet("Zdarzenia", 0);
-            int row = 0, col = 0;
-            writableSheet.addCell(new Label(col++, row, "LP"));
-            writableSheet.addCell(new Label(col++, row, "Imię i Nazwisko"));
-            writableSheet.addCell(new Label(col++, row, "Data i godzina"));
-            writableSheet.addCell(new Label(col++, row, "Typ zdarzenia"));
-            writableSheet.addCell(new Label(col++, row, "Karta"));
-            row++;
+            int r = 0, c = 0;
+            writableSheet.addCell(new Label(c++, r, "LP"));
+            writableSheet.addCell(new Label(c++, r, "Imię i Nazwisko"));
+            writableSheet.addCell(new Label(c++, r, "Data i godzina"));
+            writableSheet.addCell(new Label(c++, r, "Typ zdarzenia"));
+            writableSheet.addCell(new Label(c++, r, "Karta"));
+            r++;
             for (RfidEvent event : events) {
-                col = 0;
-                writableSheet.addCell(new Label(col++, row, "" + row));
-                writableSheet.addCell(new Label(col++, row, event.getRfidCard().getHuman().get().getName()));
-                writableSheet.addCell(new Label(col++, row, event.getEventDate().toString()));
-                writableSheet.addCell(new Label(col++, row, event.getRfidEventType().toString()));
-                writableSheet.addCell(new Label(col++, row, event.getRfidCard().getCardNumber()));
-                row++;
+                c = 0;
+                writableSheet.addCell(new Label(c++, r, "" + r));
+                writableSheet.addCell(new Label(c++, r, event.getRfidCard().getHuman().get().getName()));
+                writableSheet.addCell(new Label(c++, r, event.getEventDate().toString()));
+                writableSheet.addCell(new Label(c++, r, event.getRfidEventType().toString()));
+                writableSheet.addCell(new Label(c++, r, event.getRfidCard().getCardNumber()));
+                r++;
             }
 
+            writableSheet = xlsReport.getWritableWorkbook().createSheet("Zdarzenia", 0);
+            r = 0;
+            c = 0;
+            writableSheet.addCell(new Label(c++, r, "LP"));
+            writableSheet.addCell(new Label(c++, r, "Imię i Nazwisko"));
+            writableSheet.addCell(new Label(c++, r, "Wejście"));
+            writableSheet.addCell(new Label(c++, r, "Wyjście"));
+            writableSheet.addCell(new Label(c++, r, "Czas Łączny"));
+            for (DailyReportRow row : reportRows) {
+            }
             return xlsReport.getReport();
         } catch (Throwable t) {
             throw new RuntimeException(t);
