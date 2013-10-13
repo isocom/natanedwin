@@ -1,8 +1,7 @@
 /**
  *  Point.java
  *
-Copyright (c) 2007, 2008, 2009 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -10,7 +9,7 @@ are permitted provided that the following conditions are met:
 
     * Redistributions of source code must retain the above copyright notice,
       this list of conditions and the following disclaimer.
- 
+
     * Redistributions in binary form must reproduce the above copyright notice,
       this list of conditions and the following disclaimer in the documentation
       and / or other materials provided with the distribution.
@@ -30,12 +29,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
-import java.util.*;
 
-
-//>>>>pdfjet {
-public class Point {
+/**
+ *  Used to create point objects with different shapes and draw them on a page.
+ *  Please note: When we are mentioning (x, y) coordinates of a point - we are talking about the coordinates of the center of the point.
+ *
+ *  Please see Example_05.
+ */
+public class Point implements Drawable {
 
     public static final int INVISIBLE = -1;
     public static final int CIRCLE = 0;
@@ -52,199 +53,466 @@ public class Point {
     public static final int LEFT_ARROW = 11;
     public static final int RIGHT_ARROW = 12;
 
-    public static final boolean IS_CURVE_POINT = true;
+    public static final boolean CONTROL_POINT = true;
 
-    protected double x = 0.0;
-    protected double y = 0.0;
-    protected double r = 2.0;
+    protected float x;
+    protected float y;
+    protected float r = 2.0f;
 
-    protected int shape = 0;
-    protected double[] color = {0.0, 0.0, 0.0};
-    protected double line_width = 0.3;
-    protected String line_pattern = "[] 0";
-    protected boolean fill_shape = false;
+    protected int shape = CIRCLE;
+    protected int color = Color.black;
+    protected float lineWidth = 0.3f;
+    protected String linePattern = "[] 0";
+    protected boolean fillShape = false;
 
-    protected boolean isCurvePoint = false;
+    protected boolean isControlPoint = false;
 
-    protected String text = null;
-    protected String uri = null;
-    protected List<String> info = null;
+    private String text;
+    private String uri;
 
-    // drawLineTo == false means:
-    //      Don't draw a line to this point from the previous
-    protected boolean drawLineTo = false;
-
-    private double box_x = 0.0;
-    private double box_y = 0.0;
+    // Don't draw a line from the previous point to this point.
+    private boolean drawLineTo = false;
+    private float box_x;
+    private float box_y;
 
 
+    /**
+     *  The default constructor.
+     */
     public Point() {
     }
 
 
+    /**
+     *  Constructor for creating point objects.
+     *
+     *  @param x the x coordinate of this point when drawn on the page.
+     *  @param y the y coordinate of this point when drawn on the page.
+     */
     public Point(double x, double y) {
+    	this((float) x, (float) y);
+    }
+
+
+    /**
+     *  Constructor for creating point objects.
+     *
+     *  @param x the x coordinate of this point when drawn on the page.
+     *  @param y the y coordinate of this point when drawn on the page.
+     */
+    public Point(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
 
-    public Point(double x, double y, boolean isCurvePoint) {
-        this.x = x;
-        this.y = y;
-        this.isCurvePoint = isCurvePoint;
+    /**
+     *  Constructor for creating point objects.
+     *
+     *  @param x the x coordinate of this point when drawn on the page.
+     *  @param y the y coordinate of this point when drawn on the page.
+     *  @param isControlPoint true if this point is one of the points specifying a curve.
+     */
+    public Point(double x, double y, boolean isControlPoint) {
+    	this((float) x, (float) y, isControlPoint);
     }
 
 
+    /**
+     *  Constructor for creating point objects.
+     *
+     *  @param x the x coordinate of this point when drawn on the page.
+     *  @param y the y coordinate of this point when drawn on the page.
+     *  @param isControlPoint true if this point is one of the points specifying a curve.
+     */
+    public Point(float x, float y, boolean isControlPoint) {
+        this.x = x;
+        this.y = y;
+        this.isControlPoint = isControlPoint;
+    }
+
+    
+    /**
+     *  Sets the position (x, y) of this point.
+     *
+     *  @param x the x coordinate of this point when drawn on the page.
+     *  @param y the y coordinate of this point when drawn on the page.
+     */
     public void setPosition(double x, double y) {
+    	setPosition((float) x, (float) y);
+    }
+
+
+    /**
+     *  Sets the position (x, y) of this point.
+     *
+     *  @param x the x coordinate of this point when drawn on the page.
+     *  @param y the y coordinate of this point when drawn on the page.
+     */
+    public void setPosition(float x, float y) {
+        setLocation(x, y);
+    }
+
+
+    /**
+     *  Sets the location (x, y) of this point.
+     *
+     *  @param x the x coordinate of this point when drawn on the page.
+     *  @param y the y coordinate of this point when drawn on the page.
+     */
+    public void setLocation(float x, float y) {
         this.x = x;
         this.y = y;
     }
 
 
+    /**
+     *  Sets the x coordinate of this point.
+     *
+     *  @param x the x coordinate of this point when drawn on the page.
+     */
     public void setX(double x) {
-        this.x = x;
+        this.x = (float) x;
     }
 
 
-    public double getX() {
+    /**
+     *  Sets the x coordinate of this point.
+     *
+     *  @param x the x coordinate of this point when drawn on the page.
+     */
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    
+    /**
+     *  Returns the x coordinate of this point.
+     *
+     *  @return the x coordinate of this point.
+     */
+    public float getX() {
         return x;
     }
 
 
+    /**
+     *  Sets the y coordinate of this point.
+     *
+     *  @param y the y coordinate of this point when drawn on the page.
+     */
     public void setY(double y) {
+        this.y = (float) y;
+    }
+
+
+    /**
+     *  Sets the y coordinate of this point.
+     *
+     *  @param y the y coordinate of this point when drawn on the page.
+     */
+    public void setY(float y) {
         this.y = y;
     }
 
 
-    public double getY() {
+    /**
+     *  Returns the y coordinate of this point.
+     *
+     *  @return the y coordinate of this point.
+     */
+    public float getY() {
         return y;
     }
 
 
+    /**
+     *  Sets the radius of this point.
+     *
+     *  @param r the radius.
+     */
     public void setRadius(double r) {
+        this.r = (float) r;
+    }
+
+
+    /**
+     *  Sets the radius of this point.
+     *
+     *  @param r the radius.
+     */
+    public void setRadius(float r) {
         this.r = r;
     }
 
 
-    public double getRadius() {
+    /**
+     *  Returns the radius of this point.
+     *
+     *  @return the radius of this point.
+     */
+    public float getRadius() {
         return r;
     }
 
 
+    /**
+     *  Sets the shape of this point.
+     *
+     *  @param shape the shape of this point. Supported values:
+     *  <pre>
+     *  Point.INVISIBLE
+     *  Point.CIRCLE
+     *  Point.DIAMOND
+     *  Point.BOX
+     *  Point.PLUS
+     *  Point.H_DASH
+     *  Point.V_DASH
+     *  Point.MULTIPLY
+     *  Point.STAR
+     *  Point.X_MARK
+     *  Point.UP_ARROW
+     *  Point.DOWN_ARROW
+     *  Point.LEFT_ARROW
+     *  Point.RIGHT_ARROW
+     *  </pre>
+     */
     public void setShape(int shape) {
         this.shape = shape;
     }
 
 
+    /**
+     *  Returns the point shape code value.
+     *
+     *  @return the shape code value.
+     */
     public int getShape() {
         return shape;
     }
 
 
+    /**
+     *  Sets the private fillShape variable.
+     *
+     *  @param fill if true - fill the point with the specified brush color.
+     */
     public void setFillShape(boolean fill) {
-        this.fill_shape = fill;
+        this.fillShape = fill;
     }
 
 
+    /**
+     *  Returns the value of the fillShape private variable.
+     *
+     *  @return the value of the private fillShape variable.
+     */
     public boolean getFillShape() {
-        return fill_shape;
+        return fillShape;
     }
 
 
-    public void setColor(double[] color) {
+    /**
+     *  Sets the pen color for this point.
+     *
+     *  @param color the color specified as an integer.
+     */
+    public void setColor(int color) {
         this.color = color;
     }
 
 
-    public void setColor(int[] rgb) {
-        this.color = new double[] {rgb[0]/255.0, rgb[1]/255.0, rgb[2]/255.0};
+    /**
+     *  Returns the point color as an integer.
+     *
+     *  @return the color.
+     */
+    public int getColor() {
+        return this.color;
     }
 
 
-    public double[] getColor() {
-        return color;
+    /**
+     *  Sets the width of the lines of this point.
+     *
+     *  @param lineWidth the line width.
+     */
+    public void setLineWidth(double lineWidth) {
+        this.lineWidth = (float) lineWidth;
     }
 
 
-    public void setLineWidth(double line_width) {
-        this.line_width = line_width;
+    /**
+     *  Sets the width of the lines of this point.
+     *
+     *  @param lineWidth the line width.
+     */
+    public void setLineWidth(float lineWidth) {
+        this.lineWidth = lineWidth;
     }
 
 
-    public double getLineWidth() {
-        return line_width;
+    /**
+     *  Returns the width of the lines used to draw this point.
+     *
+     *  @return the width of the lines used to draw this point.
+     */
+    public float getLineWidth() {
+        return lineWidth;
     }
 
 
-    public void setLinePattern(String line_pattern) {
-        this.line_pattern = line_pattern;
+    /**
+     *
+     *  The line dash pattern controls the pattern of dashes and gaps used to stroke paths.
+     *  It is specified by a dash array and a dash phase.
+     *  The elements of the dash array are positive numbers that specify the lengths of
+     *  alternating dashes and gaps.
+     *  The dash phase specifies the distance into the dash pattern at which to start the dash.
+     *  The elements of both the dash array and the dash phase are expressed in user space units.
+     *  <pre>
+     *  Examples of line dash patterns:
+     *
+     *      "[Array] Phase"     Appearance          Description
+     *      _______________     _________________   ____________________________________
+     *
+     *      "[] 0"              -----------------   Solid line
+     *      "[3] 0"             ---   ---   ---     3 units on, 3 units off, ...
+     *      "[2] 1"             -  --  --  --  --   1 on, 2 off, 2 on, 2 off, ...
+     *      "[2 1] 0"           -- -- -- -- -- --   2 on, 1 off, 2 on, 1 off, ...
+     *      "[3 5] 6"             ---     ---       2 off, 3 on, 5 off, 3 on, 5 off, ...
+     *      "[2 3] 11"          -   --   --   --    1 on, 3 off, 2 on, 3 off, 2 on, ...
+     *  </pre>
+     *
+     *  @param linePattern the line dash pattern.
+     */
+    public void setLinePattern(String linePattern) {
+        this.linePattern = linePattern;
     }
 
 
+    /**
+     *  Returns the line dash pattern.
+     *
+     *  @return the line dash pattern.
+     */
     public String getLinePattern() {
-        return line_pattern;
+        return linePattern;
     }
 
 
+    /**
+     *  Sets the private drawLineTo variable.
+     *  If drawLineTo is true a line is drawn from the last pen position to this point.
+     *
+     *  @param drawLineTo the drawLineTo boolean value.
+     */
     public void setDrawLineTo(boolean drawLineTo) {
         this.drawLineTo = drawLineTo;
     }
 
 
+    /**
+     *  Returns the current value of the private drawLineTo variable.
+     */
     public boolean getDrawLineTo() {
         return drawLineTo;
     }
 
 
+    /**
+     *  Sets the URI for the "click point" action.
+     *
+     *  @param uri the URI
+     */
     public void setURIAction(String uri) {
         this.uri = uri;
     }
 
 
+    /**
+     *  Returns the URI for the "click point" action.
+     *
+     *  @return the URI for the "click point" action.
+     */
     public String getURIAction() {
         return uri;
     }
 
 
+    /**
+     *  Sets the point text.
+     *
+     *  @param text the text.
+     */
     public void setText(String text) {
         this.text = text;
     }
 
 
+    /**
+     *  Returns the text associated with this point.
+     */
     public String getText() {
         return text;
     }
 
 
-    public void setInfo(List<String> info) {
-        this.info = info;
+    /**
+     *  Places this point in the specified box at position (0.0, 0.0).
+     *
+     *  @param box the specified box.
+     */
+    public void placeIn(Box box) throws Exception {
+        placeIn(box, 0.0f, 0.0f);
     }
 
 
-    public List<String> getInfo() {
-        return info;
-    }
-
-
+    /**
+     *  Places this point in the specified box.
+     *
+     *  @param box the specified box.
+     *  @param x_offset the x offset from the top left corner of the box.
+     *  @param y_offset the y offset from the top left corner of the box.
+     */
     public void placeIn(
             Box box,
             double x_offset,
             double y_offset) throws Exception {
+    	placeIn(box, (float) x_offset, (float) y_offset);
+    }
+
+
+    /**
+     *  Places this point in the specified box.
+     *
+     *  @param box the specified box.
+     *  @param x_offset the x offset from the top left corner of the box.
+     *  @param y_offset the y offset from the top left corner of the box.
+     */
+    public void placeIn(
+            Box box,
+            float x_offset,
+            float y_offset) throws Exception {
         box_x = box.x + x_offset;
         box_y = box.y + y_offset;
     }
 
 
+    /**
+     *  Draws this point on the specified page.
+     *
+     *  @param page the page to draw this point on.
+     */
     public void drawOn(Page page) throws Exception {
-        page.setPenWidth(line_width);
-        page.setLinePattern(line_pattern);
+        page.setPenWidth(lineWidth);
+        page.setLinePattern(linePattern);
 
-        if (fill_shape) {
-            page.setBrushColor(
-                    color[0], color[1], color[2]);
-        } else {
-            page.setPenColor(
-                    color[0], color[1], color[2]);
+        if (fillShape) {
+            page.setBrushColor(color);
+        }
+        else {
+            page.setPenColor(color);
         }
 
         x += box_x;
@@ -255,4 +523,3 @@ public class Point {
     }
 
 }   // End of Point.java
-//<<<<}

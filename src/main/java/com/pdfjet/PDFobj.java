@@ -1,93 +1,155 @@
+/**
+ *  PDFobj.java
+ *
+Copyright (c) 2013, Innovatics Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and / or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
 package com.pdfjet;
 
-import java.lang.*;
 import java.util.*;
 
 
-//>>>>pdfjet {
+/**
+ *  Used to create Java or .NET objects that represent the objects in PDF document. 
+ *  See the PDF specification for more information.
+ *
+ */
 public class PDFobj {
 
-    protected static final String TYPE = "/Type";
-    protected static final String SUBTYPE = "/Subtype";
-    protected static final String FILTER = "/Filter";
-    protected static final String WIDTH = "/Width";
-    protected static final String HEIGHT = "/Height";
-    protected static final String COLORSPACE = "/ColorSpace";
-    protected static final String BITSPERCOMPONENT = "/BitsPerComponent";
+    public static final String TYPE = "/Type";
+    public static final String SUBTYPE = "/Subtype";
+    public static final String FILTER = "/Filter";
+    public static final String WIDTH = "/Width";
+    public static final String HEIGHT = "/Height";
+    public static final String COLORSPACE = "/ColorSpace";
+    public static final String BITSPERCOMPONENT = "/BitsPerComponent";
 
-    protected int offset;
-    protected int number;
-    public List< String > dict;
-
-    public byte[] stream;
+    protected int offset;           // The object offset
+    protected int number;           // The object number
+    protected List<String> dict;
     protected int stream_offset;
+    protected byte[] stream;        // The compressed stream
+    protected byte[] data;          // The decompressed data
 
-    public byte[] data;
 
-
-    public PDFobj( int offset ) {
+    /**
+     *  Used to create Java or .NET objects that represent the objects in PDF document. 
+     *  See the PDF specification for more information.
+     *  Also see Example_19.
+     *
+     *  @param offset the object offset in the offsets table.
+     */
+    public PDFobj(int offset) {
         this.offset = offset;
-        this.dict = new ArrayList< String >();
+        this.dict = new ArrayList<String>();
     }
 
 
-    public String getValue( String key ) {
+    /**
+     *  Sets this PDF object's stream.
+     *
+     */
+    public void setStream(byte[] pdf, int length) {
+        stream = new byte[length];
+        System.arraycopy(pdf, this.stream_offset, stream, 0, length);
+    }
 
-        for ( int i = 0; i < dict.size(); i++ ) {
+
+    public byte[] getData() {
+        return this.data;
+    }
+
+
+    /**
+     *  Returns the parameter value given the specified key.
+     *
+     *  @param key the specified key.
+     *
+     *  @return the value.
+     */
+    public String getValue(String key) {
+        for (int i = 0; i < dict.size(); i++) {
             String token = dict.get(i);
-            if ( token.equals( "stream" ) ||
-                    token.equals( "endobj" ) ) {
-                break;
-            }
-            
-            if ( token.equals( key ) ) {
+            if (token.equals(key)) {
                 return dict.get(i + 1);
             }
         }
-
         return "";
     }
 
 
-    public int getLength( List< PDFobj> objects ) {
+    public float[] getPageSize() {
+        for (int i = 0; i < dict.size(); i++) {
+            if (dict.get(i).equals("/MediaBox")) {
+                return new float[] {
+                        Float.valueOf(dict.get(i + 4)),
+                        Float.valueOf(dict.get(i + 5)) };
+            }
+        }
+        return Letter.PORTRAIT;
+    }
 
-        for ( int i = 0; i < dict.size(); i++ ) {
+
+    /**
+     *
+     *
+     *
+     */
+    protected int getLength(List<PDFobj> objects) {
+        for (int i = 0; i < dict.size(); i++) {
             String token = dict.get(i);
-            if ( token.equals( "/Length" ) ) {
-                int number = Integer.valueOf( dict.get(i + 1) );
-                if ( dict.get(i + 2).equals( "0" ) &&
-                        dict.get(i + 3).equals( "R" ) ) {
-                    return getLength( objects, number );
+            if (token.equals("/Length")) {
+                int number = Integer.valueOf(dict.get(i + 1));
+                if (dict.get(i + 2).equals("0") &&
+                        dict.get(i + 3).equals("R")) {
+                    return getLength(objects, number);
                 }
                 else {
                     return number;
                 }
             }
         }
-
         return 0;
     }
 
 
-    public int getLength( List< PDFobj> objects, int number ) {
-
-        for ( int i = 0; i < objects.size(); i++ ) {
+    /**
+     *
+     *
+     *
+     */
+    protected int getLength(List<PDFobj> objects, int number) {
+        for (int i = 0; i < objects.size(); i++) {
             PDFobj obj = objects.get(i);
-            if ( obj.number == number ) {
-                return Integer.valueOf( obj.dict.get(3) );
+            int objNumber = Integer.valueOf(obj.dict.get(0));
+            if (objNumber == number) {
+                return Integer.valueOf(obj.dict.get(3));
             }
         }
-
         return 0;
-    }
-
-
-    public void setStream( byte[] pdf, int length ) {
-        stream = new byte[ length ];
-        for ( int i = 0; i < length; i++ ) {
-            stream[ i ] = pdf[ this.stream_offset + i ];
-        }
     }
 
 }
-//<<<<}

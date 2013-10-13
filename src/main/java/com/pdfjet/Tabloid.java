@@ -1,8 +1,7 @@
 /**
  *  Tabloid.java
  *
-Copyright (c) 2007, 2008, 2009 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,11 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
 
-//>>>>pdfjet {
+/**
+ *  Used to specify PDF page with size <strong>Tabloid</strong>.
+ *  For more information about the page size classes - A3, A4, A5, B5, Executive, Letter, Legal and Tabloid - see the Page class.
+ *
+ */
 public class Tabloid {
-    public static double[] PORTRAIT = new double[] {792.0, 1224.0};
-    public static double[] LANDSCAPE = new double[] {1224.0, 792.0};
+    public static float[] PORTRAIT = new float[] {792.0f, 1224.0f};
+    public static float[] LANDSCAPE = new float[] {1224.0f, 792.0f};
 }
-//<<<<}

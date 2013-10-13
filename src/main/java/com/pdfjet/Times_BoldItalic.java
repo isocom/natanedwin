@@ -1,32 +1,15 @@
 package com.pdfjet;
 
-public class Times_BoldItalic extends CoreFont {
-    int bBoxLLx = -200;
-    int bBoxLLy = -218;
-    int bBoxURx = 996;
-    int bBoxURy = 921;
-    int underlinePosition = -100;
-    int underlineThickness = 50;
-    protected int getBBoxLLx() {
-        return bBoxLLx;
-    }
-    protected int getBBoxLLy() {
-        return bBoxLLy;
-    }
-    protected int getBBoxURx() {
-        return bBoxURx;
-    }
-    protected int getBBoxURy() {
-        return bBoxURy;
-    }
-    protected int getUnderlinePosition() {
-        return underlinePosition;
-    }
-    protected int getUnderlineThickness() {
-        return underlineThickness;
-    }
-    protected static final String notice = "Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.Times is a trademark of Linotype-Hell AG and/or its subsidiaries.";
-    int[][] data = {
+class Times_BoldItalic {
+    protected static final String name = "Times-BoldItalic";
+    protected static final int bBoxLLx = -200;
+    protected static final int bBoxLLy = -218;
+    protected static final int bBoxURx = 996;
+    protected static final int bBoxURy = 921;
+    protected static final int underlinePosition = -100;
+    protected static final int underlineThickness = 50;
+    protected static final String notice = "Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated. All Rights Reserved. Times is a trademark of Linotype-Hell AG and/or its subsidiaries.";
+    protected static final int[][] metrics = {
         {32,250,65,-37,193,-37,194,-37,196,-37,192,-37,197,-37,195,-37,86,-70,87,-70,89,-70,221,-70,159,-70,},
         {33,389,},
         {34,555,},
@@ -252,8 +235,4 @@ public class Times_BoldItalic extends CoreFont {
         {254,500,},
         {255,444,44,-37,46,-37,},
     };
-
-    protected int[][] getMetrics() {
-        return data;
-    }
 }

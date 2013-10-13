@@ -1,32 +1,15 @@
 package com.pdfjet;
 
-public class Symbol extends CoreFont {
-    int bBoxLLx = -180;
-    int bBoxLLy = -293;
-    int bBoxURx = 1090;
-    int bBoxURy = 1010;
-    int underlinePosition = -100;
-    int underlineThickness = 50;
-    protected int getBBoxLLx() {
-        return bBoxLLx;
-    }
-    protected int getBBoxLLy() {
-        return bBoxLLy;
-    }
-    protected int getBBoxURx() {
-        return bBoxURx;
-    }
-    protected int getBBoxURy() {
-        return bBoxURy;
-    }
-    protected int getUnderlinePosition() {
-        return underlinePosition;
-    }
-    protected int getUnderlineThickness() {
-        return underlineThickness;
-    }
+class Symbol {
+    protected static final String name = "Symbol";
+    protected static final int bBoxLLx = -180;
+    protected static final int bBoxLLy = -293;
+    protected static final int bBoxURx = 1090;
+    protected static final int bBoxURy = 1010;
+    protected static final int underlinePosition = -100;
+    protected static final int underlineThickness = 50;
     protected static final String notice = "Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated. All rights reserved.";
-    int[][] data = {
+    protected static final int[][] metrics = {
         {32,250},
         {33,333},
         {34,713},
@@ -252,8 +235,4 @@ public class Symbol extends CoreFont {
         {254,494},
         {255,250},
     };
-
-    protected int[][] getMetrics() {
-        return data;
-    }
 }

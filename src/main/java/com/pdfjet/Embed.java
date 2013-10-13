@@ -1,8 +1,7 @@
 /**
  *  Embed.java
  *
-Copyright (c) 2007, 2008, 2009 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,11 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
 
-//>>>>pdfjet {
+/**
+ *  Used to specify if TrueType or OpenType font should be embedded in the PDF document.
+ *  See the Font class for more details.
+ *
+ */
 public class Embed {
     public static final boolean YES = true;
     public static final boolean NO = false;
 }
-//<<<<}

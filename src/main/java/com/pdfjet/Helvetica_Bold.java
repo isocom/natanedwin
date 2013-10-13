@@ -1,32 +1,15 @@
 package com.pdfjet;
 
-public class Helvetica_Bold extends CoreFont {
-    int bBoxLLx = -170;
-    int bBoxLLy = -228;
-    int bBoxURx = 1003;
-    int bBoxURy = 962;
-    int underlinePosition = -100;
-    int underlineThickness = 50;
-    protected int getBBoxLLx() {
-        return bBoxLLx;
-    }
-    protected int getBBoxLLy() {
-        return bBoxLLy;
-    }
-    protected int getBBoxURx() {
-        return bBoxURx;
-    }
-    protected int getBBoxURy() {
-        return bBoxURy;
-    }
-    protected int getUnderlinePosition() {
-        return underlinePosition;
-    }
-    protected int getUnderlineThickness() {
-        return underlineThickness;
-    }
-    protected static final String notice = "Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.";
-    int[][] data = {
+class Helvetica_Bold {
+    protected static final String name = "Helvetica-Bold";
+    protected static final int bBoxLLx = -170;
+    protected static final int bBoxLLy = -228;
+    protected static final int bBoxURx = 1003;
+    protected static final int bBoxURy = 962;
+    protected static final int underlinePosition = -100;
+    protected static final int underlineThickness = 50;
+    protected static final String notice = "Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated. All Rights Reserved. Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.";
+    protected static final int[][] metrics = {
         {32,278,84,-100,86,-80,87,-80,89,-120,221,-120,159,-120,147,-80,145,-60,},
         {33,333,},
         {34,474,},
@@ -252,8 +235,4 @@ public class Helvetica_Bold extends CoreFont {
         {254,611,},
         {255,556,97,-30,225,-30,226,-30,228,-30,224,-30,229,-30,227,-30,44,-80,101,-10,233,-10,234,-10,235,-10,232,-10,111,-25,243,-25,244,-25,246,-25,242,-25,248,-25,245,-25,46,-80,},
     };
-
-    protected int[][] getMetrics() {
-        return data;
-    }
 }

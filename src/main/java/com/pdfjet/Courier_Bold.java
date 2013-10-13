@@ -1,32 +1,15 @@
 package com.pdfjet;
 
-public class Courier_Bold extends CoreFont {
-    int bBoxLLx = -113;
-    int bBoxLLy = -250;
-    int bBoxURx = 749;
-    int bBoxURy = 801;
-    int underlinePosition = -100;
-    int underlineThickness = 50;
-    protected int getBBoxLLx() {
-        return bBoxLLx;
-    }
-    protected int getBBoxLLy() {
-        return bBoxLLy;
-    }
-    protected int getBBoxURx() {
-        return bBoxURx;
-    }
-    protected int getBBoxURy() {
-        return bBoxURy;
-    }
-    protected int getUnderlinePosition() {
-        return underlinePosition;
-    }
-    protected int getUnderlineThickness() {
-        return underlineThickness;
-    }
-    protected static final String notice = "Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.  All Rights Reserved.";
-    int[][] data = {
+class Courier_Bold {
+    protected static final String name = "Courier-Bold";
+    protected static final int bBoxLLx = -113;
+    protected static final int bBoxLLy = -250;
+    protected static final int bBoxURx = 749;
+    protected static final int bBoxURy = 801;
+    protected static final int underlinePosition = -100;
+    protected static final int underlineThickness = 50;
+    protected static final String notice = "Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated. All Rights Reserved.";
+    protected static final int[][] metrics = {
         {32,600,},
         {33,600,},
         {34,600,},
@@ -252,8 +235,4 @@ public class Courier_Bold extends CoreFont {
         {254,600,},
         {255,600,},
     };
-
-    protected int[][] getMetrics() {
-        return data;
-    }
 }

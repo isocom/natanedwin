@@ -1,8 +1,7 @@
 /**
  *  Letter.java
  *
-Copyright (c) 2007, 2008, 2009, 2010 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,11 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
 
-//>>>>pdfjet {
+/**
+ *  Used to specify PDF page with size <strong>Letter</strong>.
+ *  For more information about the page size classes - A3, A4, A5, B5, Executive, Letter, Legal and Tabloid - see the Page class.
+ *
+ */
 public class Letter {
-    public static final double[] PORTRAIT = new double[] {612.0, 792.0};
-    public static final double[] LANDSCAPE = new double[] {792.0, 612.0};
+    public static final float[] PORTRAIT = new float[] {612.0f, 792.0f};
+    public static final float[] LANDSCAPE = new float[] {792.0f, 612.0f};
 }
-//<<<<}

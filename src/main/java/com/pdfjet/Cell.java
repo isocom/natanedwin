@@ -1,274 +1,690 @@
 /**
- * Cell.java * Copyright (c) 2007, 2008, 2009, 2010 Innovatics Inc.
+ *  Cell.java
  *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation and
- * / or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- */
+Copyright (c) 2013, Innovatics Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and / or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
 package com.pdfjet;
 
+import java.util.*;
+
+
+/**
+ *  Used to create table cell objects.
+ *  See the Table class for more information.
+ *
+ */
 public class Cell {
 
-    protected double width = 70.0;
-    protected double height = 0.0;
-    protected Font font = null;
-    protected String text = " ";
-    protected int align = Align.LEFT;
-    protected Point point = null;
-    public Border border = null;
-    protected int colspan = 1;
-    protected double[] bgColor = {1.0, 1.0, 1.0};
-    protected double[] penColor = {0.0, 0.0, 0.0};
-    protected double[] brushColor = {0.0, 0.0, 0.0};
-    protected double lineWidth = 0.0;
+    protected Font font;
+    protected String text;
+    protected Point point;
+    protected CompositeTextLine compositeTextLine;
 
+    protected float width = 70.0f;
+    protected float top_padding = 0.0f;
+    protected float bottom_padding = 0.0f;
+    protected float left_padding = 0.0f;
+    protected float right_padding = 0.0f;
+    protected float lineWidth = 0.0f;
+
+    private int background = Color.white;
+    private int pen = Color.black;
+    private int brush = Color.black;
+
+    // Cell properties
+    // Colspan:
+    // bits 0 to 15
+    // Border:
+    // bit 16 - top
+    // bit 17 - bottom
+    // bit 18 - left
+    // bit 19 - right
+    // Text Alignment:
+    // bit 20
+    // bit 21
+    // Text Decoration:
+    // bit 22 - underline
+    // bit 23 - strikeout
+    // Future use:
+    // bits 24 to 31
+    private int properties = 0x000F0001;
+
+
+    /**
+     *  Creates a cell object and sets the font.
+     *
+     *  @param font the font.
+     */
     public Cell(Font font) {
         this.font = font;
-        this.border = new Border();
     }
 
+
+    /**
+     *  Creates a cell object and sets the font and the cell text.
+     *
+     *  @param font the font.
+     *  @param text the text.
+     */
     public Cell(Font font, String text) {
         this.font = font;
         this.text = text;
-        this.border = new Border();
     }
 
+
+    /**
+     *  Sets the font for this cell.
+     *
+     *  @param font the font.
+     */
     public void setFont(Font font) {
         this.font = font;
     }
 
+
+    /**
+     *  Returns the font used by this cell.
+     *
+     *  @return the font.
+     */
     public Font getFont() {
-        return font;
+        return this.font;
     }
 
+
+    /**
+     *  Sets the cell text.
+     *
+     *  @param text the cell text.
+     */
     public void setText(String text) {
         this.text = text;
     }
 
+
+    /**
+     *  Returns the cell text.
+     *
+     *  @return the cell text.
+     */
     public String getText() {
-        return text;
+        return this.text;
     }
 
+
+    /**
+     *  Sets the point inside this cell.
+     *  See the Point class and Example_09 for more information.
+     *
+     *  @param point the point.
+     */
     public void setPoint(Point point) {
         this.point = point;
     }
 
+
+    /**
+     *  Returns the cell point.
+     *
+     *  @return the point.
+     */
     public Point getPoint() {
-        return point;
+        return this.point;
     }
 
-    public Border getBorder() {
-        return border;
+
+    /**
+     * Sets the composite text object.
+     * 
+     * @param compositeTextLine the composite text object.
+     */
+    public void setCompositeTextLine(CompositeTextLine compositeTextLine) {
+        this.compositeTextLine = compositeTextLine;
     }
 
-    public double getWidth() {
-        return width;
+
+    /**
+     * Returns the composite text object.
+     * 
+     * @return the composite text object.
+     */
+    public CompositeTextLine getCompositeTextLine() {
+        return this.compositeTextLine;
     }
 
-    public double getHeight() {
-        return height;
-    }
 
-    public double getColspan() {
-        return colspan;
-    }
-
-    public Cell setBorder(Border border) {
-        this.border = border;
-        return this;
-    }
-
-    public Cell setNoBorders() {
-        this.border.top = false;
-        this.border.bottom = false;
-        this.border.left = false;
-        this.border.right = false;
-        return this;
-    }
-
-    public Cell setBgColor(double[] bgColor) {
-        this.bgColor = bgColor;
-        return this;
-    }
-
-    public Cell setBgColor(int[] rgb) {
-        this.bgColor = new double[]{rgb[0] / 255.0, rgb[1] / 255.0, rgb[2] / 255.0};
-        return this;
-    }
-
-    public void setFgColor(double[] fgColor) {
-        this.penColor = fgColor;
-        this.brushColor = fgColor;
-    }
-
-    public void setFgColor(int[] rgb) {
-        this.penColor =
-                new double[]{rgb[0] / 255.0, rgb[1] / 255.0, rgb[2] / 255.0};
-        this.brushColor =
-                new double[]{rgb[0] / 255.0, rgb[1] / 255.0, rgb[2] / 255.0};
-    }
-
-    public void setPenColor(double[] fgColor) {
-        this.penColor = fgColor;
-    }
-
-    public void setPenColor(int[] rgb) {
-        this.penColor =
-                new double[]{rgb[0] / 255.0, rgb[1] / 255.0, rgb[2] / 255.0};
-    }
-
-    public void setBrushColor(double[] fgColor) {
-        this.brushColor = fgColor;
-    }
-
-    public void setBrushColor(int[] rgb) {
-        this.brushColor =
-                new double[]{rgb[0] / 255.0, rgb[1] / 255.0, rgb[2] / 255.0};
-    }
-
-    public Cell setTextAlignment(int alignment) {
-        this.align = alignment;
-        return this;
-    }
-
-    public void setColSpan(int colspan) {
-        this.colspan = colspan;
-    }
-
+    /**
+     *  Sets the width of this cell.
+     *
+     *  @param width the specified width.
+     */
     public void setWidth(double width) {
+        this.width = (float) width;
+    }
+
+
+    /**
+     *  Sets the width of this cell.
+     *
+     *  @param width the specified width.
+     */
+    public void setWidth(float width) {
         this.width = width;
     }
 
-    public void setHeight(double height) {
-        this.height = height;
+
+    /**
+     *  Returns the cell width.
+     *
+     *  @return the cell width.
+     */
+    public float getWidth() {
+        return this.width;
     }
 
-    public void setColspan(int colspan) {
-        this.colspan = colspan;
+
+    /**
+     *  Sets the top padding of this cell.
+     *
+     *  @param padding the top padding.
+     */
+    public void setTopPadding(float padding) {
+        this.top_padding = padding;
     }
 
-    public void paint(
+
+    /**
+     *  Sets the bottom padding of this cell.
+     *
+     *  @param padding the bottom padding.
+     */
+    public void setBottomPadding(float padding) {
+        this.bottom_padding = padding;
+    }
+
+
+    /**
+     *  Sets the left padding of this cell.
+     *
+     *  @param padding the left padding.
+     */
+    public void setLeftPadding(float padding) {
+        this.left_padding = padding;
+    }
+
+
+    /**
+     *  Sets the right padding of this cell.
+     *
+     *  @param padding the right padding.
+     */
+    public void setRightPadding(float padding) {
+        this.right_padding = padding;
+    }
+
+
+    /**
+     *  Returns the cell height.
+     *
+     *  @return the cell height.
+     */
+    public float getHeight() {
+        return font.body_height + top_padding + bottom_padding;
+    }
+
+
+    /**
+     * Sets the border line width.
+     * 
+     * @param lineWidth the border line width.
+     */
+    public void setLineWidth(double lineWidth) {
+        this.lineWidth = (float) lineWidth;
+    }
+
+
+    /**
+     * Sets the border line width.
+     * 
+     * @param lineWidth the border line width.
+     */
+    public void setLineWidth(float lineWidth) {
+        this.lineWidth = lineWidth;
+    }
+
+
+    /**
+     * Returns the border line width.
+     * 
+     * @return the border line width.
+     */
+    public float getLineWidth() {
+        return this.lineWidth;
+    }
+
+
+    /**
+     *  Sets the background to the specified color.
+     *
+     *  @param color the color specified as 0xRRGGBB integer.
+     */
+    public void setBgColor(int color) {
+        this.background = color;
+    }
+
+
+    /**
+     *  Returns the background color of this cell.
+     *
+     */
+    public int getBgColor() {
+        return this.background;
+    }
+
+
+    /**
+     *  Sets the pen color.
+     *
+     *  @param color the color specified as 0xRRGGBB integer.
+     */
+    public void setPenColor(int color) {
+        this.pen = color;
+    }
+
+
+    /**
+     *  Returns the pen color.
+     *
+     */
+    public int getPenColor() {
+        return pen;
+    }
+
+
+    /**
+     *  Sets the brush color.
+     *
+     *  @param color the color specified as 0xRRGGBB integer.
+     */
+    public void setBrushColor(int color) {
+        this.brush = color;
+    }
+
+
+    /**
+     *  Returns the brush color. 
+     * 
+     * @return the brush color.
+     */
+    public int getBrushColor() {
+        return brush;
+    }
+
+
+    /**
+     *  Sets the pen and brush colors to the specified color.
+     *
+     *  @param color the color specified as 0xRRGGBB integer.
+     */
+    public void setFgColor(int color) {
+        this.pen = color;
+        this.brush = color;
+    }
+
+
+    protected void setProperties(int properties) {
+        this.properties = properties;
+    }
+
+
+    protected int getProperties() {
+        return this.properties;
+    }
+
+
+    /**
+     *  Sets the column span private variable.
+     *
+     *  @param colspan the specified column span value.
+     */
+    public void setColSpan(int colspan) {
+        this.properties &= 0x00FF0000;
+        this.properties |= (colspan & 0x0000FFFF);
+    }
+
+
+    /**
+     *  Returns the column span private variable value.
+     *
+     *  @return the column span value.
+     */
+    public int getColSpan() {
+        return (this.properties & 0x0000FFFF);
+    }
+
+
+    /**
+     *  Sets the cell border object.
+     *
+     *  @param border the border object.
+     */
+    public void setBorder(int border, boolean visible) {
+        if (visible) {
+            this.properties |= border;
+        }
+        else {
+            this.properties &= (~border & 0x00FFFFFF);
+        }
+    }
+
+
+    /**
+     *  Returns the cell border object.
+     *
+     *  @return the cell border object.
+     */
+    public boolean getBorder(int border) {
+        return (this.properties & border) != 0;
+    }
+
+
+    /**
+     *  Sets all border object parameters to false.
+     *  This cell will have no borders when drawn on the page.
+     */
+    public void setNoBorders() {
+        this.properties &= 0x00F0FFFF;
+    }
+
+
+    /**
+     *  Sets the cell text alignment.
+     *
+     *  @param alignment the alignment code.
+     *  Supported values: Align.LEFT, Align.RIGHT and Align.CENTER.
+     */
+    public void setTextAlignment(int alignment) {
+        this.properties &= 0x00CFFFFF;
+        this.properties |= (alignment & 0x00300000);
+    }
+
+
+    /**
+     *  Returns the text alignment.
+     *
+     */
+    public int getTextAlignment() {
+        return (this.properties & 0x00300000);
+    }
+
+
+    /**
+     *  Sets the underline text parameter.
+     *  If the value of the underline variable is 'true' - the text is underlined.
+     *
+     *  @param underline the underline text parameter.
+     */
+    public void setUnderline(boolean underline) {
+        if (underline) {
+            this.properties |= 0x00400000;
+        }
+        else {
+            this.properties &= 0x00BFFFFF;
+        }
+    }
+
+
+    /**
+     * Returns the underline text parameter.
+     * 
+     * @return the underline text parameter.
+     */
+    public boolean getUnderline() {
+        return (properties & 0x00400000) != 0;
+    }
+
+
+    /**
+     * Sets the strikeout text parameter.
+     * 
+     * @param strikeout the strikeout text parameter.
+     */
+    public void setStrikeout(boolean strikeout) {
+        if (strikeout) {
+            this.properties |= 0x00800000;
+        }
+        else {
+            this.properties &= 0x007FFFFF;
+        }
+    }
+
+
+    /**
+     * Returns the strikeout text parameter.
+     * 
+     * @return the strikeout text parameter.
+     */
+    public boolean getStrikeout() {
+        return (properties & 0x00800000) != 0;
+    }
+
+
+    /**
+     *  Draws the point, text and borders of this cell.
+     *
+     */
+    protected void paint(
             Page page,
-            double x,
-            double y,
-            double w,
-            double h,
-            double margin) throws Exception {
-
-        drawBackground(page, x, y, w, h);
+            float x,
+            float y,
+            float w,
+            float h,
+            float padding) throws Exception {
+        if (text != null) {
+            drawBackground(page, x, y, w, h);
+        }
         drawBorders(page, x, y, w, h);
-        drawText(page, x, y, w, margin);
-
-    }
-
-    private void drawBackground(
-            Page page,
-            double x,
-            double y,
-            double cell_w,
-            double cell_h) throws Exception {
-
-        page.setBrushColor(brushColor[0], brushColor[1], brushColor[2]);
-        Box box = new Box(x, y, cell_w, cell_h);
-        box.setColor(bgColor);
-        box.setFillShape(true);
-        box.drawOn(page);
-
-    }
-
-    private void drawBorders(
-            Page page,
-            double x,
-            double y,
-            double cell_w,
-            double cell_h) throws Exception {
-
-        page.setPenWidth(lineWidth);
-        page.setPenColor(penColor[0], penColor[1], penColor[2]);
-
-        if (border.left) {
-            page.moveTo(x, y);
-            page.lineTo(x, y + cell_h);
-            page.strokePath();
-        }
-
-        if (border.right) {
-            page.moveTo(x + cell_w, y);
-            page.lineTo(x + cell_w, y + cell_h);
-            page.strokePath();
-        }
-
-        if (border.top) {
-            page.moveTo(x, y);
-            page.lineTo(x + cell_w, y);
-            page.strokePath();
-        }
-
-        if (border.bottom) {
-            page.moveTo(x, y + cell_h);
-            page.lineTo(x + cell_w, y + cell_h);
-            page.strokePath();
-        }
-
-    }
-
-    private void drawText(
-            Page page,
-            double x,
-            double y,
-            double cell_w,
-            double margin) throws Exception {
-
-        double y_text = y + font.ascent + margin;
-        page.setPenColor(penColor[0], penColor[1], penColor[2]);
-        page.setBrushColor(brushColor[0], brushColor[1], brushColor[2]);
-
-        if (align == Align.RIGHT) {
-            page.drawString(
-                    font,
-                    text,
-                    (x + cell_w) - (font.stringWidth(text) + margin), y_text);
-        } else if (align == Align.CENTER) {
-            page.drawString(
-                    font,
-                    text,
-                    x + (cell_w - font.stringWidth(text)) / 2, y_text);
-        } else {
-            // Use the default - Align.LEFT
-            page.drawString(
-                    font,
-                    text,
-                    x + margin,
-                    y_text);
-        }
-
         if (point != null) {
-            point.x = (x + cell_w) - (font.ascent / 2 + margin);
-            point.y = y + (font.ascent / 2 + margin);
+            point.x = (x + w) - (font.ascent / 2 + this.left_padding);
+            point.y = y + (font.ascent / 2 + this.top_padding);
             point.r = font.ascent / 3;
             page.drawPoint(point);
         }
+        if (text != null) {
+            drawText(page, x, y, w, padding);
+        }
+    }
+
+
+    private void drawBackground(
+            Page page,
+            float x,
+            float y,
+            float cell_w,
+            float cell_h) throws Exception {
+        page.setBrushColor(background);
+        page.fillRect(x, y, cell_w, cell_h);
+    }
+
+
+    private void drawBorders(
+            Page page,
+            float x,
+            float y,
+            float cell_w,
+            float cell_h) throws Exception {
+
+        page.setPenColor(pen);
+        page.setPenWidth(lineWidth);
+
+        if (getBorder(Border.TOP) &&
+                getBorder(Border.BOTTOM) &&
+                getBorder(Border.LEFT) &&
+                getBorder(Border.RIGHT)) {
+            page.drawRect(x, y, cell_w, cell_h);
+        }
+        else {
+            if (getBorder(Border.TOP)) {
+                page.moveTo(x, y);
+                page.lineTo(x + cell_w, y);
+                page.strokePath();
+            }
+            if (getBorder(Border.BOTTOM)) {
+                page.moveTo(x, y + cell_h);
+                page.lineTo(x + cell_w, y + cell_h);
+                page.strokePath();
+            }
+            if (getBorder(Border.LEFT)) {
+                page.moveTo(x, y);
+                page.lineTo(x, y + cell_h);
+                page.strokePath();
+            }
+            if (getBorder(Border.RIGHT)) {
+                page.moveTo(x + cell_w, y);
+                page.lineTo(x + cell_w, y + cell_h);
+                page.strokePath();
+            }
+        }
 
     }
+
+
+    private void drawText(
+            Page page,
+            float x,
+            float y,
+            float cell_w,
+            float padding) throws Exception {
+
+        float y_text = y + font.ascent + this.top_padding + padding;
+        page.setPenColor(pen);
+        page.setBrushColor(brush);
+
+        if (getTextAlignment() == Align.RIGHT) {
+            if (compositeTextLine == null) {
+                float x_text = (x + cell_w) - (font.stringWidth(text) + this.right_padding + padding);
+                page.drawString(font, text, x_text, y_text);
+                if (getUnderline()) {
+                    underlineText(page, font, text, x_text, y_text);
+                }
+                if (getStrikeout()) {
+                    strikeoutText(page, font, text, x_text, y_text);
+                }
+            }
+            else {
+                float x_text = (x + cell_w) - (compositeTextLine.getWidth() + this.right_padding + padding);
+                compositeTextLine.setPosition(x_text, y_text);
+                compositeTextLine.drawOn(page);
+            }
+        }
+        else if (getTextAlignment() == Align.CENTER) {
+            if (compositeTextLine == null) {
+                float x_text = x + this.left_padding + padding +
+                        (((cell_w - (left_padding + right_padding + 2*padding)) - font.stringWidth(text)) / 2);
+                page.drawString(font, text, x_text, y_text);
+                if (getUnderline()) {
+                    underlineText(page, font, text, x_text, y_text);
+                }
+                if (getStrikeout()) {
+                    strikeoutText(page, font, text, x_text, y_text);
+                }
+            }
+            else {
+                float x_text = x + this.left_padding + padding +
+                        (((cell_w - (left_padding + right_padding + 2*padding)) - compositeTextLine.getWidth()) / 2);
+                compositeTextLine.setPosition(x_text, y_text);
+                compositeTextLine.drawOn(page);
+            }
+        }
+        else if (getTextAlignment() == Align.LEFT) {
+            float x_text = x + this.left_padding + padding;
+            if (compositeTextLine == null) {
+                page.drawString(font, text, x_text, y_text);
+                if (getUnderline()) {
+                    underlineText(page, font, text, x_text, y_text);
+                }
+                if (getStrikeout()) {
+                    strikeoutText(page, font, text, x_text, y_text);
+                }
+            }
+            else {
+                compositeTextLine.setPosition(x_text, y_text);
+                compositeTextLine.drawOn(page);
+            }
+        }
+        else {
+            throw new Exception("Invalid Text Alignment!");
+        }
+    }
+
+
+    private void underlineText(
+            Page page, Font font, String text, float x, float y)
+        throws Exception {
+        float descent = font.getDescent();
+        page.setPenWidth(font.underlineThickness);
+        page.moveTo(x, y + descent);
+        page.lineTo(x + font.stringWidth(text), y + descent);
+        page.strokePath();
+    }
+
+
+    private void strikeoutText(
+            Page page, Font font, String text, float x, float y)
+        throws Exception {
+        page.setPenWidth(font.underlineThickness);
+        page.moveTo(x, y - font.getAscent()/3.0);
+        page.lineTo(x + font.stringWidth(text), y - font.getAscent()/3.0);
+        page.strokePath();
+    }
+
+
+    protected int getNumVerCells(float padding) {
+        int n = 1;
+        String[] tokens = getText().split("\\s+");
+        if (tokens.length == 1) {
+            return n;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < tokens.length; i++) {
+            String token = tokens[i];
+            if (font.stringWidth(sb.toString() + " " + token)
+                    > (getWidth() - (this.left_padding + this.right_padding + 2*padding))) {
+                sb = new StringBuilder(token);
+                n++;
+            }
+            else {
+                if (i > 0) {
+                    sb.append(" ");
+                }
+                sb.append(token);
+            }
+        }
+        return n;
+    }
+
 }   // End of Cell.java
-//<<<<}

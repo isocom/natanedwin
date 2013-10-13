@@ -1,8 +1,7 @@
 /**
  *  RGB.java
  *
-Copyright (c) 2007, 2008, 2009, 2010 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,32 +29,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
-import java.util.*;
 
-
-//>>>>pdfjet {
+/**
+ *  Used to specify the pen and brush colors. In new code please use the Color class - it contains a lot more predefined values that are W3C compliant.
+ *
+ *
+ */
 public class RGB {
-    public static double[] BLACK = {0.0, 0.0, 0.0};
-    public static double[] WHITE = {1.0, 1.0, 1.0};
+    public static final float[] BLACK = {0.0f, 0.0f, 0.0f};
+    public static final float[] WHITE = {1.0f, 1.0f, 1.0f};
 
-    public static double[] RED = {1.0, 0.0, 0.0};
-    public static double[] GREEN = {0.0, 1.0, 0.0};
-    public static double[] BLUE = {0.0, 0.0, 1.0};
+    public static final float[] RED = {1.0f, 0.0f, 0.0f};
+    public static final float[] GREEN = {0.0f, 1.0f, 0.0f};
+    public static final float[] BLUE = {0.0f, 0.0f, 1.0f};
 
-    public static double[] YELLOW = {1.0, 1.0, 0.0};
-    public static double[] CYAN = {0.0, 1.0, 1.0};
-    public static double[] MAGENTA = {1.0, 0.0, 1.0};
+    public static final float[] YELLOW = {1.0f, 1.0f, 0.0f};
+    public static final float[] CYAN = {0.0f, 1.0f, 1.0f};
+    public static final float[] MAGENTA = {1.0f, 0.0f, 1.0f};
 
-    public static double[] LIGHT_GRAY = {0.75, 0.75, 0.75};
-    public static double[] GRAY = {0.5, 0.5, 0.5};
-    public static double[] DARK_GRAY = {0.25, 0.25, 0.25};
+    public static final float[] LIGHT_GRAY = {0.75f, 0.75f, 0.75f};
+    public static final float[] GRAY = {0.5f, 0.5f, 0.5f};
+    public static final float[] DARK_GRAY = {0.25f, 0.25f, 0.25f};
 
-    public static double[] LIGHT_GREY = {0.75, 0.75, 0.75};
-    public static double[] GREY = {0.5, 0.5, 0.5};
-    public static double[] DARK_GREY = {0.25, 0.25, 0.25};
+    public static final float[] LIGHT_GREY = {0.75f, 0.75f, 0.75f};
+    public static final float[] GREY = {0.5f, 0.5f, 0.5f};
+    public static final float[] DARK_GREY = {0.25f, 0.25f, 0.25f};
 
-    public static double[] OLD_GLORY_BLUE = {0.0, 49.0/255.0, 104.0/255.0};
-    public static double[] OLD_GLORY_RED = {191.0/255.0, 10.0/255.0, 48.0/255.0};
+    public static final float[] OLD_GLORY_BLUE = {0.0f, 49.0f/255.0f, 104.0f/255.0f};
+    public static final float[] OLD_GLORY_RED = {191.0f/255.0f, 10.0f/255.0f, 48.0f/255.0f};
 }
-//<<<<}

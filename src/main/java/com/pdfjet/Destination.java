@@ -1,8 +1,7 @@
 /**
- *  Screen.java
+ *  Destination.java
  *
-Copyright (c) 2007, 2008, 2009 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,11 +29,46 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
 
-//>>>>pdfjet {
-public class Screen {
-    static double[] PORTRAIT = new double[] {468.0, 373.0};
-    static double[] LANDSCAPE = new double[] {373.0, 468.0};
+/**
+ *  Used to create PDF destination objects.
+ *
+ *
+ */
+public class Destination {
+
+    String name;
+    int pageObjNumber;
+    float yPosition;
+
+
+    /**
+     *  This class is used to create destination objects.
+     *
+     *  @param name the name of this destination object.
+     *  @param yPosition the y coordinate of the top left corner.
+     *
+     */
+    public Destination(String name, double yPosition) {
+        this(name, (float) yPosition);
+    }
+
+
+    /**
+     *  This class is used to create destination objects.
+     *
+     *  @param name the name of this destination object.
+     *  @param yPosition the y coordinate of the top left corner.
+     *
+     */
+    public Destination(String name, float yPosition) {
+        this.name = name;
+        this.yPosition = yPosition;
+    }
+
+
+    protected void setPageObjNumber(int pageObjNumber) {
+        this.pageObjNumber = pageObjNumber;
+    }
+
 }
-//<<<<}

@@ -1,8 +1,7 @@
 /**
  *  Glyph.java
  *
-Copyright (c) 2007, 2008, 2009 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,11 +29,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
 
-//>>>>pdfjet {
-public class Glyph {
-public static String[] names = {
+/**
+ *  Should not be used by third party applications.
+ *  It's public only because the AfmCompiler is using it.
+ *
+ */
+class Glyph {
+static String[] names = {
 "space",
 "exclam",
 "quotedbl",
@@ -261,4 +263,3 @@ public static String[] names = {
 "ydieresis",
 };
 }
-//<<<<}

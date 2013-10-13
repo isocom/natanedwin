@@ -1,7 +1,6 @@
 /**
  * 
- *  Copyright (c) 2010 Jonas K.
-
+ *  Copyright (c) 2013, Jonas Krogsboll
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -35,7 +34,7 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 
-public class BMPImage {
+class BMPImage {
 
     int w = 0;              // Image width in pixels
     int h = 0;              // Image height in pixels
@@ -83,7 +82,8 @@ public class BMPImage {
                 if (offset > 54) {
                     skipNBytes(is, offset-54);
                 }
-            } else {
+            }
+            else {
                 skipNBytes(is, 12);
                 int numpalcol = readSignedInt(is);
                 if (numpalcol == 0) {
@@ -93,7 +93,8 @@ public class BMPImage {
                 parsePalette(is, numpalcol);
             }
             parseData(is);
-        } else {
+        }
+        else {
             throw new Exception("BMP data could not be parsed!");
         }
 
@@ -104,7 +105,6 @@ public class BMPImage {
         image = new byte[w * h * 3];
 
         int rowsize = 4 * (int)Math.ceil(bpp*w/32.0);   // 4 byte alignment
-        // hiv hver rkke ud:
         byte row[];
         int index;
         try {
@@ -138,7 +138,7 @@ public class BMPImage {
                     for (int j = 0; j < w*3; j+=3) {
                         image[index++] = row[j+2];
                         image[index++] = row[j+1];
-                        image[index++] = row[j+0];
+                        image[index++] = row[j];
                     }
                 }
             }
@@ -158,11 +158,9 @@ public class BMPImage {
         byte[] ret = new byte[width * 3];
         int j = 0;
         for (int i = 0; i < width*2; i+=2) {
-            // System.out.println("B1: " + row[i] + ", B2: " + row[i+1]);
             ret[j++] = (byte)((row[i] & 0x1F)<<3);
             ret[j++] = (byte)(((row[i+1] & 0x07)<<5)+((row[i] & 0xE0)>>3));
             ret[j++] = (byte)((row[i+1] & 0xF8));
-            // System.out.println("green: " + ret[j-1]);
         }
         return ret;
     }
@@ -172,11 +170,9 @@ public class BMPImage {
         byte[] ret = new byte[width * 3];
         int j = 0;
         for (int i = 0; i < width*2; i+=2) {
-            // System.out.println("B1: " + row[i] + ", B2: " + row[i+1]);
             ret[j++] = (byte)((row[i] & 0x1F)<<3);
             ret[j++] = (byte)(((row[i+1] & 0x03)<<6)+((row[i] & 0xE0)>>2));
             ret[j++] = (byte)((row[i+1] & 0x7C)<<1);
-            // System.out.println("green: " + ret[j-1]);
         }
         return ret;
     }
@@ -198,7 +194,8 @@ public class BMPImage {
         for(int i = 0; i < width; i++) {
             if (i % 2 == 0) {
                 ret[i] =(byte) ((row[i/2] & m11110000)>>4);
-            } else {
+            }
+            else {
                 ret[i] =(byte) ((row[i/2] & m00001111));
             }
         }
@@ -209,14 +206,14 @@ public class BMPImage {
         byte[] ret = new byte[width];
         for(int i = 0; i < width; i++) {
             switch (i % 8) {
-            case 0: ret[i] =(byte) ((row[i/8] & m10000000)>>7); break;
-            case 1: ret[i] =(byte) ((row[i/8] & m01000000)>>6); break;
-            case 2: ret[i] =(byte) ((row[i/8] & m00100000)>>5); break;
-            case 3: ret[i] =(byte) ((row[i/8] & m00010000)>>4); break;
-            case 4: ret[i] =(byte) ((row[i/8] & m00001000)>>3); break;
-            case 5: ret[i] =(byte) ((row[i/8] & m00000100)>>2); break;
-            case 6: ret[i] =(byte) ((row[i/8] & m00000010)>>1); break;
-            case 7: ret[i] =(byte) ((row[i/8] & m00000001)); break;
+            case 0: ret[i] = (byte) ((row[i/8] & m10000000)>>7); break;
+            case 1: ret[i] = (byte) ((row[i/8] & m01000000)>>6); break;
+            case 2: ret[i] = (byte) ((row[i/8] & m00100000)>>5); break;
+            case 3: ret[i] = (byte) ((row[i/8] & m00010000)>>4); break;
+            case 4: ret[i] = (byte) ((row[i/8] & m00001000)>>3); break;
+            case 5: ret[i] = (byte) ((row[i/8] & m00000100)>>2); break;
+            case 6: ret[i] = (byte) ((row[i/8] & m00000010)>>1); break;
+            case 7: ret[i] = (byte) ((row[i/8] & m00000001)); break;
             }
         }
         return ret;
@@ -225,30 +222,24 @@ public class BMPImage {
     private void parsePalette(java.io.InputStream is, int size)
             throws Exception {
         palette = new byte[size][];
-        for (int i = 0; i < size; i++) palette[i] = getBytes(is, 4);
-
-        //  byte skipzero;
-        //  for (int i = 0; i < size; i++) {
-        //      palette[i] = getBytes(is, 3);
-        //      skipzero = getBytes(is, 1)[0];
-        //      if (skipzero != (byte)0) {
-        //          System.out.println("Error "+skipzero);
-        //      }
-        //  }
+        for (int i = 0; i < size; i++) {
+            palette[i] = getBytes(is, 4);
+        }
     }
 
-    private void skipNBytes( java.io.InputStream inputStream, int n ) {
+    private void skipNBytes(java.io.InputStream inputStream, int n) {
         try {
             getBytes(inputStream, n);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private byte[] getBytes( java.io.InputStream inputStream, int length )
+    private byte[] getBytes(java.io.InputStream inputStream, int length)
             throws Exception {
-        byte[] buf = new byte[ length ];
-        inputStream.read( buf, 0, buf.length );
+        byte[] buf = new byte[length];
+        inputStream.read(buf, 0, buf.length);
         return buf;
     }
 

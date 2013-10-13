@@ -1,5 +1,5 @@
 /**
- * JPEGImage.java
+ * JPGImage.java
  *
  * The authors make NO WARRANTY or representation, either express or implied,
  * with respect to this software, its quality, accuracy, merchantability, or
@@ -39,13 +39,14 @@
 
 package com.pdfjet;
 
-import java.lang.*;
 import java.io.*;
-import java.util.*;
 
 
-//>>>>pdfjet {
-public class JPEGImage {
+/**
+ * Used to embed JPG images in the PDF document.
+ *
+ */
+public class JPGImage {
 
     static final char M_SOF0  = (char) 0x00C0;  // Start Of Frame N
     static final char M_SOF1  = (char) 0x00C1;  // N indicates which compression process
@@ -61,33 +62,81 @@ public class JPEGImage {
     static final char M_SOF14 = (char) 0x00CE;
     static final char M_SOF15 = (char) 0x00CF;
 
-    static final char M_SOS   = (char) 0x00DA;  // Start Of Scan (begins compressed data)
-
-    int width  = 0;
-    int height = 0;
-    int colorComponents = 0;
-
-    ByteArrayInputStream bais = null;
+    int width;
+    int height;
+    long size;
+    int colorComponents;
     byte[] data;
 
+    private InputStream stream;
 
-    public JPEGImage(java.io.InputStream inputStream) throws Exception {
 
+    public JPGImage(JPGImage jpg, InputStream stream) throws Exception {
+        if (jpg == null) {
+            readJPGImage(stream);
+            stream.close();
+        }
+        else {
+            this.width = jpg.width;
+            this.height = jpg.height;
+            this.size = jpg.size;
+            this.colorComponents = jpg.colorComponents;
+            this.stream = stream;
+        }
+    }
+
+
+    public JPGImage(InputStream inputStream) throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] buf = new byte[2048];
         int count;
         while ((count = inputStream.read(buf, 0, buf.length)) != -1) {
             baos.write(buf, 0, count);
         }
+        inputStream.close();
         data = baos.toByteArray();
-        bais = new ByteArrayInputStream(data);
+        readJPGImage(new ByteArrayInputStream(data));
+    }
 
-        char ch1 = (char) bais.read();
-        char ch2 = (char) bais.read();
+
+    protected InputStream getInputStream() {
+        return this.stream;
+    }
+
+
+    protected int getWidth() {
+        return this.width;
+    }
+
+
+    protected int getHeight() {
+        return this.height;
+    }
+
+
+    protected long getFileSize() {
+        return this.size;
+    }
+
+
+    protected int getColorComponents() {
+        return this.colorComponents;
+    }
+
+
+    protected byte[] getData() {
+        return this.data;
+    }
+
+
+    private void readJPGImage(InputStream is) throws Exception {
+        char ch1 = (char) is.read();
+        char ch2 = (char) is.read();
+        size += 2;
         if (ch1 == 0x00FF && ch2 == 0x00D8) {
             boolean foundSOFn = false;
-            for (;;) {
-                char ch = nextMarker(inputStream);
+            while (true) {
+                char ch = nextMarker(is);
                 switch (ch) {
                     // Note that marker codes 0xC4, 0xC8, 0xCC are not,
                     // and must not be treated as SOFn. C4 in particular
@@ -106,53 +155,42 @@ public class JPEGImage {
                     case M_SOF14:   // Differential progressive, arithmetic
                     case M_SOF15:   // Differential lossless, arithmetic
                     // Skip 3 bytes to get to the image height and width
-                    bais.read();
-                    bais.read();
-                    bais.read();
-                    height = readTwoBytes(inputStream);
-                    width = readTwoBytes(inputStream);
-                    colorComponents = bais.read();
+                    is.read();
+                    is.read();
+                    is.read();
+                    size += 3;
+                    height = readTwoBytes(is);
+                    width = readTwoBytes(is);
+                    colorComponents = is.read();
+                    size++;
                     foundSOFn = true;
                     break;
 
                     default:
-                    skipVariable(inputStream);
+                    skipVariable(is);
                     break;
                 }
 
-                if (foundSOFn) break;
+                if (foundSOFn) {
+                    while (is.read() != -1) {
+                        size++;
+                    }
+                    break;
+                }
             }
-        } else {
+        }
+        else {
             throw new Exception();
         }
-
+// System.out.println("size == " + size);
     }
 
 
-    public int getWidth() {
-        return this.width;
-    }
-
-
-    public int getHeight() {
-        return this.height;
-    }
-
-
-    public int getColorComponents() {
-        return this.colorComponents;
-    }
-
-
-    public byte[] getData() {
-        return this.data;
-    }
-
-
-    private int readTwoBytes(java.io.InputStream inputStream) throws Exception {
-        int value = bais.read();
+    private int readTwoBytes(InputStream is) throws Exception {
+        int value = is.read();
         value <<= 8;
-        value |= bais.read();
+        value |= is.read();
+        size += 2;
         return value;
     }
 
@@ -161,26 +199,29 @@ public class JPEGImage {
     // We expect at least one FF byte, possibly more if the compressor
     // used FFs to pad the file.
     // There could also be non-FF garbage between markers. The treatment
-    // of such garbage is unspecified; we choose to skip over it but emit
-    // a warning msg.
+    // of such garbage is unspecified; we choose to skip over it but
+    // emit a warning msg.
     // NB: this routine must not be used after seeing SOS marker, since
     // it will not deal correctly with FF/00 sequences in the compressed
     // image data...
-    private char nextMarker(java.io.InputStream inputStream) throws Exception {
+    private char nextMarker(InputStream is) throws Exception {
         int discarded_bytes = 0;
         char ch = ' ';
 
         // Find 0xFF byte; count and skip any non-FFs.
-        ch = (char) bais.read();
+        ch = (char) is.read();
+        size++;
         while (ch != 0x00FF) {
             discarded_bytes++;
-            ch = (char) bais.read();
+            ch = (char) is.read();
+            size++;
         }
 
-        // Get marker code byte, swallowing any duplicate FF bytes. Extra FFs
-        // are legal as pad bytes, so don't count them in discarded_bytes.
+        // Get marker code byte, swallowing any duplicate FF bytes.
+        // Extra FFs are legal as pad bytes, so don't count them in discarded_bytes.
         do {
-            ch = (char) bais.read();
+            ch = (char) is.read();
+            size++;
         } while (ch == 0x00FF);
 
         if (discarded_bytes != 0) {
@@ -197,21 +238,22 @@ public class JPEGImage {
     // Note that we MUST skip the parameter segment explicitly in order
     // not to be fooled by 0xFF bytes that might appear within the
     // parameter segment such bytes do NOT introduce new markers.
-    private void skipVariable(java.io.InputStream inputStream) throws Exception {
+    private void skipVariable(InputStream is) throws Exception {
         // Get the marker parameter length count
-        int length = readTwoBytes(inputStream);
+        int length = readTwoBytes(is);
 
         // Length includes itself, so must be at least 2
         if (length < 2) {
             throw new Exception();
         }
         length -= 2;
+
         // Skip over the remaining bytes
         while (length > 0) {
-            bais.read();
+            is.read();
+            size++;
             length--;
         }
     }
 
-}   // End of JPEGImage.java
-//<<<<}
+}   // End of JPGImage.java

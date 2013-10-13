@@ -1,8 +1,7 @@
 /**
  *  Round.java
  *
-Copyright (c) 2007, 2008, 2009 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,20 +29,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
 
-
-//>>>>pdfjet {
-public class Round {
-    protected double value = 0.0;
+class Round {
+    protected float value = 0.0f;
     protected int exponent = 1;
     protected int num_of_grid_lines = 0;
 
 
     public Round(double value, int exponent, int num_of_grid_lines) {
+        this((float) value, exponent, num_of_grid_lines);
+    }
+
+    public Round(float value, int exponent, int num_of_grid_lines) {
         this.value = value;
         this.exponent = exponent;
         this.num_of_grid_lines = num_of_grid_lines;
     }
 }
-//<<<<}

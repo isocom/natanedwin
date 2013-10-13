@@ -13,10 +13,8 @@
 
 package com.pdfjet;
 
-import java.lang.*;
 
-
-public class Salsa20 {
+class Salsa20 {
 
     private String id = null;
 
@@ -112,7 +110,7 @@ The expected output:
             x[i] = a_in[i];
         }
 
-        for (int i = 20;i > 0;i -= 2) {
+        for (int i = 20; i > 0; i -= 2) {
             x[ 4] ^= R(x[ 0]+x[12], 7);  x[ 8] ^= R(x[ 4]+x[ 0], 9);
             x[12] ^= R(x[ 8]+x[ 4],13);  x[ 0] ^= R(x[12]+x[ 8],18);
             x[ 9] ^= R(x[ 5]+x[ 1], 7);  x[13] ^= R(x[ 9]+x[ 5], 9);
@@ -153,7 +151,7 @@ The expected output:
             buf.append(table.charAt(a>>12 & 0x0000000f));
             buf.append(table.charAt(a>> 8 & 0x0000000f));
             buf.append(table.charAt(a>> 4 & 0x0000000f));
-            buf.append(table.charAt(a>> 0 & 0x0000000f));
+            buf.append(table.charAt(a & 0x0000000f));
         }
 
         return buf.substring(0, 32);

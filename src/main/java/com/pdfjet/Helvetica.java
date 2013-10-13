@@ -1,32 +1,15 @@
 package com.pdfjet;
 
-public class Helvetica extends CoreFont {
-    int bBoxLLx = -166;
-    int bBoxLLy = -225;
-    int bBoxURx = 1000;
-    int bBoxURy = 931;
-    int underlinePosition = -100;
-    int underlineThickness = 50;
-    protected int getBBoxLLx() {
-        return bBoxLLx;
-    }
-    protected int getBBoxLLy() {
-        return bBoxLLy;
-    }
-    protected int getBBoxURx() {
-        return bBoxURx;
-    }
-    protected int getBBoxURy() {
-        return bBoxURy;
-    }
-    protected int getUnderlinePosition() {
-        return underlinePosition;
-    }
-    protected int getUnderlineThickness() {
-        return underlineThickness;
-    }
-    protected static final String notice = "Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.  All Rights Reserved.Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.";
-    int[][] data = {
+class Helvetica {
+    protected static final String name = "Helvetica";
+    protected static final int bBoxLLx = -166;
+    protected static final int bBoxLLy = -225;
+    protected static final int bBoxURx = 1000;
+    protected static final int bBoxURy = 931;
+    protected static final int underlinePosition = -100;
+    protected static final int underlineThickness = 50;
+    protected static final String notice = "Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated. All Rights Reserved. Helvetica is a trademark of Linotype-Hell AG and/or its subsidiaries.";
+    protected static final int[][] metrics = {
         {32,278,84,-50,86,-50,87,-40,89,-90,221,-90,159,-90,147,-30,145,-60,},
         {33,278,},
         {34,355,},
@@ -252,8 +235,4 @@ public class Helvetica extends CoreFont {
         {254,556,},
         {255,500,97,-20,225,-20,226,-20,228,-20,224,-20,229,-20,227,-20,44,-100,101,-20,233,-20,234,-20,235,-20,232,-20,111,-20,243,-20,244,-20,246,-20,242,-20,248,-20,245,-20,46,-100,},
     };
-
-    protected int[][] getMetrics() {
-        return data;
-    }
 }

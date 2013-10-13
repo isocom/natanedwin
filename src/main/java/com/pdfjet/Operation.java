@@ -1,8 +1,7 @@
 /**
- *  Paragraph.java
+ *  Operation.java
  *
-Copyright (c) 2007, 2008, 2009 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,29 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
-import java.util.*;
 
-
-//>>>>pdfjet {
-public class Paragraph {
-    protected List<TextLine> list = null;
-    protected int alignment = Align.LEFT;
-
-
-    public Paragraph() {
-        list = new ArrayList<TextLine>();
-    }
-
-
-    public void add(TextLine text) {
-        list.add(text);
-    }
-
-
-    public void setAlignment(int alignment) {
-        this.alignment = alignment;
-    }
-
-}   // End of Paragraph.java
-//<<<<}
+/**
+ *  Used to specify the 'stroke', 'close' and 'fill' operations.
+ *
+ */
+public class Operation {
+    public static char STROKE = 'S';
+    public static char CLOSE = 's';
+    public static char FILL = 'f';
+}

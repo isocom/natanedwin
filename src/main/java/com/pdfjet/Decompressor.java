@@ -1,8 +1,7 @@
 /**
  *  Decompressor.java
  *
-Copyright (c) 2010 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,29 +29,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
 import java.io.*;
 import java.util.zip.*;
 
 
-//>>>>pdfjet {
-public class Decompressor extends Inflater {
+class Decompressor extends Inflater {
 
     private ByteArrayOutputStream bos = null;
 
     
-    public Decompressor( byte[] data ) throws Exception {
-
-    	super.setInput( data );
-
+    public Decompressor(byte[] data) throws Exception {
+    	super.setInput(data);
         bos = new ByteArrayOutputStream(data.length);
 
-	    byte[] buf = new byte[ 2048 ];
-	    while ( !super.finished() ) {
-	        int count = super.inflate( buf );
-	        bos.write( buf, 0, count );
+	    byte[] buf = new byte[2048];
+	    while (!super.finished()) {
+	        int count = super.inflate(buf);
+	        bos.write(buf, 0, count);
 	    }
-    
     }
     
     
@@ -61,4 +55,3 @@ public class Decompressor extends Inflater {
     }
 
 }
-//<<<<}

@@ -1,8 +1,7 @@
 /**
  *  Executive.java
  *
-Copyright (c) 2007, 2008, 2009 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -30,11 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
-import java.lang.*;
 
-//>>>>pdfjet {
+/**
+ *  Used to specify PDF page with size <strong>Executive</strong>.
+ *  For more information about the page size classes - A3, A4, A5, B5, Executive, Letter, Legal and Tabloid - see the Page class.
+ *
+ */
 public class Executive {
-    public static double[] PORTRAIT = new double[] {522.0, 756.0};
-    public static double[] LANDSCAPE = new double[] {756.0, 522.0};
+    public static float[] PORTRAIT = new float[] {522.0f, 756.0f};
+    public static float[] LANDSCAPE = new float[] {756.0f, 522.0f};
 }
-//<<<<}

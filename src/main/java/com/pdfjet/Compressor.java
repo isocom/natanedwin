@@ -1,8 +1,7 @@
 /**
  *  Compressor.java
  *
-Copyright (c) 2010 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -28,16 +27,13 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
 package com.pdfjet;
 
-import java.lang.*;
 import java.io.*;
 import java.util.zip.*;
 
 
-//>>>>pdfjet {
-public class Compressor extends Deflater {
+class Compressor extends Deflater {
 
     public static boolean ORIGINAL_ZLIB = true;
 
@@ -65,4 +61,3 @@ public class Compressor extends Deflater {
     }
         
 }
-//<<<<}

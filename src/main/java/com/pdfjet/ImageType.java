@@ -1,8 +1,7 @@
 /**
  *  ImageType.java
  *
-Copyright (c) 2007, 2008, 2009 Innovatics Inc.
-
+Copyright (c) 2013, Innovatics Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -31,10 +30,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.pdfjet;
 
 
-//>>>>pdfjet {
+/**
+ *  Used to specify the image type of an image.
+ *  Supported types: ImageType.JPG, ImageType.PNG, ImageType.BMP and ImageType.PDF.
+ *  See the Image class for more information.
+ *
+ */
 public class ImageType {
-	public static final int JPEG = 1;
-	public static final int PNG = 2;
-	public static final int BMP = 3;
+    public static final int JPG = 0;
+    public static final int PNG = 1;
+    public static final int BMP = 2;
+    public static final int PDF = 3;
 }
-//<<<<}
