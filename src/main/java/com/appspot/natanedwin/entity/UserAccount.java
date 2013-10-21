@@ -1,6 +1,7 @@
 package com.appspot.natanedwin.entity;
 
 import com.google.appengine.api.datastore.Email;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -28,6 +29,7 @@ public class UserAccount implements Serializable {
     private String dateTimeZone = "Europe/Warsaw";
     @Unindex
     private String locale = "pl_PL";
+    private Ref<Establishment> establishment;
 
     @Override
     public String toString() {
@@ -123,5 +125,13 @@ public class UserAccount implements Serializable {
 
     public void setLocale(String locale) {
         this.locale = locale;
+    }
+
+    public Ref<Establishment> getEstablishment() {
+        return establishment;
+    }
+
+    public void setEstablishment(Ref<Establishment> establishment) {
+        this.establishment = establishment;
     }
 }

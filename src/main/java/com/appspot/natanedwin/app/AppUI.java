@@ -11,7 +11,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
@@ -28,6 +27,7 @@ public class AppUI extends UI {
     private final String WRAPPED_SESSION_USER_CREDENTIALS = "userCredentials";
     private final static Logger LOGGER = LoggerFactory.getLogger(AppUI.class);
     private AppNavigator navigator;
+    private DownloadArea downloadArea;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -183,11 +183,10 @@ public class AppUI extends UI {
         button.setWidth(buttonWidth, Unit.PIXELS);
         sideBar.addComponent(button);
 
-        VerticalLayout spacingLayout = new VerticalLayout();
-        spacingLayout.addComponent(new Label("..."));
-        spacingLayout.setSizeFull();
-        sideBar.addComponent(spacingLayout);
-        sideBar.setExpandRatio(spacingLayout, 1);
+        downloadArea = new DownloadArea();
+        downloadArea.setSizeFull();
+        sideBar.addComponent(downloadArea);
+        sideBar.setExpandRatio(downloadArea, 1);
 
         // User menu
         //        sideBar.addComponent(new VerticalLayout() {
@@ -229,5 +228,9 @@ public class AppUI extends UI {
         //            }
         //        });
         return sideBar;
+    }
+
+    public DownloadArea getDownloadArea() {
+        return downloadArea;
     }
 }

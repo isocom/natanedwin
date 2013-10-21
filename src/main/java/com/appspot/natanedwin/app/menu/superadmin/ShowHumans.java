@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class ShowHumans implements MenuBar.Command {
 
-    private Map<String, EntityAction> additionalActions = new LinkedHashMap<String, EntityAction>();
+    private Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
 
     public ShowHumans() {
         additionalActions.put("Przypisz kartę", new AssignCardToHuman1());
@@ -27,6 +27,6 @@ public class ShowHumans implements MenuBar.Command {
     @Override
     public void menuSelected(MenuItem selectedItem) {
         HumanDao humanDao = SpringContext.INSTANCE.getBean(HumanDao.class);
-        EntityContainerWindow.showWindow(new EntityContainer<Human>(humanDao.findAll(), HumanItem.class), additionalActions);
+        EntityContainerWindow.showWindow(new EntityContainer<>(humanDao.findAll(), HumanItem.class), additionalActions);
     }
 }

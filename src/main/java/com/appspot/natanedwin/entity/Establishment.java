@@ -1,16 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.entity;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.condition.IfNotEmpty;
 import com.googlecode.objectify.condition.IfNotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -27,8 +25,9 @@ public class Establishment implements Serializable {
     @Index
     private String name;
     private Date licenseValidity = new Date();
-    @Index(IfNotEmpty.class)
+    @Index(IfNotNull.class)
     private String plNip;
+    private List<Ref<Human>> humans = new ArrayList<>();
     ////////////////////////////////////////////////////////////////////////////
     // Standard EQUALLS and HASHCODE ///////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -94,5 +93,13 @@ public class Establishment implements Serializable {
 
     public void setPlNip(String plNip) {
         this.plNip = plNip;
+    }
+
+    public List<Ref<Human>> getHumans() {
+        return humans;
+    }
+
+    public void setHumans(List<Ref<Human>> humans) {
+        this.humans = humans;
     }
 }
