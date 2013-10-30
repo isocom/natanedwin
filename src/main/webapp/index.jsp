@@ -70,7 +70,7 @@
             out.println("</section>");
         } else {
             out.println("<section class=\"about\">");
-            out.println("<p>Alternatywnie użyj uprawnień konta<br/><img src=\"index/google_logo_41.png\" /></p>");
+            out.println("<p>Alternatywnie użyj uprawnień konta<br/><img src=\"index/google_logo_41.png\" alt=\"Google logo\"/></p>");
             out.println("<p class=\"about-links\">");
             out.println("<a href=\"" + userCredentials.getGoogleAccountLogin() + "\" target=\"_parent\">Zaloguj</a>");
             out.println("<a href=\"https://support.google.com/accounts/answer/112802?hl=pl&ref_topic=2665423\" target=\"_blank\">Informacje</a></p>");

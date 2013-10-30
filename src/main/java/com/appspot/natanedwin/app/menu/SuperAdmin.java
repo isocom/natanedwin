@@ -11,6 +11,7 @@ import com.appspot.natanedwin.app.menu.superadmin.AddRfidCard;
 import com.appspot.natanedwin.app.menu.superadmin.AddUserAccount;
 import com.appspot.natanedwin.app.menu.superadmin.ShowDevices;
 import com.appspot.natanedwin.app.menu.superadmin.ShowEstablishments;
+import com.appspot.natanedwin.app.menu.superadmin.ShowFileUploadDialog;
 import com.appspot.natanedwin.app.menu.superadmin.ShowHumans;
 import com.appspot.natanedwin.app.menu.superadmin.ShowRfidCards;
 import com.appspot.natanedwin.app.menu.superadmin.ShowUserAccounts;
@@ -39,7 +40,9 @@ public class SuperAdmin {
         menuShow.addItem("Pokaż organizacje", new ShowEstablishments());
         menuShow.addItem("Pokaż osoby", new ShowHumans());
         menuShow.addItem("Pokaż karty transponderowe", new ShowRfidCards());
-        
+
+        menu.addSeparator();
+        menu.addItem("Upload wzoru karty", new ShowFileUploadDialog());
         menu.addSeparator();
         menu.addItem("Testuj system mailera", new MenuBar.Command() {
             @Override

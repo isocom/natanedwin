@@ -40,7 +40,7 @@ public class GcsFileUploadServlet extends HttpServlet {
 
                 if (item.isFormField()) {
                     writer.println("Got a form field: " + item.getFieldName());
-                    description = item.getName();
+                    description = req.getParameter("note");
                     writer.println("description: " + description);
                 } else {
                     writer.println("Got an uploaded file: " + item.getFieldName() + ", name = " + item.getName() + ", content/type = " + item.getContentType());

@@ -3,6 +3,8 @@ package com.appspot.natanedwin.app.view;
 import com.appspot.natanedwin.report.ByteArrayStreamResource;
 import com.appspot.natanedwin.report.ta.DailyReport;
 import com.appspot.natanedwin.report.Report;
+import com.appspot.natanedwin.service.appsession.AppSession;
+import com.appspot.natanedwin.service.spring.SpringContext;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.BrowserWindowOpener;
@@ -16,11 +18,11 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Date;
 
-public class TimeAttendanceView extends VerticalLayout implements View {
+public class AccessControlView extends VerticalLayout implements View {
 
     private Report report;
 
-    public TimeAttendanceView() {
+    public AccessControlView() {
         setSizeFull();
 
         final Label title = new Label("Rejestracja czasu pracy");
@@ -52,7 +54,9 @@ public class TimeAttendanceView extends VerticalLayout implements View {
                 Link link = new Link();
                 link.setCaption(report.getFileName() + ".xls");
                 opener.extend(link);
-                toolbar.addComponent(link);
+
+                AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
+                appSession.getAppUI().getDownloadArea().add(link);
             }
         }));
         toolbar.addComponent(new Button("Generuj PDF", new Button.ClickListener() {
@@ -64,7 +68,9 @@ public class TimeAttendanceView extends VerticalLayout implements View {
                 Link link = new Link();
                 link.setCaption(report.getFileName() + ".pdf");
                 opener.extend(link);
-                toolbar.addComponent(link);
+
+                AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
+                appSession.getAppUI().getDownloadArea().add(link);
             }
         }));
         addComponent(toolbar);

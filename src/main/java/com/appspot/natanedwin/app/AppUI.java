@@ -184,7 +184,7 @@ public class AppUI extends UI {
         sideBar.addComponent(button);
 
         downloadArea = new DownloadArea();
-        downloadArea.setSizeFull();
+//        downloadArea.setSizeFull();
         sideBar.addComponent(downloadArea);
         sideBar.setExpandRatio(downloadArea, 1);
 

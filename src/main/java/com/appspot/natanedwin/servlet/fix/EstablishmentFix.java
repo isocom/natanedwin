@@ -60,4 +60,18 @@ public class EstablishmentFix {
         dao.save(establishment);
         writer.println(establishment);
     }
+
+    public static void fixResDruk1(PrintWriter writer) {
+        EstablishmentDao dao = SpringContext.INSTANCE.getBean(EstablishmentDao.class);
+        Establishment establishment = new Establishment();
+
+        establishment.setName("ISOCOM");
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 255001)));
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 256001)));
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 260001)));
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 261001)));
+
+        dao.save(establishment);
+        writer.println(establishment);
+    }
 }
