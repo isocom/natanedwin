@@ -65,44 +65,48 @@ public class EstablishmentFix {
         EstablishmentDao dao = SpringContext.INSTANCE.getBean(EstablishmentDao.class);
         Establishment establishment = new Establishment();
 
-        establishment.setName("RS DRUK Sp. z o.o.");
+        establishment.setName("RS DRUK Pracownia");
 
-        //Elżbieta Świątoniowska
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2289001)));
-        //Ryszard Świątoniowski
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2299001)));
-        //Renata Augustyniak
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2309001)));
-        //Marta Czernicka
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2319001)));
+        //Bakalarczyk Piotr
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2359002)));
+        //Fejkiel Mariusz
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2379003)));
+        //Matusz Jaromir
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2339002)));
+        //Mordarski Krzysztof
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2369003)));
+        //Nicgorski Piotr
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2399002)));
+        //Nicgorska Urszula
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2349002)));
+        //Nowak Dawid
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2299003)));
+        //Pecuch Arkadiusz
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2319002)));
+        //Rzucidło Lilla
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2409001)));
+        //Świątoniowska-Kret Monika
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2339003)));
+        //Wilk Grażyna
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2419001)));
+        //Wójtowicz Grzegorz
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2289003)));
+        //Żyga Sabina
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2389002)));
+        //Stochła Renata
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2399003)));
+        //Pyziak Tadeusz
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2349003)));
+        //Grzegorz Lenartowicz
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2349004)));
+        //Józefczyk Ewa
+	establishment.getHumans().add(Ref.create(Key.create(Human.class,2429001)));
+        //Kustroń Mateusz
+	establishment.getHumans().add(Ref.create(Key.create(Human.class,2319003)));
         //PRACOWNIK 1
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2329001)));
-        //Bartłomiej Bałchan
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2339001)));
-        //Elzbieta Korbecka
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2349001)));
-        //Andrzej Łoboś
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2359001)));
-        //Piotr Małysiak
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2369001)));
-        //Beata Pasternak
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2369002)));
-        //Joanna Różewicz
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2329002)));
-        //Jerzy Pasternak
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2379001)));
-        //Marcin Pitucha
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2299002)));
-        //Dariusz Różewicz
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2289002)));
-        //Piotr Różewicz
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2379002)));
-        //Artur Uszycki
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2389001)));
-        //Wilk Małgorzata
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2309002)));
+	establishment.getHumans().add(Ref.create(Key.create(Human.class,2419002)));
         //PRACOWNIK 2
-        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2299004)));
+	establishment.getHumans().add(Ref.create(Key.create(Human.class,2399001)));        
 
         dao.save(establishment);
         writer.println(establishment);
