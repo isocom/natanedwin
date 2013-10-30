@@ -48,12 +48,13 @@ public class RfidEventDao implements Dao<RfidEvent> {
     }
 
     @Override
-    public void delete(RfidEvent entity) {
+    public RfidEvent delete(RfidEvent entity) {
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
     }
 
     @Override
-    public void save(RfidEvent event) {
+    public RfidEvent save(RfidEvent event) {
         ofy.ofy().save().entity(event);
+        return event;
     }
 }

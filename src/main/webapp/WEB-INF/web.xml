@@ -65,6 +65,17 @@
         <url-pattern>/fix</url-pattern>
     </servlet-mapping>
             
+    <!-- ********************************************************************-->
+    <!-- fixing data servlet -->
+    <servlet>
+        <servlet-name>GcsFileUploadServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.tools.GcsFileUploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GcsFileUploadServlet</servlet-name>
+        <url-pattern>/tools/GcsFileUpload</url-pattern>
+    </servlet-mapping>
+
     <!-- ******************************************************************* -->
     <!-- Vaadin configuration -->
     <context-param>

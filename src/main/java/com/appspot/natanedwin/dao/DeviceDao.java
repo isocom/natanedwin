@@ -39,13 +39,14 @@ public class DeviceDao implements Dao<Device> {
     }
 
     @Override
-    public void delete(Device entity) {
+    public Device delete(Device entity) {
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
     }
 
     @Override
-    public void save(Device device) {
+    public Device save(Device device) {
         ofy.ofy().save().entity(device).now();
         memCache.put(MC_SN_PREFIX + device.getSerialNumber(), device);
+        return device;
     }
 }

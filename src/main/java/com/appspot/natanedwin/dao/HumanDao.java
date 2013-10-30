@@ -35,12 +35,13 @@ public class HumanDao implements Dao<Human> {
     }
 
     @Override
-    public void delete(Human entity) {
+    public Human delete(Human entity) {
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
     }
 
     @Override
-    public void save(Human e) {
+    public Human save(Human e) {
         ofy.ofy().save().entity(e).now();
+        return e;
     }
 }

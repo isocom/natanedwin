@@ -43,12 +43,12 @@ public class UserAccountDao implements Dao<UserAccount> {
     }
 
     @Override
-    public void delete(UserAccount entity) {
+    public UserAccount delete(UserAccount entity) {
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
     }
 
     @Override
-    public void save(UserAccount e) {
+    public UserAccount save(UserAccount e) {
         boolean sendWelcomeEmail = e.getId() == null;
         String password = null;
 
@@ -64,5 +64,6 @@ public class UserAccountDao implements Dao<UserAccount> {
         if (sendWelcomeEmail) {
             spammer.spam(SpamType.UserAccountCreated, e, password);
         }
+        return e;
     }
 }

@@ -59,13 +59,14 @@ public class RfidCardDao implements Dao<RfidCard> {
     }
 
     @Override
-    public void delete(final RfidCard entity) {
+    public RfidCard delete(final RfidCard entity) {
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
     }
 
     @Override
-    public void save(final RfidCard card) {
+    public RfidCard save(final RfidCard card) {
         ofy.ofy().save().entity(card).now();
         memCache.put(MC_SN_PREFIX + card.getSerialNumber(), card);
+        return card;
     }
 }
