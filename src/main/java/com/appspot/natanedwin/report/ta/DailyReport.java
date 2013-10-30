@@ -17,7 +17,6 @@ import com.googlecode.objectify.Ref;
 import com.pdfjet.Page;
 import com.pdfjet.TextLine;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;

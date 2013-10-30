@@ -19,6 +19,7 @@ public class FixServlet extends HttpServlet {
             return;
         }
 
-        UserAccountFix.fixRefEstablishment(writer);
+        EstablishmentFix.fixResDruk1(writer);
+//        UserAccountFix.fixRefEstablishment(writer);
     }
 }
