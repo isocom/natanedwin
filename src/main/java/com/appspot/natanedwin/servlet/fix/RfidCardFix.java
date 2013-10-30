@@ -38,4 +38,13 @@ public class RfidCardFix {
             writer.println("Zapisano: " + card + " | " + card.getCardNumber());
         }
     }
+
+    public static void fixCardOverprint(PrintWriter writer) {
+        RfidCardDao rfidCardDao = SpringContext.INSTANCE.getBean(RfidCardDao.class);
+        for (RfidCard card : rfidCardDao.findAll()) {
+            card.setOverprint(2389010);
+            rfidCardDao.save(card);
+            writer.println("Zapisano: " + card + " | " + card.getCardNumber());
+        }
+    }
 }

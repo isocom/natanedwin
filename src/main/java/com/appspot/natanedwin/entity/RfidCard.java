@@ -34,6 +34,8 @@ public class RfidCard implements Serializable {
     @Index
     private Ref<Human> human;
     @Unindex
+    Ref<GcsFile> overprint;
+    @Unindex
     private String remarks;
 
     @Override
@@ -66,6 +68,18 @@ public class RfidCard implements Serializable {
     ////////////////////////////////////////////////////////////////////////////
     public void setHuman(Human human) {
         this.human = Ref.create(Key.create(Human.class, human.getId()));
+    }
+
+    public void setHuman(long id) {
+        this.human = Ref.create(Key.create(Human.class, id));
+    }
+
+    public void setOverprint(GcsFile file) {
+        this.overprint = Ref.create(Key.create(GcsFile.class, file.getId()));
+    }
+
+    public void setOverprint(long id) {
+        this.overprint = Ref.create(Key.create(GcsFile.class, id));
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -125,6 +139,14 @@ public class RfidCard implements Serializable {
 
     public void setHuman(Ref<Human> human) {
         this.human = human;
+    }
+
+    public Ref<GcsFile> getOverprint() {
+        return overprint;
+    }
+
+    public void setOverprint(Ref<GcsFile> overprint) {
+        this.overprint = overprint;
     }
 
     public String getRemarks() {
