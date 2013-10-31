@@ -22,10 +22,11 @@ import java.util.Map;
  */
 public class ShowRfidCards implements MenuBar.Command {
 
-    private Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
+    private final Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
 
     public ShowRfidCards() {
         additionalActions.put("Drukuj kartę", new PrintCard());
+        additionalActions.put("Przypisz wzór", new AssignOverprintToCard1());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.appspot.natanedwin.dao;
 
 import com.appspot.natanedwin.app.AppError;
+import com.appspot.natanedwin.entity.GcsFile;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.RfidCard;
 import com.appspot.natanedwin.service.memcache.MemCache;
@@ -54,7 +55,17 @@ public class RfidCardDao implements Dao<RfidCard> {
         rfidCard = objectify.load().entity(rfidCard).get();
         human = objectify.load().entity(human).get();
         rfidCard.setHuman(human);
-        rfidCard.setRemarks("Karta MetalSprzęt");
+        objectify.save().entity(rfidCard);
+    }
+
+    public void assignOverprint(RfidCard rfidCard, GcsFile overprint) {
+        Objectify objectify = ofy.ofy();
+        rfidCard = objectify.load().entity(rfidCard).get();
+        if (rfidCard.getOverprint() != null) {
+            throw new RuntimeException("Nadruk już jest przypisany");
+        }
+        overprint = objectify.load().entity(overprint).get();
+        rfidCard.setOverprint(overprint);
         objectify.save().entity(rfidCard);
     }
 

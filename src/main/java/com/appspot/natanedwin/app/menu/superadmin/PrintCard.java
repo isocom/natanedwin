@@ -1,13 +1,15 @@
 package com.appspot.natanedwin.app.menu.superadmin;
 
+import com.appspot.natanedwin.app.AppError;
+import com.appspot.natanedwin.entity.GcsFile;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.RfidCard;
 import com.appspot.natanedwin.report.ByteArrayStreamResource;
 import com.appspot.natanedwin.service.appsession.AppSession;
+import com.appspot.natanedwin.service.gcs.Gcs;
 import com.appspot.natanedwin.service.ofy.Ofy;
 import com.appspot.natanedwin.service.spring.SpringContext;
 import com.appspot.natanedwin.vaadin.EntityAction;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.pdfjet.example.Example_03_CC;
 import com.vaadin.server.BrowserWindowOpener;
@@ -19,17 +21,28 @@ public class PrintCard implements EntityAction<RfidCard> {
     @Override
     public void execute(RfidCard entity) {
         String fileName = entity.getCardNumber() + ".pdf";
-        String humanName = "Nieprzypisany";
+        String humanName;
+        byte[] overprintData;
 
         Ofy ofy = SpringContext.INSTANCE.getBean(Ofy.class);
+        Gcs gcs = SpringContext.INSTANCE.getBean(Gcs.class);
         Ref<Human> humanRef = entity.getHuman();
         if (humanRef != null) {
-            Key< Human> humanKey = humanRef.getKey();
-            Human human = ofy.ofy().load().key(humanKey).now();
+            Human human = ofy.ofy().load().key(humanRef.getKey()).now();
             humanName = human.getName();
+        } else {
+            throw new AppError("Brak osoby", "Przypisz najpierw osobę do tej karty");
         }
-        
-        ByteArrayStreamResource pdf = new ByteArrayStreamResource(Example_03_CC.karta(humanName, entity.getCardNumber()));
+
+        Ref<GcsFile> overprintRef = entity.getOverprint();
+        if (overprintRef != null) {
+            GcsFile overprint = ofy.ofy().load().key(overprintRef.getKey()).now();
+            overprintData = gcs.read(overprint.getObjectName());
+        } else {
+            throw new AppError("Brak wzoru", "Przypisz najpierw wzór wydruku do tej karty");
+        }
+
+        ByteArrayStreamResource pdf = new ByteArrayStreamResource(Example_03_CC.karta(humanName, entity.getCardNumber(), overprintData));
         StreamResource resource = new StreamResource(pdf, fileName);
         BrowserWindowOpener opener = new BrowserWindowOpener(resource);
         Link link = new Link();

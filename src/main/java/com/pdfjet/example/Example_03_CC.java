@@ -13,7 +13,7 @@ import org.apache.commons.io.FileUtils;
  */
 public class Example_03_CC {
 
-    public static byte[] karta(String name, String numer) {
+    public static byte[] karta(String name, String numer, byte[] bmpImage) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PDF pdf = new PDF(baos, Compliance.PDF_A_1B);
@@ -21,7 +21,7 @@ public class Example_03_CC {
             f1.setSize(15f);
             Page page = new Page(pdf, CreditCard.LANDSCAPE);
 
-            Image image3 = new Image(pdf, Example_03_CC.class.getResourceAsStream("/MetalSprzet.bmp"), ImageType.BMP);
+            Image image3 = new Image(pdf, new ByteArrayInputStream(bmpImage), ImageType.BMP);
             image3.setLocation(0f, 0f);
             image3.scaleBy(CreditCard.WIDTH / image3.getWidth());
             image3.drawOn(page);
@@ -43,7 +43,4 @@ public class Example_03_CC {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        FileUtils.writeByteArrayToFile(new File("/opt/temp/03.pdf"), karta("Bartłomiej ø Prokop", "1234 5678 9012 3456"));
-    }
 }

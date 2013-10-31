@@ -3,6 +3,8 @@ package com.appspot.natanedwin.dao;
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.GcsFile;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.cmd.Query;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +28,12 @@ public class GcsFileDao implements Dao<GcsFile> {
     public GcsFile save(GcsFile e) {
         ofy.ofy().save().entity(e).now();
         return e;
+    }
+
+    public List<GcsFile> findAll() {
+        Query<GcsFile> query = ofy.ofy().load().type(GcsFile.class);
+        List<GcsFile> list = query.list();
+        ofy.ofy().clear();
+        return list;
     }
 }
