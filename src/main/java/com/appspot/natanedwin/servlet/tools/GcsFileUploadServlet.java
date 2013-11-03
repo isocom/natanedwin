@@ -2,8 +2,6 @@ package com.appspot.natanedwin.servlet.tools;
 
 import com.appspot.natanedwin.dao.GcsFileDao;
 import com.appspot.natanedwin.entity.GcsFile;
-import com.appspot.natanedwin.service.gcs.Gcs;
-import com.appspot.natanedwin.service.gcs.GcsMimeType;
 import com.appspot.natanedwin.service.spring.SpringContext;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -75,10 +73,10 @@ public class GcsFileUploadServlet extends HttpServlet {
             gcsFile.setDescription(description);
 
             GcsFileDao gcsFileDao = SpringContext.INSTANCE.getBean(GcsFileDao.class);
-            gcsFileDao.save(gcsFile);
-
-            Gcs gcs = SpringContext.INSTANCE.getBean(Gcs.class);
-            gcs.write(fileName, GcsMimeType.BMP, content);
+            gcsFileDao.save(gcsFile, content);
+//
+//            Gcs gcs = SpringContext.INSTANCE.getBean(Gcs.class);
+//            gcs.write(fileName, GcsMimeType.BMP, content);
         } catch (Throwable t) {
             t.printStackTrace(writer);
         }

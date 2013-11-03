@@ -2,7 +2,9 @@ package com.appspot.natanedwin.service.gcs;
 
 public interface Gcs {
 
-    public byte[] read(final String objectName);
+    public void delete(final String bucketName, final String objectName);
 
-    public void write(final String objectName, GcsMimeType mimeType, byte[] content);
+    public byte[] read(final String bucketName, final String objectName);
+
+    public void write(final String bucketName, final String objectName, GcsMimeType mimeType, byte[] content);
 }

@@ -37,7 +37,7 @@ public class PrintCard implements EntityAction<RfidCard> {
         Ref<GcsFile> overprintRef = entity.getOverprint();
         if (overprintRef != null) {
             GcsFile overprint = ofy.ofy().load().key(overprintRef.getKey()).now();
-            overprintData = gcs.read(overprint.getObjectName());
+            overprintData = gcs.read(overprint.getBucketName(), overprint.getObjectName());
         } else {
             throw new AppError("Brak wzoru", "Przypisz najpierw wzór wydruku do tej karty");
         }

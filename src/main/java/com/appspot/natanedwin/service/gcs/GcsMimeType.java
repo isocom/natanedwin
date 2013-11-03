@@ -5,7 +5,7 @@ import com.google.appengine.tools.cloudstorage.GcsFileOptions.Builder;
 
 public enum GcsMimeType {
 
-    Default {
+    Default("binary/octet-stream") {
 
                 @Override
                 public GcsFileOptions getGcsFileOptions() {
@@ -16,8 +16,8 @@ public enum GcsMimeType {
     /**
      * Bitmaps - used mainly for card printing
      */
-    BMP {
-                private final GcsFileOptions gcsFileOptions = new Builder().mimeType("image/bmp").build();
+    BMP("image/bmp") {
+                private final GcsFileOptions gcsFileOptions = new Builder().mimeType(mimeType).build();
 
                 @Override
                 public GcsFileOptions getGcsFileOptions() {
@@ -25,5 +25,23 @@ public enum GcsMimeType {
                 }
             };
 
+    protected final String mimeType;
+
+    private GcsMimeType(String mimeType) {
+        this.mimeType = mimeType;
+    }
+
     public abstract GcsFileOptions getGcsFileOptions();
+
+    public static GcsMimeType dicoverMimeType(String mimeType) {
+        if (BMP.getMimeType().equalsIgnoreCase(mimeType)) {
+            return BMP;
+        }
+        return Default;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
 }

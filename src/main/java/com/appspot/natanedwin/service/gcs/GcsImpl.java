@@ -16,9 +16,19 @@ public class GcsImpl implements Gcs {
     private final GcsService gcsService = GcsServiceFactory.createGcsService(RetryParams.getDefaultInstance());
 
     @Override
-    public byte[] read(String objectName) {
+    public void delete(final String bucketName, final String objectName) {
         try {
-            GcsFilename fileName = new GcsFilename("natanedwin", objectName);
+            GcsFilename fileName = new GcsFilename(bucketName, objectName);
+            gcsService.delete(fileName);
+        } catch (IOException ioe) {
+            throw new RuntimeException(ioe);
+        }
+    }
+
+    @Override
+    public byte[] read(final String bucketName, String objectName) {
+        try {
+            GcsFilename fileName = new GcsFilename(bucketName, objectName);
             int fileSize = (int) gcsService.getMetadata(fileName).getLength();
             ByteBuffer result = ByteBuffer.allocate(fileSize);
             try (GcsInputChannel readChannel = gcsService.openReadChannel(fileName, 0)) {
@@ -31,9 +41,9 @@ public class GcsImpl implements Gcs {
     }
 
     @Override
-    public void write(final String objectName, GcsMimeType mimeType, byte[] content) {
+    public void write(final String bucketName, final String objectName, GcsMimeType mimeType, byte[] content) {
         try {
-            GcsFilename fileName = new GcsFilename("natanedwin", objectName);
+            GcsFilename fileName = new GcsFilename(bucketName, objectName);
             try (GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName, mimeType.getGcsFileOptions())) {
                 outputChannel.write(ByteBuffer.wrap(content));
             }
