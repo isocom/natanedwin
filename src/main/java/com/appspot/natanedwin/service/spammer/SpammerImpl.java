@@ -1,13 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.spammer;
 
 import com.appspot.natanedwin.service.mailer.Email;
 import com.appspot.natanedwin.service.mailer.Mailer;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.stringtemplate.v4.ST;
@@ -47,7 +41,7 @@ public class SpammerImpl implements Spammer {
         message.setSubject(subject);
         message.setTextBody(textBody);
         message.setHtmlBody(htmlBody);
-        
+
         mailer.send(message);
     }
 }

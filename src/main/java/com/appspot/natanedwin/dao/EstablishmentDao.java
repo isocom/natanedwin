@@ -7,6 +7,8 @@ package com.appspot.natanedwin.dao;
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.Establishment;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.cmd.Query;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,5 +36,12 @@ public class EstablishmentDao implements Dao<Establishment> {
     public Establishment save(Establishment e) {
         ofy.ofy().save().entity(e).now();
         return e;
+    }
+
+    public List<Establishment> findAll() {
+        Query<Establishment> query = ofy.ofy().load().type(Establishment.class);
+        List<Establishment> list = query.list();
+        ofy.ofy().clear();
+        return list;
     }
 }

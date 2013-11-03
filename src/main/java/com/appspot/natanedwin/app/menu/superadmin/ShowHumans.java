@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class ShowHumans implements MenuBar.Command {
 
-    private Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
+    private final Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
 
     public ShowHumans() {
         additionalActions.put("Przypisz kartę", new AssignCardToHuman1());

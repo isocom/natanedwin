@@ -11,11 +11,12 @@ import com.vaadin.server.VaadinSession;
 public interface AppSession {
 
     public VaadinSession getVaadinSession();
-    
+
     public AppUI getAppUI();
 
     public UserCredentials getUserCredentials();
 
     public void setUserCredentials(UserCredentials uc);
 
+    public void shitdown();
 }

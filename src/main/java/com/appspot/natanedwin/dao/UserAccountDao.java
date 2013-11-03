@@ -2,6 +2,7 @@ package com.appspot.natanedwin.dao;
 
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.UserAccount;
+import com.appspot.natanedwin.entity.UserAccountType;
 import com.appspot.natanedwin.service.ofy.Ofy;
 import com.appspot.natanedwin.service.spammer.SpamType;
 import com.appspot.natanedwin.service.spammer.Spammer;
@@ -42,6 +43,10 @@ public class UserAccountDao implements Dao<UserAccount> {
         return query.first().now();
     }
 
+    public List<UserAccount> findEstablishmentUnassigned() {
+        return ofy.ofy().load().type(UserAccount.class).filter("establishment == ", null).list();
+    }
+
     @Override
     public UserAccount delete(UserAccount entity) {
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
@@ -62,7 +67,12 @@ public class UserAccountDao implements Dao<UserAccount> {
 
         ofy.ofy().save().entity(e).now();
         if (sendWelcomeEmail) {
-            spammer.spam(SpamType.UserAccountCreated, e, password);
+            if (e.getUserAccountType() == UserAccountType.Internal) {
+                spammer.spam(SpamType.UserAccountCreated, e, password);
+            }
+            if (e.getUserAccountType() == UserAccountType.GoogleAccount) {
+                spammer.spam(SpamType.UserGoogleAccount, e, password);
+            }
         }
         return e;
     }

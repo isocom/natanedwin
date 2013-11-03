@@ -63,7 +63,6 @@ public class UserManagerImpl implements UserManager {
             return userCredentials;
         }
 
-
         userCredentials.setGoogleAccountLogin(userService.createLoginURL(thisURL));
         return userCredentials;
     }
@@ -96,7 +95,6 @@ public class UserManagerImpl implements UserManager {
         userAccount.setUserId(user.getUserId());
         userAccount.setEmail(user.getEmail());
         userAccountDao.save(userAccount);
-        spammer.spam(SpamType.UserGoogleAccount, userAccount);
         return userAccount;
     }
 

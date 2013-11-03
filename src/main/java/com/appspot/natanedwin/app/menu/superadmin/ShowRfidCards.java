@@ -5,7 +5,6 @@
 package com.appspot.natanedwin.app.menu.superadmin;
 
 import com.appspot.natanedwin.dao.RfidCardDao;
-import com.appspot.natanedwin.entity.RfidCard;
 import com.appspot.natanedwin.service.spring.SpringContext;
 import com.appspot.natanedwin.vaadin.EntityAction;
 import com.appspot.natanedwin.vaadin.EntityContainerWindow;

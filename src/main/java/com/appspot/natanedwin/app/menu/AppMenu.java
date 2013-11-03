@@ -31,7 +31,8 @@ public final class AppMenu {
         menuBar.addItem("Zakończ", new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
-                UI.getCurrent().getPage().setLocation("/");
+                AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
+                appSession.shitdown();
             }
         });
         return menuBar;

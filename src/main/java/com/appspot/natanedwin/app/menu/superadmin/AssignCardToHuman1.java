@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.app.menu.superadmin;
 
 import com.appspot.natanedwin.dao.RfidCardDao;
@@ -17,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author rr163240
+ * @author Bartłomiej Prokop
  */
 public class AssignCardToHuman1 implements EntityAction<Human> {
 
@@ -30,7 +26,7 @@ public class AssignCardToHuman1 implements EntityAction<Human> {
             return;
         }
 
-        EntityContainer<RfidCard> entityContainer = new EntityContainer<RfidCard>(unassignedCards, RfidCardItem.class);
+        EntityContainer<RfidCard> entityContainer = new EntityContainer<>(unassignedCards, RfidCardItem.class);
         EntityItemSelectWindow.showWindow(entityContainer, new AssignCardToHuman2(human));
     }
 }

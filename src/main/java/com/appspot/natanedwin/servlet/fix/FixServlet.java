@@ -19,8 +19,9 @@ public class FixServlet extends HttpServlet {
             return;
         }
 
-        RfidCardFix.fixCardOverprint(writer);
+//        RfidCardFix.fixCardOverprint(writer);
 //        EstablishmentFix.fixResDruk1(writer);
 //        UserAccountFix.fixRefEstablishment(writer);
+        UserAccountFix.fixReSave(writer);
     }
 }

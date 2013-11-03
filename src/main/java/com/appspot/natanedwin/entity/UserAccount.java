@@ -1,6 +1,7 @@
 package com.appspot.natanedwin.entity;
 
 import com.google.appengine.api.datastore.Email;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -20,16 +21,20 @@ public class UserAccount implements Serializable {
     private Long id;
     @Index
     private String uuid = UUID.randomUUID().toString();
-    private UserAccountType userAccountType;
+    @Unindex
+    private UserAccountType userAccountType = UserAccountType.Internal;
     @Index
     private String userId;
+    @Unindex
     private String passwordHash;
+    @Unindex
     private Email email;
     @Unindex
     private String dateTimeZone = "Europe/Warsaw";
     @Unindex
     private String locale = "pl_PL";
-    private Ref<Establishment> establishment;
+    @Index
+    private Ref<Establishment> establishment = Ref.create(Key.create(Establishment.class, 2329008L));
 
     @Override
     public String toString() {
@@ -54,6 +59,17 @@ public class UserAccount implements Serializable {
     @Override
     public int hashCode() {
         return uuid.hashCode();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // HIDING REF<?> ///////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////
+    public void setEstablishment(Establishment establishment) {
+        this.establishment = Ref.create(Key.create(Establishment.class, establishment.getId()));
+    }
+
+    public void setEstablishment(long id) {
+        this.establishment = Ref.create(Key.create(Establishment.class, id));
     }
 
     ////////////////////////////////////////////////////////////////////////////

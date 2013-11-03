@@ -34,4 +34,10 @@ public class AppSessionImpl implements AppSession {
         VaadinSession current = VaadinSession.getCurrent();
         current.setAttribute(UserCredentials.class, uc);
     }
+
+    @Override
+    public void shitdown() {
+        UI.getCurrent().getPage().setLocation("/");
+        VaadinSession.getCurrent().close();
+    }
 }
