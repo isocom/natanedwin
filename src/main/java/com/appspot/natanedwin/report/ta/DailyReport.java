@@ -19,6 +19,7 @@ import com.pdfjet.TextLine;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import jxl.write.Label;
@@ -47,6 +48,16 @@ public class DailyReport implements Report {
         Establishment establishment = userAccount.getEstablishment().safe();
         for (Ref<Human> ref : establishment.getHumans()) {
             humans.add(ref.safe());
+        }
+        Iterator<RfidEvent> i = events.iterator();
+        while (i.hasNext()) {
+            Human human = i.next().getRfidCard().getHuman().safe();
+            if (human == null) {
+                continue;
+            }
+            if (!humans.contains(human)) {
+                i.remove();
+            }
         }
     }
 
