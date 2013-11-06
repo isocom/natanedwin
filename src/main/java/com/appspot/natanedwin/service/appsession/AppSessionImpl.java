@@ -2,6 +2,7 @@ package com.appspot.natanedwin.service.appsession;
 
 import com.appspot.natanedwin.app.AppUI;
 import com.appspot.natanedwin.service.user.UserCredentials;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,8 @@ public class AppSessionImpl implements AppSession {
 
     @Override
     public void shitdown() {
-        UI.getCurrent().getPage().setLocation("/");
         VaadinSession.getCurrent().close();
+        VaadinService.getCurrentRequest().getWrappedSession().invalidate();
+        UI.getCurrent().getPage().setLocation("/");
     }
 }

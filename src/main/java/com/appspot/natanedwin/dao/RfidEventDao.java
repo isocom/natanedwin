@@ -7,6 +7,7 @@ package com.appspot.natanedwin.dao;
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.RfidEvent;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.cmd.Query;
 //import com.googlecode.objectify.Ref;
 //import com.googlecode.objectify.impl.ref.NullRef;
 import java.util.ArrayList;
@@ -34,6 +35,12 @@ public class RfidEventDao implements Dao<RfidEvent> {
     public List<RfidEvent> find() {
         List<RfidEvent> list = ofy.ofy().load().type(RfidEvent.class).limit(2).list();
         list = new ArrayList<>(list);
+        return list;
+    }
+
+    public List<RfidEvent> findAll() {
+        Query<RfidEvent> query = ofy.ofy().load().type(RfidEvent.class);
+        List<RfidEvent> list = query.list();
         return list;
     }
 

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.servlet.tr610;
 
 import com.appspot.natanedwin.dao.DeviceDao;
@@ -96,6 +92,7 @@ public class TR610Servlet extends HttpServlet {
         RfidEvent rfidEvent = new RfidEvent();
         rfidEvent.setDevice(device);
         rfidEvent.setRfidCard(rfidCard);
+        rfidEvent.setHuman(rfidCard.getHuman());
         rfidEvent.setRfidEventType(mode);
         rfidEventDao.save(rfidEvent);
 

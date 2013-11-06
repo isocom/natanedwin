@@ -33,7 +33,6 @@ public class RfidCardDao implements Dao<RfidCard> {
     public List<RfidCard> findAll() {
         Query<RfidCard> query = ofy.ofy().load().type(RfidCard.class);
         List<RfidCard> list = query.list();
-        ofy.ofy().clear();
         return list;
     }
 

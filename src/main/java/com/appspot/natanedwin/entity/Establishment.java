@@ -4,6 +4,7 @@ import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 import com.googlecode.objectify.condition.IfNotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Establishment implements Serializable {
     private String uuid = UUID.randomUUID().toString();
     @Index
     private String name;
+    @Unindex
     private Date licenseValidity = new Date();
     @Index(IfNotNull.class)
     private String plNip;

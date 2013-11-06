@@ -14,26 +14,27 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Date;
 
 public class AccessControlView extends VerticalLayout implements View {
-
+    
     private Report report;
-
+    
     public AccessControlView() {
         setSizeFull();
-
+        
         final Label title = new Label("Rejestracja czasu pracy");
         title.setSizeUndefined();
         title.addStyleName("h1");
         addComponent(title);
-
+        
         report = new DailyReport(new Date());
-
+        
         final Label label = new Label(report.asHTML(), ContentMode.HTML);
-
+        
         final HorizontalLayout toolbar = new HorizontalLayout();
         final PopupDateField popupDateField = new PopupDateField("Podaj dzień raportu", new Date());
         popupDateField.setDateFormat("yyyy-MM-dd");
@@ -41,7 +42,12 @@ public class AccessControlView extends VerticalLayout implements View {
         toolbar.addComponent(new Button("Przelicz", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                report = new DailyReport(popupDateField.getValue());
+                Date value = popupDateField.getValue();
+                if (value == null) {
+                    Notification.show("Ustaw najpierw date !!!");
+                    return;
+                }
+                report = new DailyReport(value);
                 label.setValue(report.asHTML());
             }
         }));
@@ -54,7 +60,7 @@ public class AccessControlView extends VerticalLayout implements View {
                 Link link = new Link();
                 link.setCaption(report.getFileName() + ".xls");
                 opener.extend(link);
-
+                
                 AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
                 appSession.getAppUI().getDownloadArea().add(link);
             }
@@ -68,18 +74,18 @@ public class AccessControlView extends VerticalLayout implements View {
                 Link link = new Link();
                 link.setCaption(report.getFileName() + ".pdf");
                 opener.extend(link);
-
+                
                 AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
                 appSession.getAppUI().getDownloadArea().add(link);
             }
         }));
         addComponent(toolbar);
-
+        
         label.setSizeFull();
         addComponent(label);
         setExpandRatio(label, 1);
     }
-
+    
     @Override
     public void enter(ViewChangeEvent event) {
     }

@@ -8,6 +8,7 @@ import com.google.appengine.api.datastore.Text;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+import com.googlecode.objectify.annotation.Unindex;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,6 +23,7 @@ public class StatEntry implements Serializable {
     private Long id;
     @Index
     private Date date = new Date();
+    @Unindex
     private Text jsonData;
 
     ////////////////////////////////////////////////////////////////////////////

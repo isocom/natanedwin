@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.entity;
 
 import com.googlecode.objectify.Ref;
@@ -9,6 +5,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
+import com.googlecode.objectify.condition.IfNotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -25,10 +22,12 @@ public class RfidEvent implements Serializable {
     private RfidEventType rfidEventType;
     @Index
     private Date eventDate = new Date();
-    @Index
+    @Index(IfNotNull.class)
     private Ref<Device> device;
-    @Index
+    @Index(IfNotNull.class)
     private Ref<RfidCard> rfidCard;
+    @Index(IfNotNull.class)
+    private Ref<Human> human;
 
     @Override
     public String toString() {
@@ -65,16 +64,15 @@ public class RfidEvent implements Serializable {
     ////////////////////////////////////////////////////////////////////////////
     // HIDING REF<?> ///////////////////////////////////////////////////////////    
     ////////////////////////////////////////////////////////////////////////////
-    public Device getDevice() {
-        return device.get();
-    }
-
     public void setDevice(Device device) {
         this.device = Ref.create(device);
     }
 
-    public RfidCard getRfidCard() {
-        return rfidCard.get();
+    public RfidCard getRfidCardSafe() {
+        if (rfidCard == null) {
+            return null;
+        }
+        return rfidCard.safe();
     }
 
     public void setRfidCard(RfidCard card) {
@@ -107,4 +105,29 @@ public class RfidEvent implements Serializable {
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
+
+    public Ref<Human> getHuman() {
+        return human;
+    }
+
+    public void setHuman(Ref<Human> human) {
+        this.human = human;
+    }
+
+    public Ref<Device> getDevice() {
+        return device;
+    }
+
+    public void setDevice(Ref<Device> device) {
+        this.device = device;
+    }
+
+    public Ref<RfidCard> getRfidCard() {
+        return rfidCard;
+    }
+
+    public void setRfidCard(Ref<RfidCard> rfidCard) {
+        this.rfidCard = rfidCard;
+    }
+
 }

@@ -165,7 +165,7 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
-            <version>7.1.7</version>
+            <version>7.1.1</version>
             <exclusions>
                 <exclusion>
                     <artifactId>commons-logging</artifactId>
@@ -176,12 +176,12 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiled</artifactId>
-            <version>7.1.7</version>
+            <version>7.1.1</version>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-themes</artifactId>
-            <version>7.1.7</version>
+            <version>7.1.1</version>
         </dependency>
 
         <!-- Apache commons -->
