@@ -61,7 +61,7 @@ public class AppUI extends UI {
         getPage().setTitle("ISOCOM");
         setContent(buildContent());
 
-        navigator.navigateTo(AppNavigator.HOME);
+//        navigator.navigateTo(AppNavigator.HOME);
     }
 
     private VerticalLayout buildContent() {

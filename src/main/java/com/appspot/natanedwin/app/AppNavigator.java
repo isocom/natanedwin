@@ -19,7 +19,7 @@ public class AppNavigator extends Navigator {
 
     public static final String AC = "/ac";
     public static final String BOGUS = "/bogus";
-    public static final String HOME = "/home";
+    public static final String HOME = "";
     public static final String RPC = "/rpc";
     public static final String TRANSACTIONS = "/transactions";
     public static final String USERS = "/users";
