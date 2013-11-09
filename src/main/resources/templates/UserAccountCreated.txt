@@ -1,6 +1,7 @@
 Witaj $UserAccount.userId$,
 
 Właśnie zostało założone dla Ciebie konto w systemie KD-ISOCOM.
+Logując się, użyj tej nazwy: $UserAccount.userId$
 Zapamiętaj dobrze swoje hasło dostępowe: $String$
 
 Pozdrawiamy,

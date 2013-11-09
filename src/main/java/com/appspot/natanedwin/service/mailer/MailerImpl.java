@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.mailer;
 
 import com.google.appengine.api.mail.MailService;
@@ -35,8 +31,8 @@ public class MailerImpl implements Mailer {
     private String fromAddr;
     @Value("${service.mailer.fromName}")
     private String fromName;
-    private Session session = Session.getDefaultInstance(new Properties(), null);
-    private MailService mailService = MailServiceFactory.getMailService();
+    private final Session session = Session.getDefaultInstance(new Properties(), null);
+    private final MailService mailService = MailServiceFactory.getMailService();
 
     @Override
     public void send(Email email) {

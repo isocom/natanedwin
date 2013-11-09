@@ -76,4 +76,15 @@ public class UserAccountDao implements Dao<UserAccount> {
         }
         return e;
     }
+
+    public void resetPassword(UserAccount entity) {
+        entity = byId(entity.getId());
+        if (entity.getUserAccountType() != UserAccountType.Internal) {
+            throw new IllegalArgumentException("To nie jest konto wewnętrzne");
+        }
+        String password = userManager.generatePassword();
+        entity.setPasswordHash(userManager.hashPassword(password));
+        ofy.ofy().save().entity(entity);
+        spammer.spam(SpamType.UserAccountCreated, entity, password);
+    }
 }

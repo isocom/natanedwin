@@ -27,6 +27,7 @@ public class ShowUserAccounts implements MenuBar.Command {
 
     public ShowUserAccounts() {
         additionalActions.put("Przypisz podmiot", new AssignUserAccountToEstablishment1());
+        additionalActions.put("Resetuj hasło", new ResetPassword());
     }
 
     @Override
@@ -65,4 +66,13 @@ public class ShowUserAccounts implements MenuBar.Command {
         }
     }
 
+    private class ResetPassword implements EntityAction<UserAccount> {
+
+        @Override
+        public void execute(UserAccount entity) {
+            UserAccountDao userAccountDao = SpringContext.INSTANCE.getBean(UserAccountDao.class);
+            userAccountDao.resetPassword(entity);
+        }
+
+    }
 }
