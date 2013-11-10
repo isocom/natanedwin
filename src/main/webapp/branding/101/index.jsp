@@ -25,33 +25,32 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="RPC, KD, kontrola dostępu, rejestracja czasu pracy, ISOCOM, RFID" />
-    <meta name="description" content="Realizacjia kontroli dostępu i rejestracji czasu pracy w oparciu o chmurę usług." />
-    <title>Logowanie do Aplikacji</title>
-    <link rel="stylesheet" href="index/style.css">
+    <title>Przykładowa integracja</title>
 </head>
 <body>
-    <h1 class="naglowek">.</h1>
-
-    <form method="post" class="login">
-        <p>
+    <p>
+        Integracja jest bardzo prosta. Należy dostarczyć kod strony WWW, który zostanie wgrany do katalogu:
+        http://natanedwin.appspot.com/branding/TWOJA_NAZWA/*.
+    </p>
+    <p>
+        Przykładowe integracje:
+    </p>
+    <ul>
+        <li>Źródła tej strony - 101.zip</li>
+        <li>Integracja ze stroną http://www.isocom.eu/ - isocom.zip</li>
+    </ul>
+    <p>
+        Na stronie należy zawrzeć formularz, który powinien wyglądać jak ten poniżej. Zwróć uwagę, że nie jest użyty atrybut action.
+    </p>
+    <form method="post">
             <label for="login">Identyfikator:</label>
-            <input type="text" name="login" id="login" value="identyfikator">
-        </p>
+            <input type="text" name="login" id="login">
 
-        <p>
             <label for="password">Hasło:</label>
-            <input type="password" name="password" id="password" value="4815162342">
-        </p>
+            <input type="password" name="password" id="password">
 
-        <p class="login-submit">
-            <button type="submit" class="login-button">Login</button>
-        </p>
-
-        <p class="forgot-password"><a href="#">Zapomniałeś hasła?</a></p>
-        <p class="forgot-password"><a href="https://docs.google.com/document/d/1IHsfjAaVdmcjpvM4o-j6gSXZiTT8A0485p7GEVLiMuY/edit?usp=sharing" target="_blank">Instrukcja obsługi</a></p>
+            <button type="submit">Login</button>
     </form>
 
     <%
