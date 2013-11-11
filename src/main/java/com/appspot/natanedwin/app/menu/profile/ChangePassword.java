@@ -4,6 +4,7 @@
  */
 package com.appspot.natanedwin.app.menu.profile;
 
+import com.appspot.natanedwin.dao.UserAccountDao;
 import com.appspot.natanedwin.entity.UserAccount;
 import com.appspot.natanedwin.entity.UserAccountType;
 import com.appspot.natanedwin.service.appsession.AppSession;
@@ -20,10 +21,15 @@ public class ChangePassword implements MenuBar.Command {
     @Override
     public void menuSelected(MenuBar.MenuItem selectedItem) {
         AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
+        UserAccountDao userAccountDao = SpringContext.INSTANCE.getBean(UserAccountDao.class);
         UserAccount userAccount = appSession.getUserCredentials().getUserAccount();
+
         if (userAccount.getUserAccountType() == UserAccountType.GoogleAccount) {
             Notification.show("Nie można zmienić hasła", "Używasz konta Google do logowania, zmień swoje hasło na stronach Google", Notification.Type.WARNING_MESSAGE);
             return;
         }
+
+        userAccountDao.resetPassword(userAccount);
+        Notification.show("Nowe hasło zostało wysłane na adres: " + userAccount.getEmail().getEmail());
     }
 }

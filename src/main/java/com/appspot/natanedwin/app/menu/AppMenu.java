@@ -6,7 +6,6 @@ import com.appspot.natanedwin.service.appsession.AppSession;
 import com.appspot.natanedwin.service.spring.SpringContext;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
-import com.vaadin.ui.UI;
 
 /**
  *

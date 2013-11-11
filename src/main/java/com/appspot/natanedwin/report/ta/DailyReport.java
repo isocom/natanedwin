@@ -51,7 +51,7 @@ public class DailyReport implements Report {
         }
         Iterator<RfidEvent> i = events.iterator();
         while (i.hasNext()) {
-            Human human = i.next().getRfidCardSafe().getHuman().safe();
+            Human human = i.next().safeRfidCard().getHuman().safe();
             if (human == null) {
                 continue;
             }
@@ -149,10 +149,10 @@ public class DailyReport implements Report {
             for (RfidEvent event : events) {
                 c = 0;
                 writableSheet.addCell(new Label(c++, r, "" + r));
-                writableSheet.addCell(new Label(c++, r, event.getRfidCardSafe().getHuman().get().getName()));
+                writableSheet.addCell(new Label(c++, r, event.safeRfidCard().getHuman().get().getName()));
                 writableSheet.addCell(new Label(c++, r, event.getEventDate().toString()));
                 writableSheet.addCell(new Label(c++, r, event.getRfidEventType().toString()));
-                writableSheet.addCell(new Label(c++, r, event.getRfidCardSafe().getCardNumber()));
+                writableSheet.addCell(new Label(c++, r, event.safeRfidCard().getCardNumber()));
                 r++;
             }
 
@@ -175,7 +175,7 @@ public class DailyReport implements Report {
     private Map<Human, DailyReportRow> calcDailyReportRows() {
         HashMap<Human, DailyReportRow> rows = new HashMap<>();
         for (RfidEvent event : events) {
-            Human human = event.getRfidCardSafe().getHuman().get();
+            Human human = event.safeRfidCard().getHuman().get();
             if (!rows.containsKey(human)) {
                 rows.put(human, new DailyReportRow(human));
             }
