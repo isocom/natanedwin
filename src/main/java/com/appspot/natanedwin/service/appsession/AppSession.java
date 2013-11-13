@@ -18,5 +18,5 @@ public interface AppSession {
 
     public void setUserCredentials(UserCredentials uc);
 
-    public void shitdown();
+    public void shutdown();
 }

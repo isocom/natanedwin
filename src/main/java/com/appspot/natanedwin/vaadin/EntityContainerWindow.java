@@ -15,17 +15,26 @@ import java.util.Map;
 public class EntityContainerWindow extends Window {
 
     public static void showWindow(EntityContainer entityContainer) {
-        showWindow(entityContainer, Collections.EMPTY_MAP);
+        showWindow(entityContainer, false, Collections.EMPTY_MAP);
+    }
+
+    public static void showWindowEditOnly(EntityContainer entityContainer) {
+        showWindow(entityContainer, true, Collections.EMPTY_MAP);
     }
 
     public static void showWindow(EntityContainer entityContainer, Map<String, EntityAction> additionalActions) {
         UI current = UI.getCurrent();
-        current.addWindow(new EntityContainerWindow(entityContainer, additionalActions));
+        current.addWindow(new EntityContainerWindow(entityContainer, false, additionalActions));
+    }
+
+    public static void showWindow(EntityContainer entityContainer, boolean editOnly, Map<String, EntityAction> additionalActions) {
+        UI current = UI.getCurrent();
+        current.addWindow(new EntityContainerWindow(entityContainer, editOnly, additionalActions));
     }
     private final Table table;
     private final EntityContainer entityContainer;
 
-    private EntityContainerWindow(final EntityContainer entityContainer, final Map<String, EntityAction> additionalActions) {
+    private EntityContainerWindow(final EntityContainer entityContainer, final boolean editOnly, final Map<String, EntityAction> additionalActions) {
         super("Lista obiektów typu: ");
         this.entityContainer = entityContainer;
 
@@ -44,12 +53,14 @@ public class EntityContainerWindow extends Window {
             }
         }));
 
-        horizontalLayout.addComponent(new Button("Nowy", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                newButtonClicked();
-            }
-        }));
+        if (!editOnly) {
+            horizontalLayout.addComponent(new Button("Nowy", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    newButtonClicked();
+                }
+            }));
+        }
 
         horizontalLayout.addComponent(new Button("Edytuj", new Button.ClickListener() {
             @Override
@@ -58,12 +69,14 @@ public class EntityContainerWindow extends Window {
             }
         }));
 
-        horizontalLayout.addComponent(new Button("Usuń", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                deleteButtonClicked();
-            }
-        }));
+        if (!editOnly) {
+            horizontalLayout.addComponent(new Button("Usuń", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    deleteButtonClicked();
+                }
+            }));
+        }
 
         for (final String caption : additionalActions.keySet()) {
             horizontalLayout.addComponent(new Button(caption, new Button.ClickListener() {

@@ -37,7 +37,7 @@ public class AppSessionImpl implements AppSession {
     }
 
     @Override
-    public void shitdown() {
+    public void shutdown() {
         VaadinSession.getCurrent().close();
         VaadinService.getCurrentRequest().getWrappedSession().invalidate();
         UI.getCurrent().getPage().setLocation("/");

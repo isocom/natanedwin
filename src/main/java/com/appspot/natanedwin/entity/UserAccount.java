@@ -72,6 +72,14 @@ public class UserAccount implements Serializable {
         this.establishment = Ref.create(Key.create(Establishment.class, id));
     }
 
+    public Establishment safeEstablishment() {
+        if (establishment == null) {
+            return null;
+        } else {
+            return establishment.safe();
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////
     // GETTERS AND SETTERS /////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////

@@ -23,6 +23,7 @@ public final class AppMenu {
         menuBar.setWidth("100%");
 
         buildMenuProfil(menuBar);
+        FilesMenu.buildMenuFiles(menuBar);
         if (appSession.getUserCredentials().isUserAdmin()) {
             SuperAdmin.buildMenuSuperAdmin(menuBar);
         }
@@ -31,7 +32,7 @@ public final class AppMenu {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
-                appSession.shitdown();
+                appSession.shutdown();
             }
         });
         return menuBar;
