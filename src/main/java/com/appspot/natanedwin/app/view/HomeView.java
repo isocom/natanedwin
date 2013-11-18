@@ -31,7 +31,7 @@ public class HomeView extends VerticalLayout implements View {
 
         SpringInformation springInformation = SpringContext.INSTANCE.getBean(SpringInformation.class);
         String applicationName = springInformation.getApplicationName();
-        String applicationVersion = springInformation.getVersion();
+        String applicationVersion = springInformation.getApplicationVersion();
 
         AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
         UserCredentials userCredentials = appSession.getUserCredentials();

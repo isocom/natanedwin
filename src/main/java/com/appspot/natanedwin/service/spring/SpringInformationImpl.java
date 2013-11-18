@@ -20,7 +20,7 @@ public class SpringInformationImpl implements SpringInformation {
     private String applicationName;
 
     @Override
-    public String getVersion() {
+    public String getApplicationVersion() {
         return version;
     }
 
@@ -31,7 +31,7 @@ public class SpringInformationImpl implements SpringInformation {
 
     public static void main(String... args) {
         SpringInformation bean = SpringContext.INSTANCE.getApplicationContext().getBean(SpringInformation.class);
-        System.out.println(bean.getVersion());
+        System.out.println(bean.getApplicationVersion());
     }
 
     @Override

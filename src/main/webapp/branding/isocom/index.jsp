@@ -149,7 +149,7 @@
                             <div class="foot_pad">
                                 <ul class="ls">
                                     <li><a href="#">Lokalizacja: <%=request.getHeader("X-AppEngine-City")%>, <%=request.getHeader("X-AppEngine-Country")%></a></li>
-                                    <li><a href="#">Wersja: <%=springInformation.getVersion()%></a></li>
+                                    <li><a href="#">Wersja: <%=springInformation.getApplicationVersion()%></a></li>
                                     <li><a href="/info/">Informacja o serwerze</a></li>
                                     <li><a href="http://www.isocom.eu/m2-sites/natanedwin/">Dokumentacja techniczna</a></li>
                                     <li><a href="https://appengine.google.com/">Panel kontrolny aplikacji</a></li>

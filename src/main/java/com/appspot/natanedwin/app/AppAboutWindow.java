@@ -32,7 +32,7 @@ public class AppAboutWindow extends Window implements Button.ClickListener {
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.addComponent(new Label(springInformation.getApplicationName()));
         verticalLayout.addComponent(new Label("Zalogowany user: " + appSession.getUserCredentials()));
-        verticalLayout.addComponent(new Label("Wersja aplikacji: " + springInformation.getVersion()));
+        verticalLayout.addComponent(new Label("Wersja aplikacji: " + springInformation.getApplicationVersion()));
         verticalLayout.addComponent(new Button("Zamknij", this));
         setContent(verticalLayout);
         center();
