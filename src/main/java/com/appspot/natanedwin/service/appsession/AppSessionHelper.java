@@ -29,7 +29,7 @@ public final class AppSessionHelper {
         return DateTimeZone.forID(appSession.getUserCredentials().getUserAccount().getDateTimeZone());
     }
 
-    private static Locale locale(AppSession appSession) {
+    public static Locale locale(AppSession appSession) {
         return locale(appSession.getUserCredentials().getUserAccount().getLocale());
     }
 

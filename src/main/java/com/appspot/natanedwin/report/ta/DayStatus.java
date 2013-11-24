@@ -5,22 +5,18 @@ import com.appspot.natanedwin.dao.RfidEventDao;
 import com.appspot.natanedwin.entity.Establishment;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.RfidEvent;
+import com.appspot.natanedwin.entity.RfidEventType;
 import com.appspot.natanedwin.report.ByteArrayStreamResource;
-import com.appspot.natanedwin.report.PDFReport;
+import com.appspot.natanedwin.report.DummyPDFReport;
 import com.appspot.natanedwin.report.Report;
-import com.appspot.natanedwin.report.XLSReport;
 import com.appspot.natanedwin.service.appsession.AppSession;
 import com.appspot.natanedwin.service.appsession.AppSessionHelper;
-import com.pdfjet.Page;
-import com.pdfjet.TextLine;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WriteException;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormatter;
@@ -29,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
 @Configurable(preConstruction = true)
-public class DailyReport implements Report {
+public class DayStatus implements Report {
 
     final private DateTime date;
     final private List<RfidEvent> events;
@@ -43,7 +39,7 @@ public class DailyReport implements Report {
     @Autowired
     private transient RfidEventDao rfidEventDao;
 
-    public DailyReport(final Date date) {
+    public DayStatus(final Date date) {
         this.date = new DateTime(date, AppSessionHelper.dateTimeZone(appSession));
 
         long establishmentId = AppSessionHelper.establishmentId(appSession);
@@ -51,7 +47,8 @@ public class DailyReport implements Report {
         humans = establishment.safeHumans();
 
         events = rfidEventDao.findToday(this.date, humans);
-        fileName = "RPC Stan dnia " + 3333;
+        DateTimeFormatter mediumDate = AppSessionHelper.mediumDate(appSession);
+        fileName = "RPC Stan dnia " + mediumDate.print(this.date);
 
         Iterator<RfidEvent> i = events.iterator();
         while (i.hasNext()) {
@@ -72,7 +69,6 @@ public class DailyReport implements Report {
 
     @Override
     public String asHTML() {
-        DateTimeFormatter mediumDateTime = AppSessionHelper.mediumDateTime(appSession);
         DateTimeFormatter mediumTime = AppSessionHelper.mediumTime(appSession);
         PeriodFormatter hms = AppSessionHelper.hms();
 
@@ -82,24 +78,28 @@ public class DailyReport implements Report {
         sb.append("<body>");
 
         sb.append("<h1>Raport dzienny</h1>");
-        sb.append("<h2>Raport za chwilę: ").append(mediumDateTime.print(date)).append("</h2>");
+        sb.append("<h2>").append(fileName).append("</h2>");
 
         sb.append("<h3>Raport dzienny</h3>");
         sb.append("<table border=1>");
         sb.append("<tr>");
         sb.append("<th>Lp</th>");
         sb.append("<th>Pracownik</th>");
-        sb.append("<th>Wejście</th>");
-        sb.append("<th>Wyjście</th>");
-        sb.append("<th>Czas Łączny</th>");
+        sb.append("<th>Zdarzenie od</th>");
+        sb.append("<th>Czas od</th>");
+        sb.append("<th>Zdarzenie do</th>");
+        sb.append("<th>Czas do</th>");
+        sb.append("<th>Czas łączny</th>");
         sb.append("</tr>");
         for (DailyReportRow row : reportRows.values()) {
             sb.append("<tr>");
             sb.append("<td>").append(++rowNo).append("</td>");
             sb.append("<td>").append(row.human.getName()).append("</td>");
-            sb.append("<td>").append(mediumTime.print(row.from.getTime())).append("</td>");
-            sb.append("<td>").append(mediumTime.print(row.to.getTime())).append("</td>");
-            sb.append("<td>").append(hms.print(new Period(row.to.getTime() - row.from.getTime()))).append("</td>");
+            sb.append("<td>").append(row.fromEvent).append("</td>");
+            sb.append("<td>").append(mediumTime.print(row.from)).append("</td>");
+            sb.append("<td>").append(row.toEvent).append("</td>");
+            sb.append("<td>").append(mediumTime.print(row.to)).append("</td>");
+            sb.append("<td>").append(hms.print(new Period(row.duration()))).append("</td>");
             sb.append("</tr>");
         }
         sb.append("</table>");
@@ -107,10 +107,7 @@ public class DailyReport implements Report {
 
         sb.append("<h3>Lista nieobecnych</h3>");
         sb.append("<ol>");
-        for (Human human : humans) {
-            if (reportRows.containsKey(human)) {
-                continue;
-            }
+        for (Human human : calcAbsences(reportRows)) {
             sb.append("<li>").append(human.getName()).append("</li>");
         }
         sb.append("</ol>");
@@ -121,62 +118,15 @@ public class DailyReport implements Report {
 
     @Override
     public ByteArrayStreamResource asPDF() {
-        try {
-            PDFReport pdfReport = new PDFReport();
-            Page newPage = pdfReport.newPage();
-
-            TextLine text = new TextLine(pdfReport.getFontHelvetica14());
-            text.setText("Ala ma kota łąć");
-            text.setPosition(100, 100);
-            text.drawOn(newPage);
-
-            return pdfReport.getReport();
-        } catch (Exception t) {
-            throw new RuntimeException(t);
-        }
+        return DummyPDFReport.asPDF();
     }
 
     @Override
     public ByteArrayStreamResource asXLS() {
-        try {
-            Map<Human, DailyReportRow> reportRows = calcDailyReportRows();
-            XLSReport xlsReport = new XLSReport();
-
-            WritableSheet writableSheet = xlsReport.getWritableWorkbook().createSheet("Zdarzenia", 0);
-            int r = 0, c = 0;
-            writableSheet.addCell(new Label(c++, r, "LP"));
-            writableSheet.addCell(new Label(c++, r, "Imię i Nazwisko"));
-            writableSheet.addCell(new Label(c++, r, "Data i godzina"));
-            writableSheet.addCell(new Label(c++, r, "Typ zdarzenia"));
-            writableSheet.addCell(new Label(c++, r, "Karta"));
-            r++;
-            for (RfidEvent event : events) {
-                c = 0;
-                writableSheet.addCell(new Label(c++, r, "" + r));
-                writableSheet.addCell(new Label(c++, r, event.safeRfidCard().getHuman().get().getName()));
-                writableSheet.addCell(new Label(c++, r, event.getEventDate().toString()));
-                writableSheet.addCell(new Label(c++, r, event.getRfidEventType().toString()));
-                writableSheet.addCell(new Label(c++, r, event.safeRfidCard().getCardNumber()));
-                r++;
-            }
-
-            writableSheet = xlsReport.getWritableWorkbook().createSheet("Zdarzenia", 0);
-            r = 0;
-            c = 0;
-            writableSheet.addCell(new Label(c++, r, "LP"));
-            writableSheet.addCell(new Label(c++, r, "Imię i Nazwisko"));
-            writableSheet.addCell(new Label(c++, r, "Wejście"));
-            writableSheet.addCell(new Label(c++, r, "Wyjście"));
-            writableSheet.addCell(new Label(c++, r, "Czas Łączny"));
-            for (DailyReportRow row : reportRows.values()) {
-            }
-            return xlsReport.getReport();
-        } catch (WriteException t) {
-            throw new RuntimeException(t);
-        }
+        return DayStatusXLS.asXLS(this);
     }
 
-    private Map<Human, DailyReportRow> calcDailyReportRows() {
+    Map<Human, DailyReportRow> calcDailyReportRows() {
         HashMap<Human, DailyReportRow> rows = new HashMap<>();
         for (RfidEvent event : events) {
             Human human = event.safeRfidCard().getHuman().get();
@@ -185,28 +135,47 @@ public class DailyReport implements Report {
             }
             DailyReportRow row = rows.get(human);
             Date ed = event.getEventDate();
-            if (ed.before(row.from)) {
-                row.from = ed;
+            if (ed.before(row.from.toDate())) {
+                row.from = new DateTime(ed);
+                row.fromEvent = event.getRfidEventType();
             }
-            if (ed.after(row.to)) {
-                row.to = ed;
+            if (ed.after(row.to.toDate())) {
+                row.to = new DateTime(ed);
+                row.toEvent = event.getRfidEventType();
             }
         }
         return rows;
     }
 
-    private class DailyReportRow {
+    List<Human> calcAbsences(Map<Human, DailyReportRow> reportRows) {
+        List<Human> absences = new ArrayList<>();
+        for (Human human : humans) {
+            if (reportRows.containsKey(human)) {
+                continue;
+            }
+            absences.add(human);
+        }
+        return absences;
+    }
 
-        private final Human human;
-        private Date from = new Date(Long.MAX_VALUE);
-        private Date to = new Date(0);
+    public List<RfidEvent> getEvents() {
+        return events;
+    }
 
-        public DailyReportRow(final Human human) {
+    class DailyReportRow {
+
+        final Human human;
+        DateTime from = new DateTime(Long.MAX_VALUE);
+        DateTime to = new DateTime(0);
+        RfidEventType fromEvent = null;
+        RfidEventType toEvent = null;
+
+        private DailyReportRow(final Human human) {
             this.human = human;
         }
 
         long duration() {
-            return to.getTime() - from.getTime();
+            return to.getMillis() - from.getMillis();
         }
     }
 }

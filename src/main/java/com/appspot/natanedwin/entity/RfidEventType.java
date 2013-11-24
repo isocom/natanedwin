@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.entity;
 
 /**
@@ -11,4 +7,21 @@ package com.appspot.natanedwin.entity;
 public enum RfidEventType {
 
     In, Out, TempIn, TempOut;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case In:
+                return "Rozpoczęcie";
+            case Out:
+                return "Zakończenie";
+            case TempIn:
+                return "Powrót";
+            case TempOut:
+                return "Wyjście";
+            default:
+                return name();
+        }
+    }
+
 }

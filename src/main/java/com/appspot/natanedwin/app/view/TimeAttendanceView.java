@@ -1,9 +1,10 @@
 package com.appspot.natanedwin.app.view;
 
 import com.appspot.natanedwin.report.ByteArrayStreamResource;
-import com.appspot.natanedwin.report.ta.DailyReport;
+import com.appspot.natanedwin.report.ta.DayStatus;
 import com.appspot.natanedwin.report.Report;
 import com.appspot.natanedwin.service.appsession.AppSession;
+import com.appspot.natanedwin.service.appsession.AppSessionHelper;
 import com.appspot.natanedwin.service.spring.SpringContext;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -17,10 +18,15 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
+@Configurable(preConstruction = true)
 public class TimeAttendanceView extends VerticalLayout implements View {
 
     private Report report;
+    @Autowired
+    private transient AppSession appSession;
 
     public TimeAttendanceView() {
         setSizeFull();
@@ -30,18 +36,19 @@ public class TimeAttendanceView extends VerticalLayout implements View {
         title.addStyleName("h1");
         addComponent(title);
 
-        report = new DailyReport(new Date());
+        report = new DayStatus(new Date());
 
         final Label label = new Label(report.asHTML(), ContentMode.HTML);
 
         final HorizontalLayout toolbar = new HorizontalLayout();
         final PopupDateField popupDateField = new PopupDateField("Podaj dzień raportu", new Date());
         popupDateField.setDateFormat("yyyy-MM-dd");
+        popupDateField.setLocale(AppSessionHelper.locale(appSession));
         toolbar.addComponent(popupDateField);
         toolbar.addComponent(new Button("Przelicz", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                report = new DailyReport(popupDateField.getValue());
+                report = new DayStatus(popupDateField.getValue());
                 label.setValue(report.asHTML());
             }
         }));

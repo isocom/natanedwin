@@ -35,7 +35,7 @@ public class PDFReport {
             fontHelvetica6 = new Font(pdf, CoreFont.HELVETICA);
             fontHelvetica6.setSize(6);
             pageNumber = 0;
-        } catch (Throwable t) {
+        } catch (Exception t) {
             throw new RuntimeException(t);
         }
     }
@@ -46,7 +46,7 @@ public class PDFReport {
             fos.close();
             byte[] toByteArray = fos.toByteArray();
             return new ByteArrayStreamResource(toByteArray);
-        } catch (Throwable t) {
+        } catch (Exception t) {
             throw new RuntimeException(t);
         }
     }
@@ -58,7 +58,7 @@ public class PDFReport {
             y_pos = 20.0;
             pageNumber++;
             return page;
-        } catch (Throwable t) {
+        } catch (Exception t) {
             throw new RuntimeException(t);
         }
     }

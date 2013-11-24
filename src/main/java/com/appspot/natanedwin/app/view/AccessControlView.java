@@ -1,7 +1,7 @@
 package com.appspot.natanedwin.app.view;
 
 import com.appspot.natanedwin.report.ByteArrayStreamResource;
-import com.appspot.natanedwin.report.ta.DailyReport;
+import com.appspot.natanedwin.report.ta.DayStatus;
 import com.appspot.natanedwin.report.Report;
 import com.appspot.natanedwin.service.appsession.AppSession;
 import com.appspot.natanedwin.service.spring.SpringContext;
@@ -31,7 +31,7 @@ public class AccessControlView extends VerticalLayout implements View {
         title.addStyleName("h1");
         addComponent(title);
         
-        report = new DailyReport(new Date());
+        report = new DayStatus(new Date());
         
         final Label label = new Label(report.asHTML(), ContentMode.HTML);
         
@@ -47,7 +47,7 @@ public class AccessControlView extends VerticalLayout implements View {
                     Notification.show("Ustaw najpierw date !!!");
                     return;
                 }
-                report = new DailyReport(value);
+                report = new DayStatus(value);
                 label.setValue(report.asHTML());
             }
         }));
