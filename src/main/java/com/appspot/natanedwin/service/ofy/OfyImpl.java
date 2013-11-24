@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class OfyImpl implements Ofy {
 
     @PostConstruct
-    private void init() {
+    private void construct() {
         factory().register(com.appspot.natanedwin.entity.Device.class);
         factory().register(com.appspot.natanedwin.entity.Establishment.class);
         factory().register(com.appspot.natanedwin.entity.GcsFile.class);
@@ -34,13 +34,13 @@ public class OfyImpl implements Ofy {
         return ObjectifyService.ofy();
     }
 
-    @Override
-    public ObjectifyFactory factory() {
+//    @Override
+    private ObjectifyFactory factory() {
         return ObjectifyService.factory();
     }
 
-    @Override
-    public boolean exists(Class<?> type, long id) {
-        return ofy().load().type(type).id(id).get() != null;
-    }
+//    @Override
+//    public boolean exists(Class<?> type, long id) {
+//        return ofy().load().type(type).id(id).get() != null;
+//    }
 }

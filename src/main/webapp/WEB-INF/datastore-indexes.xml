@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datastore-indexes autoGenerate="false">
+    <datastore-index kind="RfidEvent" ancestor="false" source="manual">
+        <property name="human" direction="asc"/>
+        <property name="eventDate" direction="asc"/>
+    </datastore-index>
+</datastore-indexes>

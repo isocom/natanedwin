@@ -5,7 +5,6 @@
 package com.appspot.natanedwin.service.ofy;
 
 import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyFactory;
 
 /**
  *
@@ -15,7 +14,4 @@ public interface Ofy {
 
     public Objectify ofy();
 
-    public ObjectifyFactory factory();
-
-    public boolean exists(Class<?> type, long id);
 }

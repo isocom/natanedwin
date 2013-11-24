@@ -29,11 +29,6 @@ public class SpringInformationImpl implements SpringInformation {
         return applicationName;
     }
 
-    public static void main(String... args) {
-        SpringInformation bean = SpringContext.INSTANCE.getApplicationContext().getBean(SpringInformation.class);
-        System.out.println(bean.getApplicationVersion());
-    }
-
     @Override
     public String getSystemInformation() {
         StringBuilder sb = new StringBuilder();
