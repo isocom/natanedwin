@@ -48,7 +48,7 @@ public class SpringInformationServlet extends HttpServlet {
             out.println("<table border=1><tr><th colspan=2>Spring Framework Information</th></tr>");
             out.println("<tr><td>ApplicationContext</td><td>" + SpringContext.INSTANCE.getApplicationContext() + "</td></tr>");
             SpringInformation springInformation = SpringContext.INSTANCE.getBean(SpringInformation.class);
-            out.println("<tr><td>SpringInformation.getVersion()</td><td>" + springInformation.getApplicationVersion() + "</td></tr>");
+//            out.println("<tr><td>SpringInformation.getVersion()</td><td>" + springInformation.getApplicationVersion() + "</td></tr>");
             out.println("<tr><td>SpringInformation.getSystemInformation()</td><td><pre>" + springInformation.getSystemInformation() + "</pre></td></tr>");
             out.println("<tr><td>ApplicationContext.getId()</td><td>" + SpringContext.INSTANCE.getApplicationContext().getId() + "</td></tr>");
             out.println("<tr><td>ApplicationContext.getDisplayName()</td><td>" + SpringContext.INSTANCE.getApplicationContext().getDisplayName() + "</td></tr>");

@@ -80,6 +80,13 @@ public class RfidEvent implements Serializable {
         return rfidCard.safe();
     }
 
+    public Human safeHuman() {
+        if (human == null) {
+            return null;
+        }
+        return human.safe();
+    }
+
     public void setRfidCard(RfidCard card) {
         this.rfidCard = Ref.create(card);
     }

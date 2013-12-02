@@ -46,7 +46,7 @@ public class DayStatus implements Report {
         Establishment establishment = establishmentDao.byId(establishmentId);
         humans = establishment.safeHumans();
 
-        events = rfidEventDao.findToday(this.date, humans);
+        events = rfidEventDao.find(this.date, humans);
         DateTimeFormatter mediumDate = AppSessionHelper.mediumDate(appSession);
         fileName = "RPC Stan dnia " + mediumDate.print(this.date);
 

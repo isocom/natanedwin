@@ -32,11 +32,6 @@ public class TransactionsView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeEvent event) {
         RfidEventDao rfidEventDao = SpringContext.INSTANCE.getBean(RfidEventDao.class);
-        find = rfidEventDao.find();
-        beanItemContainer = new BeanItemContainer(RfidEvent.class, find);
-
-        addTop();
-        addTable();
         //        DataProvider dataProvider = ((DashboardUI) getUI()).dataProvider;
         //        t.setContainerDataSource(dataProvider.getRevenueByTitle());
     }

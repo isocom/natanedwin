@@ -1,10 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.spring;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,21 +8,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SpringInformationImpl implements SpringInformation {
-
-    @Value("${natanedwin.version}")
-    private String version;
-    @Value("${natanedwin.appname}")
-    private String applicationName;
-
-    @Override
-    public String getApplicationVersion() {
-        return version;
-    }
-
-    @Override
-    public String getApplicationName() {
-        return applicationName;
-    }
 
     @Override
     public String getSystemInformation() {

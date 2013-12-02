@@ -60,12 +60,11 @@ public class AppUI extends UI {
 
         getPage().setTitle("ISOCOM");
         setContent(buildContent());
-
-//        navigator.navigateTo(AppNavigator.HOME);
     }
 
     private VerticalLayout buildContent() {
         VerticalLayout content = new VerticalLayout();
+        content.setSizeFull();
 
         MenuBar menuBar = AppMenu.buildMainMenu();
         content.addComponent(menuBar);
@@ -74,7 +73,6 @@ public class AppUI extends UI {
         content.addComponent(centerArea);
         content.setExpandRatio(centerArea, 1);
 
-        content.setSizeFull();
         return content;
     }
 

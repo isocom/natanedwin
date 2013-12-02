@@ -31,24 +31,24 @@ public class RfidEventDao implements Dao<RfidEvent> {
         return ofy.ofy().load().type(RfidEvent.class).id(id).safe();
     }
 
-    public List<RfidEvent> find() {
-        List<RfidEvent> list = ofy.ofy().load().type(RfidEvent.class).limit(2).list();
-        list = new ArrayList<>(list);
-        return list;
-    }
-
     public List<RfidEvent> findAll() {
         Query<RfidEvent> query = ofy.ofy().load().type(RfidEvent.class);
         List<RfidEvent> list = query.list();
         return list;
     }
 
-    public List<RfidEvent> findToday(DateTime date, List<Human> humans) {
+    public List<RfidEvent> find(DateTime date, List<Human> humans) {
         date = date.withTimeAtStartOfDay();
         Date from = date.toDate();
         Date to = new Date(date.getMillis() + 24 * 60 * 60 * 1000);
-
         List<RfidEvent> list = ofy.ofy().load().type(RfidEvent.class).filter("eventDate > ", from).filter("eventDate < ", to).filter("human in", humans).list();
+        return new ArrayList<>(list);
+    }
+
+    public List<RfidEvent> find(DateTime from, DateTime to, List<Human> humans) {
+        Date f = from.toDate();
+        Date t = to.toDate();
+        List<RfidEvent> list = ofy.ofy().load().type(RfidEvent.class).filter("eventDate > ", f).filter("eventDate < ", t).filter("human in", humans).list();
         return new ArrayList<>(list);
     }
 

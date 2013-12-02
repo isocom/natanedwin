@@ -8,7 +8,7 @@ import com.appspot.natanedwin.app.view.TransactionsView;
 import com.appspot.natanedwin.app.view.UserAccountView;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.ComponentContainer;
 import java.util.HashMap;
 
 /**
@@ -34,7 +34,7 @@ public class AppNavigator extends Navigator {
         }
     };
 
-    public AppNavigator(AppUI ui, VerticalLayout container) {
+    public AppNavigator(AppUI ui, ComponentContainer container) {
         super(ui, container);
 
         for (String route : navigatorRoutes.keySet()) {
