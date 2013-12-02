@@ -73,6 +73,10 @@ public class RfidEvent implements Serializable {
         this.human = Ref.create(key);
     }
 
+    public void setHuman(Human human) {
+        this.human = Ref.create(Key.create(Human.class, human.getId()));
+    }
+
     public RfidCard safeRfidCard() {
         if (rfidCard == null) {
             return null;
