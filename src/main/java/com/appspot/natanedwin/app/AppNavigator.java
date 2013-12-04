@@ -7,9 +7,7 @@ import com.appspot.natanedwin.app.view.TimeAttendanceView;
 import com.appspot.natanedwin.app.view.TransactionsView;
 import com.appspot.natanedwin.app.view.UserAccountView;
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.View;
 import com.vaadin.ui.ComponentContainer;
-import java.util.HashMap;
 
 /**
  *
@@ -17,28 +15,35 @@ import java.util.HashMap;
  */
 public class AppNavigator extends Navigator {
 
-    public static final String AC = "/ac";
-    public static final String BOGUS = "/bogus";
-    public static final String HOME = "";
-    public static final String RPC = "/rpc";
-    public static final String TRANSACTIONS = "/transactions";
-    public static final String USERS = "/users";
-    private final static HashMap<String, Class<? extends View>> navigatorRoutes = new HashMap<String, Class<? extends View>>() {
-        {
-            put(AC, AccessControlView.class);
-            put(BOGUS, BogusView.class);
-            put(HOME, HomeView.class);
-            put(RPC, TimeAttendanceView.class);
-            put(TRANSACTIONS, TransactionsView.class);
-            put(USERS, UserAccountView.class);
+    public enum ViewDestination {
+
+        HOME("", HomeView.class),
+        AC("/ac", AccessControlView.class),
+        BOGUS("/bogus", BogusView.class),
+        RPC("/rpc", TimeAttendanceView.class),
+        TRANSACTIONS("/transactions", TransactionsView.class),
+        USERS("/users", UserAccountView.class);
+
+        private final String route;
+        private final Class classView;
+
+        private ViewDestination(String route, Class classView) {
+            this.route = route;
+            this.classView = classView;
         }
-    };
+    }
 
     public AppNavigator(AppUI ui, ComponentContainer container) {
         super(ui, container);
 
-        for (String route : navigatorRoutes.keySet()) {
-            this.addView(route, navigatorRoutes.get(route));
+        for (ViewDestination v : ViewDestination.values()) {
+            this.addView(v.route, v.classView);
         }
     }
+
+    public void navigateTo(ViewDestination destination) {
+
+        super.navigateTo(destination.route);
+    }
+
 }

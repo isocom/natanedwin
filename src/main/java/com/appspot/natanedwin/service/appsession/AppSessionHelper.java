@@ -1,5 +1,8 @@
 package com.appspot.natanedwin.service.appsession;
 
+import com.appspot.natanedwin.app.AppNavigator;
+import com.appspot.natanedwin.app.AppUI;
+import com.vaadin.ui.UI;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -15,6 +18,14 @@ public final class AppSessionHelper {
 
     private AppSessionHelper() {
         throw new IllegalStateException();
+    }
+
+    public static AppUI getAppUI() {
+        return (AppUI) UI.getCurrent();
+    }
+
+    public static AppNavigator getAppNavigator() {
+        return getAppUI().getAppNavigator();
     }
 
     public static long userAccountId(AppSession appSession) {

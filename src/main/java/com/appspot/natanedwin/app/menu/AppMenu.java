@@ -1,8 +1,10 @@
 package com.appspot.natanedwin.app.menu;
 
 import com.appspot.natanedwin.app.AppAboutWindow;
+import com.appspot.natanedwin.app.AppNavigator;
 import com.appspot.natanedwin.app.menu.profile.ChangePassword;
 import com.appspot.natanedwin.service.appsession.AppSession;
+import com.appspot.natanedwin.service.appsession.AppSessionHelper;
 import com.appspot.natanedwin.service.spring.SpringContext;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
@@ -22,6 +24,7 @@ public final class AppMenu {
         final MenuBar menuBar = new MenuBar();
         menuBar.setWidth("100%");
 
+        buildMenuView(menuBar);
         buildMenuProfil(menuBar);
         FilesMenu.buildMenuFiles(menuBar);
         if (appSession.getUserCredentials().isUserAdmin()) {
@@ -63,6 +66,32 @@ public final class AppMenu {
             @Override
             public void menuSelected(MenuItem selectedItem) {
                 AppAboutWindow.show();
+            }
+        });
+    }
+
+    private static void buildMenuView(MenuBar menuBar) {
+        MenuItem menu = menuBar.addItem("Widok", null);
+
+        menu.addItem("Panel główny", new MenuBar.Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                AppSessionHelper.getAppNavigator().navigateTo(AppNavigator.ViewDestination.HOME);
+            }
+        });
+        menu.addItem("Rejestracja czasu pracy", new MenuBar.Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                AppSessionHelper.getAppNavigator().navigateTo(AppNavigator.ViewDestination.RPC);
+            }
+        });
+        menu.addItem("Kontrola dostępu", new MenuBar.Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                AppSessionHelper.getAppNavigator().navigateTo(AppNavigator.ViewDestination.AC);
             }
         });
     }

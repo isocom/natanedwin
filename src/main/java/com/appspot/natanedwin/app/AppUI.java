@@ -26,7 +26,7 @@ public class AppUI extends UI {
 
     private final String WRAPPED_SESSION_USER_CREDENTIALS = "userCredentials";
     private final static Logger LOGGER = LoggerFactory.getLogger(AppUI.class);
-    private AppNavigator navigator;
+    private AppNavigator appNavigator;
     private DownloadArea downloadArea;
 
     @Override
@@ -82,7 +82,7 @@ public class AppUI extends UI {
         centerArea.addComponent(buildSideBar());
 
         VerticalLayout content = new VerticalLayout();
-        navigator = new AppNavigator(this, content);
+        appNavigator = new AppNavigator(this, content);
 
         centerArea.addComponent(content);
         centerArea.setExpandRatio(content, 1);
@@ -103,7 +103,7 @@ public class AppUI extends UI {
         button = new Button("Panel główny", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                navigator.navigateTo(AppNavigator.HOME);
+                appNavigator.navigateTo(AppNavigator.ViewDestination.HOME);
             }
         });
         button.setWidth(buttonWidth, Unit.PIXELS);
@@ -112,7 +112,7 @@ public class AppUI extends UI {
         button = new Button("RCP", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                navigator.navigateTo(AppNavigator.RPC);
+                appNavigator.navigateTo(AppNavigator.ViewDestination.RPC);
             }
         });
         button.setWidth(buttonWidth, Unit.PIXELS);
@@ -121,7 +121,7 @@ public class AppUI extends UI {
         button = new Button("KD", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                navigator.navigateTo(AppNavigator.BOGUS);
+                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
             }
         });
         button.setWidth(buttonWidth, Unit.PIXELS);
@@ -130,7 +130,7 @@ public class AppUI extends UI {
         button = new Button("Parking", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                navigator.navigateTo(AppNavigator.BOGUS);
+                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
             }
         });
         button.setWidth(buttonWidth, Unit.PIXELS);
@@ -139,7 +139,7 @@ public class AppUI extends UI {
         button = new Button("Hotel", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                navigator.navigateTo(AppNavigator.BOGUS);
+                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
             }
         });
         button.setWidth(buttonWidth, Unit.PIXELS);
@@ -148,7 +148,7 @@ public class AppUI extends UI {
         button = new Button("Bilety", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                navigator.navigateTo(AppNavigator.BOGUS);
+                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
             }
         });
         button.setWidth(buttonWidth, Unit.PIXELS);
@@ -157,7 +157,7 @@ public class AppUI extends UI {
         button = new Button("Basen", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                navigator.navigateTo(AppNavigator.BOGUS);
+                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
             }
         });
         button.setWidth(buttonWidth, Unit.PIXELS);
@@ -166,7 +166,7 @@ public class AppUI extends UI {
         button = new Button("Siłownia", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                navigator.navigateTo(AppNavigator.BOGUS);
+                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
             }
         });
         button.setWidth(buttonWidth, Unit.PIXELS);
@@ -175,7 +175,7 @@ public class AppUI extends UI {
         button = new Button("Sprzedaż", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                navigator.navigateTo(AppNavigator.BOGUS);
+                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
             }
         });
         button.setWidth(buttonWidth, Unit.PIXELS);
@@ -185,7 +185,6 @@ public class AppUI extends UI {
 //        downloadArea.setSizeFull();
         sideBar.addComponent(downloadArea);
         sideBar.setExpandRatio(downloadArea, 1);
-
         // User menu
         //        sideBar.addComponent(new VerticalLayout() {
         //            {
@@ -231,4 +230,9 @@ public class AppUI extends UI {
     public DownloadArea getDownloadArea() {
         return downloadArea;
     }
+
+    public AppNavigator getAppNavigator() {
+        return appNavigator;
+    }
+
 }
