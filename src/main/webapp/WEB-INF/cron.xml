@@ -5,4 +5,9 @@
         <description>Clean up sessions</description>
         <schedule>every 2 hours</schedule>    
     </cron>
+    <cron>
+        <url>/tools/PeriodicInvoice</url>
+        <description>Monthly invoice</description>
+        <schedule>2nd monday of dec 10:00</schedule>    
+    </cron>
 </cronentries>

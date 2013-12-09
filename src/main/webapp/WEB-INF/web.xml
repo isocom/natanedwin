@@ -72,7 +72,7 @@
     </servlet-mapping>
             
     <!-- ********************************************************************-->
-    <!-- fixing data servlet -->
+    <!-- File upload servlet -->
     <servlet>
         <servlet-name>GcsFileUploadServlet</servlet-name>
         <servlet-class>com.appspot.natanedwin.servlet.tools.GcsFileUploadServlet</servlet-class>
@@ -80,6 +80,17 @@
     <servlet-mapping>
         <servlet-name>GcsFileUploadServlet</servlet-name>
         <url-pattern>/tools/GcsFileUpload</url-pattern>
+    </servlet-mapping>
+
+    <!-- ********************************************************************-->
+    <!-- periodic invoice servlet -->
+    <servlet>
+        <servlet-name>PeriodicInvoiceServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.tools.PeriodicInvoiceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PeriodicInvoiceServlet</servlet-name>
+        <url-pattern>/tools/PeriodicInvoice</url-pattern>
     </servlet-mapping>
 
     <!-- ******************************************************************* -->
