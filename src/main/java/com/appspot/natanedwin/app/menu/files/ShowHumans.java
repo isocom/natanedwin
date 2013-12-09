@@ -1,6 +1,5 @@
 package com.appspot.natanedwin.app.menu.files;
 
-import com.appspot.natanedwin.dao.HumanDao;
 import com.appspot.natanedwin.dao.UserAccountDao;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.UserAccount;
@@ -9,10 +8,8 @@ import com.appspot.natanedwin.service.spring.SpringContext;
 import com.appspot.natanedwin.vaadin.EntityContainerWindow;
 import com.appspot.natanedwin.vaadin.EntityContainer;
 import com.appspot.natanedwin.vaadin.entity.HumanItem;
-import com.googlecode.objectify.Ref;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

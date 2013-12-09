@@ -26,7 +26,9 @@ public final class AppMenu {
 
         buildMenuView(menuBar);
         buildMenuProfil(menuBar);
-        FilesMenu.buildMenuFiles(menuBar);
+        FilesMenu.build(menuBar);
+        AcMenu.build(menuBar);
+        TaMenu.build(menuBar);
         if (appSession.getUserCredentials().isUserAdmin()) {
             SuperAdmin.buildMenuSuperAdmin(menuBar);
         }

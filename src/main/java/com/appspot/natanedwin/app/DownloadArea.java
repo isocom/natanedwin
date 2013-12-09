@@ -1,9 +1,9 @@
 package com.appspot.natanedwin.app;
 
 import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.HorizontalLayout;
 
-public class DownloadArea extends VerticalLayout {
+public class DownloadArea extends HorizontalLayout {
 
     private Component component1 = null;
     private Component component2 = null;

@@ -6,11 +6,9 @@ import com.appspot.natanedwin.entity.Establishment;
 import com.appspot.natanedwin.entity.UserAccount;
 import com.appspot.natanedwin.service.appsession.AppSession;
 import com.appspot.natanedwin.service.appsession.AppSessionHelper;
-import com.appspot.natanedwin.service.user.UserCredentials;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -37,10 +35,11 @@ public class HomeView extends VerticalLayout implements View {
         Establishment establishment = establishmentDao.byId(establishmentId);
 
         setSizeFull();
-//        setCaption("Informacja o systemie:");
         Label title = new Label("Witaj w naszej aplikacji");
+        title.setSizeUndefined();
         title.addStyleName("h1");
         addComponent(title);
+
         addComponent(new Label("Bieżąca wersja: " + applicationName + " / " + applicationVersion));
         String google = (appSession.getUserCredentials().getPrincipalName() != null) ? (" -> " + appSession.getUserCredentials().getPrincipalName()) : "";
         addComponent(new Label("Typ użytkownika: " + userAccount.getUserAccountType() + google));

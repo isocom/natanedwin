@@ -46,13 +46,6 @@ public class TimeAttendanceView2 extends VerticalLayout {
         }));
         toolbar.addComponent(new Button("Generuj XLS"));
         toolbar.addComponent(new Button("Generuj PDF"));
-        toolbar.addComponent(new Button("Dodaj zdarzenie", new Button.ClickListener() {
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                AddRfidEventWindow.show();
-            }
-        }));
         addComponent(label);
     }
 

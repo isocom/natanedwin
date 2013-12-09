@@ -7,10 +7,6 @@ import com.appspot.natanedwin.service.spring.SpringContext;
 import com.appspot.natanedwin.service.user.UserCredentials;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.WrappedSession;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
@@ -69,122 +65,17 @@ public class AppUI extends UI {
         MenuBar menuBar = AppMenu.buildMainMenu();
         content.addComponent(menuBar);
 
-        HorizontalLayout centerArea = buildCenterArea();
+        VerticalLayout centerArea = new VerticalLayout();
+        appNavigator = new AppNavigator(this, centerArea);
         content.addComponent(centerArea);
         content.setExpandRatio(centerArea, 1);
+
+        downloadArea = new DownloadArea();
+        content.addComponent(downloadArea);
 
         return content;
     }
 
-    private HorizontalLayout buildCenterArea() {
-        HorizontalLayout centerArea = new HorizontalLayout();
-        centerArea.setSizeFull();
-        centerArea.addComponent(buildSideBar());
-
-        VerticalLayout content = new VerticalLayout();
-        appNavigator = new AppNavigator(this, content);
-
-        centerArea.addComponent(content);
-        centerArea.setExpandRatio(content, 1);
-
-        return centerArea;
-    }
-
-    private VerticalLayout buildSideBar() {
-        final float buttonWidth = 120;
-
-        VerticalLayout sideBar = new VerticalLayout();
-        sideBar.setWidth(null);
-        sideBar.setHeight("100%");
-        sideBar.setSpacing(false);
-
-        Button button;
-
-        button = new Button("Panel główny", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                appNavigator.navigateTo(AppNavigator.ViewDestination.HOME);
-            }
-        });
-        button.setWidth(buttonWidth, Unit.PIXELS);
-        sideBar.addComponent(button);
-
-        button = new Button("RCP", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                appNavigator.navigateTo(AppNavigator.ViewDestination.RPC);
-            }
-        });
-        button.setWidth(buttonWidth, Unit.PIXELS);
-        sideBar.addComponent(button);
-
-        button = new Button("KD", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
-            }
-        });
-        button.setWidth(buttonWidth, Unit.PIXELS);
-        sideBar.addComponent(button);
-
-        button = new Button("Parking", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
-            }
-        });
-        button.setWidth(buttonWidth, Unit.PIXELS);
-        sideBar.addComponent(button);
-
-        button = new Button("Hotel", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
-            }
-        });
-        button.setWidth(buttonWidth, Unit.PIXELS);
-        sideBar.addComponent(button);
-
-        button = new Button("Bilety", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
-            }
-        });
-        button.setWidth(buttonWidth, Unit.PIXELS);
-        sideBar.addComponent(button);
-
-        button = new Button("Basen", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
-            }
-        });
-        button.setWidth(buttonWidth, Unit.PIXELS);
-        sideBar.addComponent(button);
-
-        button = new Button("Siłownia", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
-            }
-        });
-        button.setWidth(buttonWidth, Unit.PIXELS);
-        sideBar.addComponent(button);
-
-        button = new Button("Sprzedaż", new ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                appNavigator.navigateTo(AppNavigator.ViewDestination.BOGUS);
-            }
-        });
-        button.setWidth(buttonWidth, Unit.PIXELS);
-        sideBar.addComponent(button);
-
-        downloadArea = new DownloadArea();
-//        downloadArea.setSizeFull();
-        sideBar.addComponent(downloadArea);
-        sideBar.setExpandRatio(downloadArea, 1);
         // User menu
         //        sideBar.addComponent(new VerticalLayout() {
         //            {
@@ -224,8 +115,6 @@ public class AppUI extends UI {
         //                });
         //            }
         //        });
-        return sideBar;
-    }
 
     public DownloadArea getDownloadArea() {
         return downloadArea;

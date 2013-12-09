@@ -12,7 +12,7 @@ public class TimeAttendanceView extends VerticalLayout implements View {
     public TimeAttendanceView() {
         setSizeFull();
 
-        final Label title = new Label("Rejestracja czasu pracy");
+        final Label title = new Label("Rejestracja Czasu Pracy (RCP)");
         title.setSizeUndefined();
         title.addStyleName("h1");
         addComponent(title);
@@ -24,11 +24,6 @@ public class TimeAttendanceView extends VerticalLayout implements View {
         tabSheet.addTab(new TimeAttendanceView2(), "Raport miesięczny");
         tabSheet.addTab(tab3(), "Raport Przyszły 1");
         setExpandRatio(tabSheet, 1);
-    }
-
-    private Component tab2() {
-        VerticalLayout verticalLayout = new VerticalLayout();
-        return verticalLayout;
     }
 
     private Component tab3() {

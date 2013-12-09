@@ -20,7 +20,7 @@ public class AppNavigator extends Navigator {
         HOME("", HomeView.class),
         AC("/ac", AccessControlView.class),
         BOGUS("/bogus", BogusView.class),
-        RPC("/rpc", TimeAttendanceView.class),
+        RPC("/ta", TimeAttendanceView.class),
         TRANSACTIONS("/transactions", TransactionsView.class),
         USERS("/users", UserAccountView.class);
 

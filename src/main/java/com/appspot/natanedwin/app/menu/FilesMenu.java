@@ -5,7 +5,7 @@ import com.vaadin.ui.MenuBar;
 
 public class FilesMenu {
 
-    static void buildMenuFiles(MenuBar menuBar) {
+    static void build(MenuBar menuBar) {
         MenuBar.MenuItem menu = menuBar.addItem("Kartoteki", null);
         
         menu.addItem("Pokaż osoby", new ShowHumans());

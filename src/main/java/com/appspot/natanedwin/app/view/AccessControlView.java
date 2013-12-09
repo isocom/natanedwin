@@ -20,21 +20,21 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.Date;
 
 public class AccessControlView extends VerticalLayout implements View {
-    
+
     private Report report;
-    
+
     public AccessControlView() {
         setSizeFull();
-        
-        final Label title = new Label("Rejestracja czasu pracy");
+
+        final Label title = new Label("Kontrola dostępu");
         title.setSizeUndefined();
         title.addStyleName("h1");
         addComponent(title);
-        
+
         report = new DayStatus(new Date());
-        
+
         final Label label = new Label(report.asHTML(), ContentMode.HTML);
-        
+
         final HorizontalLayout toolbar = new HorizontalLayout();
         final PopupDateField popupDateField = new PopupDateField("Podaj dzień raportu", new Date());
         popupDateField.setDateFormat("yyyy-MM-dd");
@@ -60,7 +60,7 @@ public class AccessControlView extends VerticalLayout implements View {
                 Link link = new Link();
                 link.setCaption(report.getFileName() + ".xls");
                 opener.extend(link);
-                
+
                 AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
                 appSession.getAppUI().getDownloadArea().add(link);
             }
@@ -74,18 +74,18 @@ public class AccessControlView extends VerticalLayout implements View {
                 Link link = new Link();
                 link.setCaption(report.getFileName() + ".pdf");
                 opener.extend(link);
-                
+
                 AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
                 appSession.getAppUI().getDownloadArea().add(link);
             }
         }));
         addComponent(toolbar);
-        
+
         label.setSizeFull();
         addComponent(label);
         setExpandRatio(label, 1);
     }
-    
+
     @Override
     public void enter(ViewChangeEvent event) {
     }
