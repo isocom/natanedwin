@@ -27,6 +27,8 @@ public class PeriodicInvoiceServlet extends HttpServlet {
         StringBuilder sb = new StringBuilder();
         long total = 0;
 
+        sb.append("Miesięczne rozliczenie kart RFID u klientów\n\n");
+        sb.append("----------------------------------------------------\n");
         List<Establishment> establishments = establishmentDao.findAll();
         for (Establishment establishment : establishments) {
             long subTotal = 0;
@@ -37,11 +39,14 @@ public class PeriodicInvoiceServlet extends HttpServlet {
                 subTotal += human.getMonthlyRate();
             }
             sb.append("Razem firma: ").append(subTotal / 100.0).append(" zł.\n");
+            sb.append("Połowa: ").append(subTotal / 200.0).append(" zł.\n");
+            sb.append("Ilość kart: ").append(humans.size()).append(" szt.\n");
+            sb.append("Opis FV: Dostęp do aplikacji churowej RFID dla: ").append(establishment.getName()).append(".\n");
+            sb.append("----------------------------------------------------\n");
             total += subTotal;
-            sb.append('\n');
         }
         sb.append("RAZEM wszystkie firmy: ").append(total / 100.0).append(" zł.\n");
-        sb.append("Wygenerowano automatycznie: ").append(new Date()).append(".\n");
+        sb.append("Wygenerowano automatycznie: ").append(new Date()).append(" (pierwszy poniedziałek miesiąca).\n");
 
         resp.setContentType("text/plain;charset=UTF-8");
         resp.getWriter().print(sb);
