@@ -1,5 +1,6 @@
 package com.appspot.natanedwin.entity;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -59,6 +60,11 @@ public class Establishment implements Serializable {
     ////////////////////////////////////////////////////////////////////////////
     // HIDING REF<?> ///////////////////////////////////////////////////////////    
     ////////////////////////////////////////////////////////////////////////////
+    public void addHuman(Human human) {
+        Ref<Human> h = Ref.create(Key.create(Human.class, human.getId()));
+        getHumans().add(h);
+    }
+
     public List<Human> safeHumans() {
         List<Human> hh = new ArrayList<>();
         for (Ref<Human> hr : humans) {
