@@ -19,7 +19,7 @@ public class FixServlet extends HttpServlet {
             return;
         }
         
-        HumanFix.fixReSave(writer);
+//        HumanFix.fixReSave(writer);
 //        RfidCardFix.fixCardOverprint(writer);
 //        EstablishmentFix.fixResDruk1(writer);
 //        UserAccountFix.fixRefEstablishment(writer);

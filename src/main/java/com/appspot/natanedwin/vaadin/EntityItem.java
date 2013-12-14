@@ -10,11 +10,17 @@ import java.util.LinkedList;
 
 /**
  *
+ * @param <BT> POJO (Bean that is used do wrap)
  */
 public abstract class EntityItem<BT> implements Item {
 
     private final static String ID_PID = "GAE ID";
     private final static String UUID_PID = "UUID";
+
+    public enum RenderingHint {
+
+        TextField, CheckBox;
+    }
     /**
      * The bean which this Item is based on.
      */
@@ -25,11 +31,15 @@ public abstract class EntityItem<BT> implements Item {
     /**
      * Mapping from property id to property.
      */
-    private HashMap<Object, Property<?>> propertyMap = new HashMap<Object, Property<?>>();
+    private final HashMap<Object, Property<?>> propertyMap = new HashMap<>();
+    /**
+     * Mapping from property id to rendering hint.
+     */
+    private final HashMap<Object, RenderingHint> renderingHintMap = new HashMap<>();
     /**
      * List of all property ids to maintain the order.
      */
-    private LinkedList<String> propertyList = new LinkedList<String>();
+    private final LinkedList<String> propertyList = new LinkedList<>();
 
     public EntityItem(BT bean) {
         this.entity = bean;
@@ -61,6 +71,13 @@ public abstract class EntityItem<BT> implements Item {
     @Override
     public final boolean addItemProperty(Object id, Property property) throws UnsupportedOperationException {
         propertyMap.put(id, property);
+        renderingHintMap.put(id, RenderingHint.TextField);
+        return propertyList.add(id.toString());
+    }
+
+    public final boolean addItemProperty(Object id, Property property, RenderingHint renderingHint) throws UnsupportedOperationException {
+        propertyMap.put(id, property);
+        renderingHintMap.put(id, renderingHint);
         return propertyList.add(id.toString());
     }
 
@@ -68,6 +85,10 @@ public abstract class EntityItem<BT> implements Item {
     public boolean removeItemProperty(Object id) throws UnsupportedOperationException {
         propertyMap.remove(id);
         return propertyList.remove(id.toString());
+    }
+
+    public RenderingHint renderingHint(String pid) {
+        return renderingHintMap.get(pid);
     }
 
     public abstract Dao getDao();

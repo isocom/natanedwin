@@ -2,6 +2,7 @@ package com.appspot.natanedwin.vaadin;
 
 import com.appspot.natanedwin.dao.Dao;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
@@ -62,16 +63,14 @@ public class EntityItemWindow extends Window {
         public EntityForm(final Map<String, EntityAction> additionalActions) {
             VerticalLayout verticalLayout = new VerticalLayout();
             verticalLayout.setMargin(true);
+
             FormLayout formLayout = new FormLayout();
-            HorizontalLayout horizontalLayout = new HorizontalLayout();
             Collection<String> itemPropertyIds = entityItem.getItemPropertyIds();
             for (String pid : itemPropertyIds) {
-                Field field = new TextField();
-                field.setCaption(pid);
-                field.setPropertyDataSource(entityItem.getItemProperty(pid));
-                formLayout.addComponent(field);
+                formLayout.addComponent(buildField(pid));
             }
 
+            HorizontalLayout horizontalLayout = new HorizontalLayout();
             horizontalLayout.addComponent(new Button("Zapisz", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
@@ -96,6 +95,21 @@ public class EntityItemWindow extends Window {
             verticalLayout.addComponent(formLayout);
             verticalLayout.addComponent(horizontalLayout);
             setCompositionRoot(verticalLayout);
+        }
+
+        private Field buildField(String pid) {
+            Field field;
+            switch (entityItem.renderingHint(pid)) {
+                case CheckBox:
+                    field = new CheckBox();
+                    break;
+                default:
+                    field = new TextField();
+                    break;
+            }
+            field.setCaption(pid);
+            field.setPropertyDataSource(entityItem.getItemProperty(pid));
+            return field;
         }
     }
 

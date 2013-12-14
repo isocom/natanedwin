@@ -12,6 +12,7 @@ public class HumanItem extends EntityItem<Human> {
     public HumanItem(Human bean) {
         super(bean);
         addItemProperty("Imię i nazwisko", new MethodProperty(bean, "name"));
+        addItemProperty("Aktywny", new MethodProperty(bean, "active"), RenderingHint.CheckBox);
     }
 
     @Override

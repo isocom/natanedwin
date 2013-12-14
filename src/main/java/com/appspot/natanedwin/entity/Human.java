@@ -21,6 +21,7 @@ public class Human implements Serializable, Comparable<Human> {
     private String uuid = UUID.randomUUID().toString();
     @Index
     private String name = "";
+    private boolean active = true;
     private long monthlyRate = 300;
 
     ////////////////////////////////////////////////////////////////////////////
@@ -86,6 +87,14 @@ public class Human implements Serializable, Comparable<Human> {
 
     public void setMonthlyRate(long monthlyRate) {
         this.monthlyRate = monthlyRate;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
 }
