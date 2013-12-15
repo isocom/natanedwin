@@ -15,29 +15,37 @@ public final class TR610Response {
     public static void heartBeat1(PrintWriter resp, Device device) {
         SimpleDateFormat dateFormater = new SimpleDateFormat("yyMMdd HHmmss");
         dateFormater.setTimeZone(TimeZone.getTimeZone("CET"));
-        resp.print(CMD_ESC + "HeartBeat1" + CMD_DEL + dateFormater.format(new Date()) + CMD_END);
+        resp.println(CMD_ESC + "HeartBeat1" + CMD_DEL + dateFormater.format(new Date()) + CMD_END);
     }
 
     public static void hello1(PrintWriter resp, Device device) {
-        resp.print(CMD_ESC + "Hello1" + CMD_DEL + device.getId() + CMD_END);
+        resp.println(CMD_ESC + "Hello1" + CMD_DEL + device.getId() + CMD_END);
+    }
+
+    public static void enableLocalTTSoftDevices(PrintWriter resp) {
+        resp.println(CMD_ESC + "StartTCPTT" + CMD_END);
+    }
+
+    public static void enableLocalRs232Server(PrintWriter resp) {
+        resp.println(CMD_ESC + "StartRS232" + CMD_END);
     }
 
     public static void display1(PrintWriter resp, String line1) {
         line1 = latinize(line1);
-        resp.print(CMD_ESC + "Display1" + CMD_DEL + line1 + CMD_END);
+        resp.println(CMD_ESC + "Display1" + CMD_DEL + line1 + CMD_END);
     }
 
     public static void display2(PrintWriter resp, String line1, String line2) {
         line1 = latinize(line1);
         line2 = latinize(line2);
-        resp.print(CMD_ESC + "Display2" + CMD_DEL + line1 + CMD_DEL + line2 + CMD_END);
+        resp.println(CMD_ESC + "Display2" + CMD_DEL + line1 + CMD_DEL + line2 + CMD_END);
     }
 
     public static void display3(PrintWriter resp, String line1, String line2, String line3) {
         line1 = latinize(line1);
         line2 = latinize(line2);
         line3 = latinize(line3);
-        resp.print(CMD_ESC + "Display3" + CMD_DEL + line1 + CMD_DEL + line2 + CMD_DEL + line3 + CMD_END);
+        resp.println(CMD_ESC + "Display3" + CMD_DEL + line1 + CMD_DEL + line2 + CMD_DEL + line3 + CMD_END);
     }
 
     public static void display4(PrintWriter resp, String line1, String line2, String line3, String line4) {
@@ -45,7 +53,11 @@ public final class TR610Response {
         line2 = latinize(line2);
         line3 = latinize(line3);
         line4 = latinize(line4);
-        resp.print(CMD_ESC + "Display4" + CMD_DEL + line1 + CMD_DEL + line2 + CMD_DEL + line3 + CMD_DEL + line4 + CMD_END);
+        resp.println(CMD_ESC + "Display4" + CMD_DEL + line1 + CMD_DEL + line2 + CMD_DEL + line3 + CMD_DEL + line4 + CMD_END);
+    }
+
+    public static void ttsoftOpenRelay(PrintWriter resp, int addr) {
+        resp.println(CMD_ESC + "TTSoftOpen" + CMD_DEL + addr + CMD_END);
     }
 
     private static String latinize(String s) {

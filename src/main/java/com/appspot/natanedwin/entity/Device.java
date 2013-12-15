@@ -8,6 +8,9 @@ import com.googlecode.objectify.annotation.Unindex;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -28,11 +31,13 @@ public class Device implements Serializable {
     @Unindex
     private Date firstTimeSeen = new Date();
     @Unindex
-    private String description = null;
+    private String description = "";
+    @Unindex
+    private String configuration = "{}";
 
     @Override
     public String toString() {
-        return getClass() + ":" + id + "/" + deviceType + "/" + serialNumber;
+        return ReflectionToStringBuilder.toString(this);
     }
     ////////////////////////////////////////////////////////////////////////////
     // Standard EQUALLS and HASHCODE ///////////////////////////////////////////
@@ -55,9 +60,20 @@ public class Device implements Serializable {
         return uuid.hashCode();
     }
     ////////////////////////////////////////////////////////////////////////////
-    // GETTERS AND SETTERS
+    // HIDING REF<?> ///////////////////////////////////////////////////////////    
     ////////////////////////////////////////////////////////////////////////////
 
+    public JSONObject getJsonConfiguration() {
+        try {
+            return new JSONObject(configuration);
+        } catch (JSONException jsone) {
+            throw new RuntimeException(jsone);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // GETTERS AND SETTERS
+    ////////////////////////////////////////////////////////////////////////////
     public Long getId() {
         return id;
     }
@@ -104,5 +120,13 @@ public class Device implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(String configuration) {
+        this.configuration = configuration;
     }
 }

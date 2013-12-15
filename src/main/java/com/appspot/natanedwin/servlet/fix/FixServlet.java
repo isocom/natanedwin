@@ -21,6 +21,7 @@ public class FixServlet extends HttpServlet {
         
 //        HumanFix.fixReSave(writer);
 //        RfidCardFix.fixCardOverprint(writer);
+        DeviceFix.fixReSave(writer);
 //        EstablishmentFix.fixResDruk1(writer);
 //        UserAccountFix.fixRefEstablishment(writer);
 //        UserAccountFix.fixReSave(writer);

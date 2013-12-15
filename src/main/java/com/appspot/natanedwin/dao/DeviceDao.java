@@ -6,8 +6,11 @@ package com.appspot.natanedwin.dao;
 
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.Device;
+import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.service.memcache.MemCache;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.cmd.Query;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +30,13 @@ public class DeviceDao implements Dao<Device> {
     @Override
     public Device byId(long id) {
         return ofy.ofy().load().type(Device.class).id(id).safe();
+    }
+
+    public List<Device> findAll() {
+        Query<Device> query = ofy.ofy().load().type(Device.class);
+        List<Device> list = query.list();
+        ofy.ofy().clear();
+        return list;
     }
 
     public Device findBySerialNumber(String serialNumber) {
