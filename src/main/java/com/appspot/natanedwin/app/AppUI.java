@@ -24,6 +24,7 @@ public class AppUI extends UI {
     private final static Logger LOGGER = LoggerFactory.getLogger(AppUI.class);
     private AppNavigator appNavigator;
     private DownloadArea downloadArea;
+    private AppMenu appMenu;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -62,8 +63,8 @@ public class AppUI extends UI {
         VerticalLayout content = new VerticalLayout();
         content.setSizeFull();
 
-        MenuBar menuBar = AppMenu.buildMainMenu();
-        content.addComponent(menuBar);
+        appMenu = new AppMenu();
+        content.addComponent(appMenu);
 
         VerticalLayout centerArea = new VerticalLayout();
         appNavigator = new AppNavigator(this, centerArea);
@@ -76,52 +77,55 @@ public class AppUI extends UI {
         return content;
     }
 
-        // User menu
-        //        sideBar.addComponent(new VerticalLayout() {
-        //            {
-        //                setSizeUndefined();
-        //                addStyleName("user");
-        //                Image profilePic = new Image(null, new ClassResource("profile-pic.png"));
-        //                profilePic.setWidth("34px");
-        //                addComponent(profilePic);
-        //                Label userName = new Label("Bart Prokop");
-        //                userName.setSizeUndefined();
-        //                addComponent(userName);
-        //
-        //                Command cmd = new Command() {
-        //                    @Override
-        //                    public void menuSelected(MenuItem selectedItem) {
-        //                        Notification.show("Not implemented in this demo");
-        //                    }
-        //                };
-        //                MenuBar settings = new MenuBar();
-        //                MenuItem settingsMenu = settings.addItem("", new ClassResource("settings-pic.png"), null);
-        //                settingsMenu.setStyleName("icon-cog");
-        //                settingsMenu.addItem("Settings", cmd);
-        //                settingsMenu.addItem("Preferences", cmd);
-        //                settingsMenu.addSeparator();
-        //                settingsMenu.addItem("My Account", cmd);
-        //                addComponent(settings);
-        //
-        //                Button exit = new NativeButton();
-        //                exit.setIcon(new ClassResource("close-pic.png"));
-        //                exit.setDescription("Zamknij aplikację");
-        //                addComponent(exit);
-        //                exit.addClickListener(new ClickListener() {
-        //                    @Override
-        //                    public void buttonClick(ClickEvent event) {
-        //                        UI.getCurrent().getPage().setLocation("/");
-        //                    }
-        //                });
-        //            }
-        //        });
-
+    // User menu
+    //        sideBar.addComponent(new VerticalLayout() {
+    //            {
+    //                setSizeUndefined();
+    //                addStyleName("user");
+    //                Image profilePic = new Image(null, new ClassResource("profile-pic.png"));
+    //                profilePic.setWidth("34px");
+    //                addComponent(profilePic);
+    //                Label userName = new Label("Bart Prokop");
+    //                userName.setSizeUndefined();
+    //                addComponent(userName);
+    //
+    //                Command cmd = new Command() {
+    //                    @Override
+    //                    public void menuSelected(MenuItem selectedItem) {
+    //                        Notification.show("Not implemented in this demo");
+    //                    }
+    //                };
+    //                MenuBar settings = new MenuBar();
+    //                MenuItem settingsMenu = settings.addItem("", new ClassResource("settings-pic.png"), null);
+    //                settingsMenu.setStyleName("icon-cog");
+    //                settingsMenu.addItem("Settings", cmd);
+    //                settingsMenu.addItem("Preferences", cmd);
+    //                settingsMenu.addSeparator();
+    //                settingsMenu.addItem("My Account", cmd);
+    //                addComponent(settings);
+    //
+    //                Button exit = new NativeButton();
+    //                exit.setIcon(new ClassResource("close-pic.png"));
+    //                exit.setDescription("Zamknij aplikację");
+    //                addComponent(exit);
+    //                exit.addClickListener(new ClickListener() {
+    //                    @Override
+    //                    public void buttonClick(ClickEvent event) {
+    //                        UI.getCurrent().getPage().setLocation("/");
+    //                    }
+    //                });
+    //            }
+    //        });
     public DownloadArea getDownloadArea() {
         return downloadArea;
     }
 
     public AppNavigator getAppNavigator() {
         return appNavigator;
+    }
+
+    public AppMenu getAppMenu() {
+        return appMenu;
     }
 
 }

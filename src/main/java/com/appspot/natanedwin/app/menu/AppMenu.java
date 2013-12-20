@@ -5,46 +5,42 @@ import com.appspot.natanedwin.app.AppNavigator;
 import com.appspot.natanedwin.app.menu.profile.ChangePassword;
 import com.appspot.natanedwin.service.appsession.AppSession;
 import com.appspot.natanedwin.service.appsession.AppSessionHelper;
-import com.appspot.natanedwin.service.spring.SpringContext;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 /**
  *
  * @author prokob01
  */
-public final class AppMenu {
+@Configurable(preConstruction = true)
+public final class AppMenu extends MenuBar {
 
-    private AppMenu() {
-        throw new IllegalStateException();
-    }
+    @Autowired
+    private transient AppSession appSession;
 
-    public static MenuBar buildMainMenu() {
-        AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
-        final MenuBar menuBar = new MenuBar();
-        menuBar.setWidth("100%");
-
-        buildMenuView(menuBar);
-        buildMenuProfil(menuBar);
-        FilesMenu.build(menuBar);
-        AcMenu.build(menuBar);
-        TaMenu.build(menuBar);
+    public AppMenu() {
+        setWidth("100%");
+        buildMenuView();
+        buildMenuProfil();
+        FilesMenu.build(this);
+        AcMenu.build(this);
+        TaMenu.build(this);
         if (appSession.getUserCredentials().isUserAdmin()) {
-            SuperAdmin.buildMenuSuperAdmin(menuBar);
+            SuperAdmin.buildMenuSuperAdmin(this);
         }
 
-        menuBar.addItem("Zakończ", new MenuBar.Command() {
+        addItem("Zakończ", new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
-                AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
                 appSession.shutdown();
             }
         });
-        return menuBar;
     }
 
-    private static void buildMenuProfil(MenuBar menuBar) {
-        MenuItem menu = menuBar.addItem("Profil", null);
+    private void buildMenuProfil() {
+        MenuItem menu = addItem("Profil", null);
         MenuItem menuItem;
 
         menuItem = menu.addItem("Zmień hasło dostępu", new ChangePassword());
@@ -72,8 +68,8 @@ public final class AppMenu {
         });
     }
 
-    private static void buildMenuView(MenuBar menuBar) {
-        MenuItem menu = menuBar.addItem("Widok", null);
+    private void buildMenuView() {
+        MenuItem menu = addItem("Widok", null);
 
         menu.addItem("Panel główny", new MenuBar.Command() {
 

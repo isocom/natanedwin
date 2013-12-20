@@ -8,15 +8,25 @@ import com.appspot.natanedwin.report.ByteArrayStreamResource;
 import com.appspot.natanedwin.service.appsession.AppSession;
 import com.appspot.natanedwin.service.gcs.Gcs;
 import com.appspot.natanedwin.service.ofy.Ofy;
-import com.appspot.natanedwin.service.spring.SpringContext;
 import com.appspot.natanedwin.vaadin.EntityAction;
 import com.googlecode.objectify.Ref;
 import com.pdfjet.example.Example_03_CC;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Link;
+import com.vaadin.ui.Notification;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
+@Configurable
 public class PrintCard implements EntityAction<RfidCard> {
+
+    @Autowired
+    private transient AppSession appSession;
+    @Autowired
+    private transient Ofy ofy;
+    @Autowired
+    private transient Gcs gcs;
 
     @Override
     public void execute(RfidCard entity) {
@@ -24,14 +34,13 @@ public class PrintCard implements EntityAction<RfidCard> {
         String humanName;
         byte[] overprintData;
 
-        Ofy ofy = SpringContext.INSTANCE.getBean(Ofy.class);
-        Gcs gcs = SpringContext.INSTANCE.getBean(Gcs.class);
         Ref<Human> humanRef = entity.getHuman();
         if (humanRef != null) {
             Human human = ofy.ofy().load().key(humanRef.getKey()).now();
             humanName = human.getName();
         } else {
-            throw new AppError("Brak osoby", "Przypisz najpierw osobę do tej karty");
+            Notification.show("Brak przypisanej osoby", Notification.Type.ERROR_MESSAGE);
+            return;
         }
 
         Ref<GcsFile> overprintRef = entity.getOverprint();
@@ -39,7 +48,8 @@ public class PrintCard implements EntityAction<RfidCard> {
             GcsFile overprint = ofy.ofy().load().key(overprintRef.getKey()).now();
             overprintData = gcs.read(overprint.getBucketName(), overprint.getObjectName());
         } else {
-            throw new AppError("Brak wzoru", "Przypisz najpierw wzór wydruku do tej karty");
+            Notification.show("Brak przypisanego wzoru wydruku", Notification.Type.ERROR_MESSAGE);
+            return;
         }
 
         ByteArrayStreamResource pdf = new ByteArrayStreamResource(Example_03_CC.karta(humanName, entity.getCardNumber(), overprintData));
@@ -49,7 +59,6 @@ public class PrintCard implements EntityAction<RfidCard> {
         link.setCaption(fileName);
         opener.extend(link);
 
-        AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
         appSession.getAppUI().getDownloadArea().add(link);
     }
 }
