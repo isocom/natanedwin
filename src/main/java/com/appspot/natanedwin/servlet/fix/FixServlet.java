@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class FixServlet extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
@@ -18,13 +18,19 @@ public class FixServlet extends HttpServlet {
             writer.println("Niepoprawne hasło");
             return;
         }
-        
+
+        try {
 //        HumanFix.fixReSave(writer);
 //        RfidCardFix.fixCardOverprint(writer);
-        DeviceFix.fixReSave(writer);
+            RfidCardFix.addPrzedszkole2(writer);
+//        RfidCardFix.fixReSave(writer);
+//        DeviceFix.fixReSave(writer);
 //        EstablishmentFix.fixResDruk1(writer);
 //        UserAccountFix.fixRefEstablishment(writer);
 //        UserAccountFix.fixReSave(writer);
 //        RfidEventFix.fixCardIndexing(writer);
+        } catch (Exception e) {
+            e.printStackTrace(writer);
+        }
     }
 }

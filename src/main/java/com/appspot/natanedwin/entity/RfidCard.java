@@ -10,6 +10,7 @@ import com.googlecode.objectify.annotation.Unindex;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
  *
@@ -25,6 +26,8 @@ public class RfidCard implements Serializable {
     private String uuid = UUID.randomUUID().toString();
     @Unindex
     private RfidCardType rfidCardType;
+    @Unindex
+    private RfidCardNature rfidCardNature = RfidCardNature.Regular;
     @Index
     private String serialNumber;
     @Unindex
@@ -34,13 +37,13 @@ public class RfidCard implements Serializable {
     @Index
     private Ref<Human> human;
     @Unindex
-    Ref<GcsFile> overprint;
+    private Ref<GcsFile> overprint;
     @Unindex
     private String remarks;
 
     @Override
     public String toString() {
-        return getClass() + ":" + id + "/" + rfidCardType + "/" + serialNumber + "/" + cardNumber;
+        return ReflectionToStringBuilder.toString(this);
     }
     ////////////////////////////////////////////////////////////////////////////
     // Standard EQUALLS and HASHCODE ///////////////////////////////////////////
@@ -107,6 +110,14 @@ public class RfidCard implements Serializable {
 
     public void setRfidCardType(RfidCardType rfidCardType) {
         this.rfidCardType = rfidCardType;
+    }
+
+    public RfidCardNature getRfidCardNature() {
+        return rfidCardNature;
+    }
+
+    public void setRfidCardNature(RfidCardNature rfidCardNature) {
+        this.rfidCardNature = rfidCardNature;
     }
 
     public String getSerialNumber() {

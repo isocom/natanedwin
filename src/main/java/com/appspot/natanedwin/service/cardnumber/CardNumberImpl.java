@@ -5,6 +5,7 @@
 package com.appspot.natanedwin.service.cardnumber;
 
 import java.util.Random;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -85,6 +86,8 @@ public class CardNumberImpl implements CardNumber {
      * in the third category must sign a license agreement before they are given
      * access to the registry. Several IINs are well known, especially those
      * representing credit card issuers.
+     * 
+     * @return Prefix of the card number
      */
     protected static synchronized String buildIIN() {
         token++;
@@ -197,5 +200,7 @@ public class CardNumberImpl implements CardNumber {
         System.out.println(cardNumberImpl.generate());
         System.out.println(cardNumberImpl.generate());
         System.out.println(cardNumberImpl.generate());
+        System.out.println(RandomStringUtils.randomAlphanumeric(40));
+        System.out.println(RandomStringUtils.randomAlphanumeric(100));
     }
 }

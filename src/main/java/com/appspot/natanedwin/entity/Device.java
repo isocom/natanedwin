@@ -8,7 +8,7 @@ import com.googlecode.objectify.annotation.Unindex;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -7,7 +7,6 @@ package com.appspot.natanedwin.service.user;
 import com.appspot.natanedwin.dao.UserAccountDao;
 import com.appspot.natanedwin.entity.UserAccount;
 import com.appspot.natanedwin.entity.UserAccountType;
-import com.appspot.natanedwin.service.spammer.SpamType;
 import com.appspot.natanedwin.service.spammer.Spammer;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
@@ -16,7 +15,7 @@ import java.security.MessageDigest;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
