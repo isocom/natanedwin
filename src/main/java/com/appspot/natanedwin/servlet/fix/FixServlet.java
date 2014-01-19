@@ -22,7 +22,7 @@ public class FixServlet extends HttpServlet {
         try {
 //        HumanFix.fixReSave(writer);
 //        RfidCardFix.fixCardOverprint(writer);
-//        RfidCardFix.addPrzedszkole1(writer);
+        RfidCardFix.addPrzedszkole1(writer);
 //        RfidCardFix.addPrzedszkole2(writer);
         RfidCardFix.addPrzedszkole3(writer);
 //        RfidCardFix.fixReSave(writer);
