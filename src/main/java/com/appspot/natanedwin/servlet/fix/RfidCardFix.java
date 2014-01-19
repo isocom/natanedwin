@@ -10,7 +10,6 @@ import com.appspot.natanedwin.entity.RfidCardNature;
 import com.appspot.natanedwin.entity.RfidCardType;
 import com.appspot.natanedwin.service.cardnumber.CardNumber;
 import com.appspot.natanedwin.service.spring.SpringContext;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashSet;
@@ -53,6 +52,16 @@ public class RfidCardFix {
         }
     }
 
+    /**
+     * First you shall export whole database for przsedszkole:
+     * view-source:https://e-dziecko.appspot.com/ExportujKD
+     *
+     * Then create a new Establishment and put it's ID here... Upload card
+     * printout, and notice ID of uploaded file Put GCSFile id down here
+     *
+     * @param writer
+     * @throws Exception
+     */
     public static void addPrzedszkole1(PrintWriter writer) throws Exception {
         RfidCardDao rfidCardDao = SpringContext.INSTANCE.getBean(RfidCardDao.class);
         StringWriter stringWriter = new StringWriter();
@@ -83,8 +92,8 @@ public class RfidCardFix {
             rfidCard.setRfidCardType(RfidCardType.Mifare1k);
             rfidCard.setCardNumber(number);
             rfidCard.setSerialNumber(serial);
-            rfidCard.setRemarks("Import E-Dziecko PP14");
-            rfidCard.setOverprint(6608497064017920L);
+            rfidCard.setRemarks("Import E-Dziecko Trzciana");
+            rfidCard.setOverprint(5680735809699840L);
             rfidCardDao.save(rfidCard);
             writer.println("Zapisano:" + rfidCard);
         }
@@ -99,7 +108,7 @@ public class RfidCardFix {
         JSONObject jsonObject = new JSONObject(stringWriter.toString());
         writer.println(jsonObject);
 
-        Establishment establishment = establishmentDao.byId(6592287857442816L);
+        Establishment establishment = establishmentDao.byId(5709941587312640L);
         Set<String> serials = new HashSet<>();
         JSONArray jsonArray = jsonObject.getJSONArray("humans");
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -138,4 +147,40 @@ public class RfidCardFix {
         }
         establishmentDao.save(establishment);
     }
+
+    /**
+     * Obsluga kart dodatkowych
+     *
+     * @param writer
+     * @throws Exception
+     */
+    public static void addPrzedszkole3(PrintWriter writer) throws Exception {
+        RfidCardDao rfidCardDao = SpringContext.INSTANCE.getBean(RfidCardDao.class);
+
+        StringWriter stringWriter = new StringWriter();
+        IOUtils.copy(RfidCardFix.class.getResourceAsStream("RfidCardFix.json"), stringWriter, "UTF-8");
+        JSONObject jsonObject = new JSONObject(stringWriter.toString());
+        writer.println(jsonObject);
+        JSONArray jsonArray = jsonObject.getJSONArray("humans");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+            JSONArray jsonArray1 = jsonObject1.getJSONArray("cards");
+            String sn = jsonArray1.getString(0);
+            RfidCard rfidCard = rfidCardDao.findBySerialNumber(sn);
+            Human human = rfidCard.getHuman().safe();
+
+            for (int j = 1; j < jsonArray1.length(); j++) {
+                sn = jsonArray1.getString(j);
+                rfidCard = rfidCardDao.findBySerialNumber(sn);
+                if (rfidCard.getHuman().get() != null) {
+                    writer.println("ISTNIEJE JUŻ OSOBA DLA" + sn + " == " + human);
+                } else {
+                    rfidCard.setHuman(human);
+                    rfidCardDao.save(rfidCard);
+                    writer.println("PRZYPISANO " + human + " == " + rfidCard);
+                }
+            }
+        }
+    }
+
 }

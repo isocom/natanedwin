@@ -2,7 +2,6 @@ package com.appspot.natanedwin.servlet.tools;
 
 import com.appspot.natanedwin.dao.GcsFileDao;
 import com.appspot.natanedwin.entity.GcsFile;
-import com.appspot.natanedwin.service.spring.SpringContext;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +15,15 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.util.Streams;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
+@Configurable
 public class GcsFileUploadServlet extends HttpServlet {
+
+    @Autowired
+    private GcsFileDao gcsFileDao;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -25,23 +31,32 @@ public class GcsFileUploadServlet extends HttpServlet {
         try {
             ServletFileUpload upload = new ServletFileUpload();
             res.setContentType("text/plain");
-            FileItemIterator iterator = upload.getItemIterator(req);
+
             String fileName = "";
             String md5 = "";
             String sha1 = "";
             byte[] content = null;
+            String renameTo = null;
             String description = "";
 
+            FileItemIterator iterator = upload.getItemIterator(req);
             while (iterator.hasNext()) {
                 FileItemStream item = iterator.next();
                 InputStream stream = item.openStream();
 
                 if (item.isFormField()) {
                     writer.println("Got a form field: " + item.getFieldName());
-                    description = req.getParameter("note");
+                    if ("description".equals(item.getFieldName())) {
+                        description = Streams.asString(stream, "UTF-8");
+                    }
+                    if ("renameTo".equals(item.getFieldName())) {
+                        renameTo = Streams.asString(stream, "UTF-8");
+                    }
                     writer.println("description: " + description);
+                    writer.println("renameTo   : " + renameTo);
                 } else {
-                    writer.println("Got an uploaded file: " + item.getFieldName() + ", name = " + item.getName() + ", content/type = " + item.getContentType());
+                    fileName = item.getName();
+                    writer.println("Got an uploaded file: " + item.getFieldName() + ", name = " + fileName + ", content/type = " + item.getContentType());
 
                     // You now have the filename (item.getName() and the
                     // contents (which you can read from stream). Here we just
@@ -58,12 +73,13 @@ public class GcsFileUploadServlet extends HttpServlet {
                     content = baos.toByteArray();
                     md5 = Hex.encodeHexString(DigestUtils.md5(content));
                     sha1 = Hex.encodeHexString(DigestUtils.sha1(content));
-
-                    writer.println("md5: " + md5);
-                    writer.println("sha1: " + sha1);
-
-                    fileName = "app/rfidcard/" + item.getName();
                 }
+            }
+
+            if (renameTo != null) {
+                fileName = "app/rfidcard/" + renameTo;
+            } else {
+                fileName = "app/rfidcard/" + fileName;
             }
 
             GcsFile gcsFile = new GcsFile();
@@ -72,7 +88,13 @@ public class GcsFileUploadServlet extends HttpServlet {
             gcsFile.setObjectName(fileName);
             gcsFile.setDescription(description);
 
-            GcsFileDao gcsFileDao = SpringContext.INSTANCE.getBean(GcsFileDao.class);
+            writer.println("-----------------------------------------");
+            writer.println("md5:         " + md5);
+            writer.println("sha1:        " + sha1);
+            writer.println("saved as:    " + fileName);
+            writer.println("description: " + description);
+            writer.println("-----------------------------------------");
+
             gcsFileDao.save(gcsFile, content);
 //
 //            Gcs gcs = SpringContext.INSTANCE.getBean(Gcs.class);

@@ -28,21 +28,28 @@ public class PeriodicInvoiceServlet extends HttpServlet {
         long total = 0;
 
         sb.append("Miesięczne rozliczenie kart RFID u klientów\n\n");
-        sb.append("----------------------------------------------------\n");
+        sb.append("----------------------------------------------------\n\n");
         List<Establishment> establishments = establishmentDao.findAll();
         for (Establishment establishment : establishments) {
             long subTotal = 0;
+            int active = 0;
             sb.append("Firma: ").append(establishment.getName()).append('\n');
             List<Human> humans = establishment.safeHumans();
             for (Human human : humans) {
+                if (human.isActive()) {
+                    subTotal += human.getMonthlyRate();
+                    sb.append(++active).append(". ");
+                } else {
+                    sb.append("NIEAKTYWNA - ");
+                }
                 sb.append(human.getName()).append(" opłata ").append(human.getMonthlyRate() / 100.0).append(" zł.\n");
-                subTotal += human.getMonthlyRate();
             }
             sb.append("Razem firma: ").append(subTotal / 100.0).append(" zł.\n");
             sb.append("Połowa: ").append(subTotal / 200.0).append(" zł.\n");
-            sb.append("Ilość kart: ").append(humans.size()).append(" szt.\n");
-            sb.append("Opis FV: Dostęp do aplikacji churowej RFID dla: ").append(establishment.getName()).append(".\n");
-            sb.append("----------------------------------------------------\n");
+            sb.append("Ilość osób: ").append(humans.size()).append(".\n");
+            sb.append("Ilość aktywnych osób: ").append(active).append(".\n");
+            sb.append("Opis FV: Dostęp do aplikacji chmurowej RFID dla: ").append(establishment.getName()).append(".\n");
+            sb.append("----------------------------------------------------\n\n");
             total += subTotal;
         }
         sb.append("RAZEM wszystkie firmy: ").append(total / 100.0).append(" zł.\n");
