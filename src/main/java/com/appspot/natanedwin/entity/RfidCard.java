@@ -77,6 +77,13 @@ public class RfidCard implements Serializable {
         this.human = Ref.create(Key.create(Human.class, id));
     }
 
+    public Human getHumanChecked() {
+        if (this.human == null) {
+            return null;
+        }
+        return this.human.get();
+    }
+
     public void setOverprint(GcsFile file) {
         this.overprint = Ref.create(Key.create(GcsFile.class, file.getId()));
     }

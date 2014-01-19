@@ -172,7 +172,7 @@ public class RfidCardFix {
             for (int j = 1; j < jsonArray1.length(); j++) {
                 sn = jsonArray1.getString(j);
                 rfidCard = rfidCardDao.findBySerialNumber(sn);
-                if (rfidCard.getHuman().get() != null) {
+                if (rfidCard.getHumanChecked() != null) {
                     writer.println("ISTNIEJE JUŻ OSOBA DLA" + sn + " == " + human);
                 } else {
                     rfidCard.setHuman(human);
