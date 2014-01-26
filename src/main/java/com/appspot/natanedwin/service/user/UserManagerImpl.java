@@ -1,17 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.user;
 
 import com.appspot.natanedwin.dao.UserAccountDao;
 import com.appspot.natanedwin.entity.UserAccount;
 import com.appspot.natanedwin.entity.UserAccountType;
-import com.appspot.natanedwin.service.spammer.Spammer;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.codec.binary.Hex;
@@ -28,8 +24,6 @@ public class UserManagerImpl implements UserManager {
 
     @Autowired
     private UserAccountDao userAccountDao;
-    @Autowired
-    private Spammer spammer;
 
     @Override
     public UserCredentials discoverCredentials(HttpServletRequest request) {
@@ -37,12 +31,12 @@ public class UserManagerImpl implements UserManager {
         UserService userService = UserServiceFactory.getUserService();
         String thisURL = request.getRequestURI();
 
-        if (request.getParameter("login") != null && request.getParameter("password") != null) {
-            String login = request.getParameter("login").trim();
+        if (request.getParameter("username") != null && request.getParameter("password") != null) {
+            String username = request.getParameter("username").trim();
             String password = request.getParameter("password").trim();
             userCredentials.setUser(null);
             userCredentials.setUserAdmin(false);
-            userCredentials.setUserAccount(loggedWithInternal(login, password));
+            userCredentials.setUserAccount(loggedWithInternal(username, password));
             return userCredentials;
         }
 
@@ -66,8 +60,8 @@ public class UserManagerImpl implements UserManager {
         return userCredentials;
     }
 
-    private UserAccount loggedWithInternal(String login, String password) {
-        UserAccount userAccount = userAccountDao.findByUserId(login);
+    private UserAccount loggedWithInternal(String username, String password) {
+        UserAccount userAccount = userAccountDao.findByUserId(username);
         if (userAccount == null) {
             return null;
         }
@@ -103,7 +97,7 @@ public class UserManagerImpl implements UserManager {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] digest = md.digest(password.getBytes());
             return Hex.encodeHexString(digest);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException e) {
             return null;
         }
     }

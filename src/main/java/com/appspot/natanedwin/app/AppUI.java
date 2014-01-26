@@ -7,7 +7,6 @@ import com.appspot.natanedwin.service.spring.SpringContext;
 import com.appspot.natanedwin.service.user.UserCredentials;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.WrappedSession;
-import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;

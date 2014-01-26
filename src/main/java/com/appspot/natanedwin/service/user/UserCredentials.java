@@ -3,6 +3,7 @@ package com.appspot.natanedwin.service.user;
 import com.appspot.natanedwin.entity.UserAccount;
 import com.google.appengine.api.users.User;
 import java.io.Serializable;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
  *
@@ -39,14 +40,7 @@ public class UserCredentials implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if (user != null) {
-            sb.append("GAE_User:").append(user.getEmail()).append(". ");
-        }
-        if (userAccount != null) {
-            sb.append("UserAccount:").append(userAccount.getUserId()).append(". ");
-        }
-        return sb.toString().trim();
+        return ReflectionToStringBuilder.toString(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////

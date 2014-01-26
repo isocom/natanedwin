@@ -72,7 +72,8 @@
     </servlet-mapping>
             
     <!-- ********************************************************************-->
-    <!-- File upload servlet -->
+    <!-- ******************   TOOLS SERVLETS   ******************************-->
+    <!-- ********************************************************************-->
     <servlet>
         <servlet-name>GcsFileUploadServlet</servlet-name>
         <servlet-class>com.appspot.natanedwin.servlet.tools.GcsFileUploadServlet</servlet-class>
@@ -82,8 +83,15 @@
         <url-pattern>/tools/GcsFileUpload</url-pattern>
     </servlet-mapping>
 
-    <!-- ********************************************************************-->
-    <!-- periodic invoice servlet -->
+    <servlet>
+        <servlet-name>UserAccountLoginServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.tools.UserAccountLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserAccountLoginServlet</servlet-name>
+        <url-pattern>/tools/UserAccountLoginServlet</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>PeriodicInvoiceServlet</servlet-name>
         <servlet-class>com.appspot.natanedwin.servlet.tools.PeriodicInvoiceServlet</servlet-class>

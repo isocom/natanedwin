@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface UserManager {
 
     public UserCredentials discoverCredentials(HttpServletRequest request);
+
     public String hashPassword(String password);
+
     public String generatePassword();
 }
