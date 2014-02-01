@@ -92,8 +92,8 @@ public class RfidCardFix {
             rfidCard.setRfidCardType(RfidCardType.Mifare1k);
             rfidCard.setCardNumber(number);
             rfidCard.setSerialNumber(serial);
-            rfidCard.setRemarks("Import E-Dziecko PP14");
-            rfidCard.setOverprint(6608497064017920L);
+            rfidCard.setRemarks("Import E-Dziecko PP39");
+            rfidCard.setOverprint(5145621807759360L);
             rfidCardDao.save(rfidCard);
             writer.println("Zapisano:" + rfidCard);
         }
@@ -108,7 +108,7 @@ public class RfidCardFix {
         JSONObject jsonObject = new JSONObject(stringWriter.toString());
         writer.println(jsonObject);
 
-        Establishment establishment = establishmentDao.byId(6592287857442816L);
+        Establishment establishment = establishmentDao.byId(4776770016378880L);
         Set<String> serials = new HashSet<>();
         JSONArray jsonArray = jsonObject.getJSONArray("humans");
         for (int i = 0; i < jsonArray.length(); i++) {

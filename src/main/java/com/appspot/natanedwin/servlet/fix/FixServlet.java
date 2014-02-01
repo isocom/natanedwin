@@ -24,7 +24,7 @@ public class FixServlet extends HttpServlet {
 //        RfidCardFix.fixCardOverprint(writer);
         RfidCardFix.addPrzedszkole1(writer);
 //        RfidCardFix.addPrzedszkole2(writer);
-        RfidCardFix.addPrzedszkole3(writer);
+//        RfidCardFix.addPrzedszkole3(writer);
 //        RfidCardFix.fixReSave(writer);
 //        DeviceFix.fixReSave(writer);
 //        EstablishmentFix.fixResDruk1(writer);

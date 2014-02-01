@@ -3,6 +3,7 @@ package com.appspot.natanedwin.app;
 import com.appspot.natanedwin.app.view.AccessControlView;
 import com.appspot.natanedwin.app.view.BogusView;
 import com.appspot.natanedwin.app.view.HomeView;
+import com.appspot.natanedwin.app.view.KinderGartenView;
 import com.appspot.natanedwin.app.view.TimeAttendanceView;
 import com.appspot.natanedwin.app.view.TransactionsView;
 import com.appspot.natanedwin.app.view.UserAccountView;
@@ -20,6 +21,7 @@ public class AppNavigator extends Navigator {
         HOME("", HomeView.class),
         AC("/ac", AccessControlView.class),
         BOGUS("/bogus", BogusView.class),
+        KG("/kg", KinderGartenView.class),
         RPC("/ta", TimeAttendanceView.class),
         TRANSACTIONS("/transactions", TransactionsView.class),
         USERS("/users", UserAccountView.class);

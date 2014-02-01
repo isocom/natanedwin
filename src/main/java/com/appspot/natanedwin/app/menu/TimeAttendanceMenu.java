@@ -4,7 +4,7 @@ import com.appspot.natanedwin.app.menu.ta.AddRfidEvent;
 import com.appspot.natanedwin.app.menu.ta.ShowTimeAttendance;
 import com.vaadin.ui.MenuBar;
 
-public class TaMenu {
+public class TimeAttendanceMenu {
 
     static void build(MenuBar menuBar) {
         MenuBar.MenuItem menu = menuBar.addItem("RCP", null);

@@ -24,19 +24,23 @@ public final class AppMenu extends MenuBar {
         setWidth("100%");
         buildMenuView();
         buildMenuProfil();
-        FilesMenu.build(this);
-        AcMenu.build(this);
-        TaMenu.build(this);
-        if (appSession.getUserCredentials().isUserAdmin()) {
-            SuperAdmin.buildMenuSuperAdmin(this);
-        }
-
+        buildMenus();
         addItem("Zakończ", new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
                 appSession.shutdown();
             }
         });
+    }
+    
+    private void buildMenus() {
+        FilesMenu.build(this);
+        AccessControlMenu.build(this);
+        KinderGartenMenu.build(this);
+        TimeAttendanceMenu.build(this);
+        if (appSession.getUserCredentials().isUserAdmin()) {
+            SuperAdmin.buildMenuSuperAdmin(this);
+        }
     }
 
     private void buildMenuProfil() {
@@ -78,18 +82,26 @@ public final class AppMenu extends MenuBar {
                 AppSessionHelper.getAppNavigator().navigateTo(AppNavigator.ViewDestination.HOME);
             }
         });
-        menu.addItem("Rejestracja czasu pracy", new MenuBar.Command() {
-
-            @Override
-            public void menuSelected(MenuItem selectedItem) {
-                AppSessionHelper.getAppNavigator().navigateTo(AppNavigator.ViewDestination.RPC);
-            }
-        });
+        menu.addSeparator();
         menu.addItem("Kontrola dostępu", new MenuBar.Command() {
 
             @Override
             public void menuSelected(MenuItem selectedItem) {
                 AppSessionHelper.getAppNavigator().navigateTo(AppNavigator.ViewDestination.AC);
+            }
+        });
+        menu.addItem("Przedszkole", new MenuBar.Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                AppSessionHelper.getAppNavigator().navigateTo(AppNavigator.ViewDestination.KG);
+            }
+        });
+        menu.addItem("Rejestracja czasu pracy", new MenuBar.Command() {
+
+            @Override
+            public void menuSelected(MenuItem selectedItem) {
+                AppSessionHelper.getAppNavigator().navigateTo(AppNavigator.ViewDestination.RPC);
             }
         });
     }

@@ -3,7 +3,7 @@ package com.appspot.natanedwin.app.menu;
 import com.appspot.natanedwin.app.menu.ac.ShowAccessControl;
 import com.vaadin.ui.MenuBar;
 
-public class AcMenu {
+public class AccessControlMenu {
 
     static void build(MenuBar menuBar) {
         MenuBar.MenuItem menu = menuBar.addItem("KD", null);
