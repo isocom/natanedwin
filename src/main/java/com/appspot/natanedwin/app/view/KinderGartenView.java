@@ -16,7 +16,7 @@ public class KinderGartenView extends VerticalLayout implements View {
         top.setWidth("100%");
         top.setSpacing(true);
         addComponent(top);
-        final Label title = new Label("Brak licencji dla tego modułu");
+        final Label title = new Label("Moduł obsługi przedszkola - EDziecko");
         title.setSizeUndefined();
         title.addStyleName("h1");
         top.addComponent(title);
