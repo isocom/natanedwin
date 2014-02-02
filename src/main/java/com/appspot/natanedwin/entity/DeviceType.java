@@ -10,5 +10,5 @@ package com.appspot.natanedwin.entity;
  */
 public enum DeviceType {
 
-    RaspberryPi, TR610;
+    AppEngine, TR610;
 }

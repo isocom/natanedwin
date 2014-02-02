@@ -35,10 +35,10 @@ public final class DayStatusXLS {
             for (RfidEvent event : dayStatus.getEvents()) {
                 c = 0;
                 writableSheet.addCell(new Label(c++, r, "" + r));
-                writableSheet.addCell(new Label(c++, r, event.safeRfidCard().getHuman().get().getName()));
+                writableSheet.addCell(new Label(c++, r, event.obtainHuman().getName()));
                 writableSheet.addCell(new Label(c++, r, event.getEventDate().toString()));
                 writableSheet.addCell(new Label(c++, r, event.getRfidEventType().name()));
-                writableSheet.addCell(new Label(c++, r, event.safeRfidCard().getCardNumber()));
+                writableSheet.addCell(new Label(c++, r, event.obtainRfidCard() != null ? event.obtainRfidCard().getCardNumber() : "- brak karty -"));
                 r++;
             }
 

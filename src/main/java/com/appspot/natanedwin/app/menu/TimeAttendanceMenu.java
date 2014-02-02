@@ -10,6 +10,7 @@ public class TimeAttendanceMenu {
         MenuBar.MenuItem menu = menuBar.addItem("RCP", null);
         
         menu.addItem("Pokaż Moduł RCP", new ShowTimeAttendance());
+        menu.addSeparator();
         menu.addItem("Dodaj zdarzenie RFID", new AddRfidEvent());
     }
 

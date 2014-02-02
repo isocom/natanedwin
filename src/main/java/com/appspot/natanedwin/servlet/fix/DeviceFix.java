@@ -15,4 +15,12 @@ public class DeviceFix {
         }
     }
 
+    public static void fixAddWebDevice(PrintWriter writer) {
+        DeviceDao dao = SpringContext.INSTANCE.getBean(DeviceDao.class);
+        Device device = new Device();
+        device.setDescription("Aplikacja Webowa");
+        device.setSerialNumber("natanedwin.appspot.com");
+        dao.save(device);
+    }
+
 }

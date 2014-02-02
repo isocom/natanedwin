@@ -14,7 +14,6 @@ import com.appspot.natanedwin.service.appsession.AppSessionHelper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.joda.time.DateTime;
@@ -50,16 +49,17 @@ public class DayStatus implements Report {
         DateTimeFormatter mediumDate = AppSessionHelper.mediumDate(appSession);
         fileName = "RPC Stan dnia " + mediumDate.print(this.date);
 
-        Iterator<RfidEvent> i = events.iterator();
-        while (i.hasNext()) {
-            Human human = i.next().safeRfidCard().getHuman().safe();
-            if (human == null) {
-                continue;
-            }
-            if (!humans.contains(human)) {
-                i.remove();
-            }
-        }
+//        Iterator<RfidEvent> i = events.iterator();
+//        while (i.hasNext()) {
+////            Human human = i.next().safeRfidCard().getHuman().safe();
+//            Human human = i.next().safeHuman();
+//            if (human == null) {
+//                continue;
+//            }
+//            if (!humans.contains(human)) {
+//                i.remove();
+//            }
+//        }
     }
 
     @Override
@@ -95,9 +95,9 @@ public class DayStatus implements Report {
             sb.append("<tr>");
             sb.append("<td>").append(++rowNo).append("</td>");
             sb.append("<td>").append(row.human.getName()).append("</td>");
-            sb.append("<td>").append(row.fromEvent).append("</td>");
+            sb.append("<td title=\"id:").append(row.fromEventId).append("\">").append(row.fromEvent).append("</td>");
             sb.append("<td>").append(mediumTime.print(row.from)).append("</td>");
-            sb.append("<td>").append(row.toEvent).append("</td>");
+            sb.append("<td title=\"id:").append(row.toEventId).append("\">").append(row.toEvent).append("</td>");
             sb.append("<td>").append(mediumTime.print(row.to)).append("</td>");
             sb.append("<td>").append(hms.print(new Period(row.duration()))).append("</td>");
             sb.append("</tr>");
@@ -129,7 +129,7 @@ public class DayStatus implements Report {
     Map<Human, DailyReportRow> calcDailyReportRows() {
         HashMap<Human, DailyReportRow> rows = new HashMap<>();
         for (RfidEvent event : events) {
-            Human human = event.safeRfidCard().getHuman().get();
+            Human human = event.obtainHuman();
             if (!rows.containsKey(human)) {
                 rows.put(human, new DailyReportRow(human));
             }
@@ -138,10 +138,12 @@ public class DayStatus implements Report {
             if (ed.before(row.from.toDate())) {
                 row.from = new DateTime(ed);
                 row.fromEvent = event.getRfidEventType();
+                row.fromEventId = event.getId();
             }
             if (ed.after(row.to.toDate())) {
                 row.to = new DateTime(ed);
                 row.toEvent = event.getRfidEventType();
+                row.toEventId = event.getId();
             }
         }
         return rows;
@@ -169,6 +171,8 @@ public class DayStatus implements Report {
         DateTime to = new DateTime(0);
         RfidEventType fromEvent = null;
         RfidEventType toEvent = null;
+        long fromEventId = 0;
+        long toEventId = 0;
 
         private DailyReportRow(final Human human) {
             this.human = human;

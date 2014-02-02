@@ -133,7 +133,7 @@ public class MonthSummary implements Report {
                 sb.append("<td>").append(++rowNo2).append("</td>");
                 sb.append("<td>").append(event.getRfidEventType()).append("</td>");
                 sb.append("<td>").append(event.getEventDate()).append("</td>");
-                sb.append("<td>").append(event.safeRfidCard().getCardNumber()).append("</td>");
+                sb.append("<td>").append(event.obtainRfidCard() != null ? event.obtainRfidCard().getCardNumber() : "- brak karty -").append("</td>");
                 sb.append("</tr>");
             }
             sb.append("</table>");

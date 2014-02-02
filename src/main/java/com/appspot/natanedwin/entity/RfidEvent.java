@@ -1,6 +1,7 @@
 package com.appspot.natanedwin.entity;
 
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.NotFoundException;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -77,16 +78,30 @@ public class RfidEvent implements Serializable {
         this.human = Ref.create(Key.create(Human.class, human.getId()));
     }
 
-    public RfidCard safeRfidCard() {
+    public RfidCard obtainRfidCard() {
         if (rfidCard == null) {
             return null;
+        }
+        return rfidCard.get();
+    }
+
+    public RfidCard safeRfidCard() {
+        if (rfidCard == null) {
+            throw new NotFoundException();
         }
         return rfidCard.safe();
     }
 
-    public Human safeHuman() {
+    public Human obtainHuman() {
         if (human == null) {
             return null;
+        }
+        return human.get();
+    }
+
+    public Human safeHuman() {
+        if (human == null) {
+            throw new NotFoundException();
         }
         return human.safe();
     }

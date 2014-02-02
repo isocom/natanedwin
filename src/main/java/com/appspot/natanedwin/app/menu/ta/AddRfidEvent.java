@@ -9,9 +9,9 @@ import com.vaadin.ui.MenuBar.MenuItem;
  * @author prokob01
  */
 public class AddRfidEvent implements MenuBar.Command {
-    
+
     @Override
     public void menuSelected(MenuItem selectedItem) {
-                AddRfidEventWindow.show();
+        AddRfidEventWindow.show();
     }
 }
