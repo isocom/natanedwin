@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.mailer;
 
 import java.util.ArrayList;
@@ -13,13 +9,13 @@ import java.util.List;
  */
 public class Email {
 
-    private final List<EmailAddress> to = new ArrayList<EmailAddress>();
-    private final List<EmailAddress> cc = new ArrayList<EmailAddress>();
-    private final List<EmailAddress> bcc = new ArrayList<EmailAddress>();
+    private final List<EmailAddress> to = new ArrayList<>();
+    private final List<EmailAddress> cc = new ArrayList<>();
+    private final List<EmailAddress> bcc = new ArrayList<>();
     private String subject;
     private String textBody;
     private String htmlBody;
-    private final List<EmailAttachment> attachments = new ArrayList<EmailAttachment>();
+    private final List<EmailAttachment> attachments = new ArrayList<>();
 
     public void addTo(EmailAddress mailAddress) {
         to.add(mailAddress);

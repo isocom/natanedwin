@@ -8,6 +8,14 @@
         <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
     </system-properties>
 
+    <env-variables>
+        <env-var name="DEFAULT_ENCODING" value="UTF-8" />
+    </env-variables>
+
     <sessions-enabled>true</sessions-enabled>
     <threadsafe>false</threadsafe>
+
+    <admin-console>
+        <page name="Spring info" url="/info" />
+    </admin-console>
 </appengine-web-app>
