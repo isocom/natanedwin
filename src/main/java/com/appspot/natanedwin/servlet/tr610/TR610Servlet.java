@@ -3,6 +3,7 @@ package com.appspot.natanedwin.servlet.tr610;
 import com.appspot.natanedwin.dao.DeviceDao;
 import com.appspot.natanedwin.entity.Device;
 import com.appspot.natanedwin.entity.DeviceType;
+import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Strings;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,11 +25,14 @@ public class TR610Servlet extends HttpServlet {
 
     @Autowired
     private DeviceDao deviceDao;
+    @Autowired
+    private MetricRegistry metricRegistry;
 
     private final CardDetected1 cardDetected1 = new CardDetected1();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        metricRegistry.counter(MetricRegistry.name(TR610Servlet.class, "doGet", "call")).inc();
         if (Strings.isNullOrEmpty(req.getParameter("cmd"))) {
             resp.sendError(500, "F1");
             return;

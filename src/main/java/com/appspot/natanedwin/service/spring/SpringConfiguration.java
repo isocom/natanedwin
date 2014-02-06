@@ -7,7 +7,7 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource("classpath:/natanedwin.properties")
+@PropertySource("classpath:/META-INF/natanedwin.properties")
 @EnableSpringConfigured
 public class SpringConfiguration {
 
