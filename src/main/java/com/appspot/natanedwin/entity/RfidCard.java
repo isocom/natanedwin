@@ -30,7 +30,7 @@ public class RfidCard implements Serializable {
     private RfidCardNature rfidCardNature = RfidCardNature.Regular;
     @Index
     private String serialNumber;
-    @Unindex
+    @Index
     private Date firstTimeSeen = new Date();
     @Index
     private String cardNumber;

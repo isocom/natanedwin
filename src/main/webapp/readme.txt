@@ -1,9 +1,10 @@
-Query for unassigned cards (no HUMAN):
-SELECT * FROM RfidCard WHERE human=NULL
-SELECT * FROM RfidCard where serialNumber='81315AA4'
-
 Query for Human by Name
 SELECT * FROM Human WHERE name='Jachna-Szmigielska Klara'
+
+ ===== RfidCard =====
+SELECT * FROM RfidCard WHERE human=NULL
+SELECT * FROM RfidCard where serialNumber='81315AA4'
+SELECT * FROM RfidCard ORDER BY firstTimeSeen DESC LIMIT 1
 
 RfidEvent
 SELECT * FROM RfidEvent WHERE __key__ = KEY('RfidEvent', 5712793714032640)
