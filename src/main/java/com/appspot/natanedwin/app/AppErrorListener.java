@@ -54,7 +54,7 @@ public class AppErrorListener extends DefaultErrorHandler {
         StringBuilder sb = new StringBuilder();
         String subject = "no Throwable assigned";
 
-        sb.append("Użytkownik: ").append(appSession.getUserCredentials()).append("\n");
+        sb.append("Użytkownik: ").append(appSession.getUserAccount()).append("\n");
         Throwable throwable = event.getThrowable();
         while (throwable != null) {
             sb.append("Klasa: ").append(throwable.getClass()).append(".");

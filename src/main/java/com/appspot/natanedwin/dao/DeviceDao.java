@@ -1,14 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.dao;
 
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.Device;
-import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.service.memcache.MemCache;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +26,11 @@ public class DeviceDao implements Dao<Device> {
     @Override
     public Device byId(long id) {
         return ofy.ofy().load().type(Device.class).id(id).safe();
+    }
+
+    @Override
+    public Device byRef(Ref<Device> ref) {
+        return ofy.ofy().load().now(ref.getKey());
     }
 
     public List<Device> findAll() {

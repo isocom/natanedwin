@@ -3,6 +3,7 @@ package com.appspot.natanedwin.dao;
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.Establishment;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class EstablishmentDao implements Dao<Establishment> {
     @Override
     public Establishment byId(long id) {
         return ofy.ofy().load().type(Establishment.class).id(id).safe();
+    }
+
+    @Override
+    public Establishment byRef(Ref<Establishment> ref) {
+        return ofy.ofy().load().now(ref.getKey());
     }
 
     @Override

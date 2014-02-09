@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.dao;
 
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,11 @@ public class HumanDao implements Dao<Human> {
     @Override
     public Human byId(long id) {
         return ofy.ofy().load().type(Human.class).id(id).safe();
+    }
+
+    @Override
+    public Human byRef(Ref<Human> ref) {
+        return ofy.ofy().load().now(ref.getKey());
     }
 
     public List<Human> findAll() {

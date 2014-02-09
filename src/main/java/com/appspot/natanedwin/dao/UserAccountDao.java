@@ -7,6 +7,7 @@ import com.appspot.natanedwin.service.ofy.Ofy;
 import com.appspot.natanedwin.service.spammer.SpamType;
 import com.appspot.natanedwin.service.spammer.Spammer;
 import com.appspot.natanedwin.service.user.UserManager;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class UserAccountDao implements Dao<UserAccount> {
     @Override
     public UserAccount byId(long id) {
         return ofy.ofy().load().type(UserAccount.class).id(id).safe();
+    }
+
+    @Override
+    public UserAccount byRef(Ref<UserAccount> ref) {
+        return ofy.ofy().load().now(ref.getKey());
     }
 
     public List<UserAccount> findAll() {

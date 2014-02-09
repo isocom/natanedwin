@@ -58,6 +58,7 @@
         <servlet-name>TR610Servlet</servlet-name>
         <url-pattern>/tr610</url-pattern>
     </servlet-mapping>
+    <!-- ********************************************************************-->
     
     <!-- ********************************************************************-->
     <!-- export data servlet -->
@@ -94,6 +95,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>PeriodicInvoiceServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.tools.PeriodicInvoiceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PeriodicInvoiceServlet</servlet-name>
+        <url-pattern>/tools/PeriodicInvoice</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>UserAccountLoginServlet</servlet-name>
         <servlet-class>com.appspot.natanedwin.servlet.tools.UserAccountLoginServlet</servlet-class>
     </servlet>
@@ -103,13 +113,14 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>PeriodicInvoiceServlet</servlet-name>
-        <servlet-class>com.appspot.natanedwin.servlet.tools.PeriodicInvoiceServlet</servlet-class>
+        <servlet-name>com.appspot.natanedwin.servlet.tools.TestServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.tools.TestServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>PeriodicInvoiceServlet</servlet-name>
-        <url-pattern>/tools/PeriodicInvoice</url-pattern>
+        <servlet-name>com.appspot.natanedwin.servlet.tools.TestServlet</servlet-name>
+        <url-pattern>/tools/test</url-pattern>
     </servlet-mapping>
+    <!-- ******************************************************************* -->
 
     <!-- ******************************************************************* -->
     <!-- Vaadin configuration -->

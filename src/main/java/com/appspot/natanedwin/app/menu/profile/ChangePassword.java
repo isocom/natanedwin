@@ -22,7 +22,7 @@ public class ChangePassword implements MenuBar.Command {
     public void menuSelected(MenuBar.MenuItem selectedItem) {
         AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
         UserAccountDao userAccountDao = SpringContext.INSTANCE.getBean(UserAccountDao.class);
-        UserAccount userAccount = appSession.getUserCredentials().getUserAccount();
+        UserAccount userAccount = appSession.getUserAccount();
 
         if (userAccount.getUserAccountType() == UserAccountType.GoogleAccount) {
             Notification.show("Nie można zmienić hasła", "Używasz konta Google do logowania, zmień swoje hasło na stronach Google", Notification.Type.WARNING_MESSAGE);

@@ -4,6 +4,7 @@ import com.appspot.natanedwin.entity.GcsFile;
 import com.appspot.natanedwin.service.gcs.Gcs;
 import com.appspot.natanedwin.service.gcs.GcsMimeType;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class GcsFileDao implements Dao<GcsFile> {
     @Override
     public GcsFile byId(long id) {
         return ofy.ofy().load().type(GcsFile.class).id(id).safe();
+    }
+
+    @Override
+    public GcsFile byRef(Ref<GcsFile> ref) {
+        return ofy.ofy().load().now(ref.getKey());
     }
 
     @Override

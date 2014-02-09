@@ -1,13 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.dao;
 
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.RfidEvent;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +26,11 @@ public class RfidEventDao implements Dao<RfidEvent> {
     @Override
     public RfidEvent byId(long id) {
         return ofy.ofy().load().type(RfidEvent.class).id(id).safe();
+    }
+
+    @Override
+    public RfidEvent byRef(Ref<RfidEvent> ref) {
+        return ofy.ofy().load().now(ref.getKey());
     }
 
     public List<RfidEvent> findAll() {

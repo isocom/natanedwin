@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.ofy;
 
 import com.googlecode.objectify.Objectify;
@@ -29,18 +25,12 @@ public class OfyImpl implements Ofy {
         factory().register(com.appspot.natanedwin.entity.UserAccount.class);
     }
 
-    @Override
-    public Objectify ofy() {
-        return ObjectifyService.ofy();
-    }
-
-//    @Override
     private ObjectifyFactory factory() {
         return ObjectifyService.factory();
     }
 
-//    @Override
-//    public boolean exists(Class<?> type, long id) {
-//        return ofy().load().type(type).id(id).get() != null;
-//    }
+    @Override
+    public Objectify ofy() {
+        return ObjectifyService.ofy();
+    }
 }

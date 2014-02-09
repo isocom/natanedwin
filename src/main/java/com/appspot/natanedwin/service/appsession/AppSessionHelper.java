@@ -29,19 +29,19 @@ public final class AppSessionHelper {
     }
 
     public static long userAccountId(AppSession appSession) {
-        return appSession.getUserCredentials().getUserAccount().getId();
+        return appSession.getUserAccount().getId();
     }
 
     public static long establishmentId(AppSession appSession) {
-        return appSession.getUserCredentials().getUserAccount().getEstablishment().getKey().getId();
+        return appSession.getEstablishment().getId();
     }
 
     public static DateTimeZone dateTimeZone(AppSession appSession) {
-        return DateTimeZone.forID(appSession.getUserCredentials().getUserAccount().getDateTimeZone());
+        return DateTimeZone.forID(appSession.getUserAccount().getDateTimeZone());
     }
 
     public static Locale locale(AppSession appSession) {
-        return locale(appSession.getUserCredentials().getUserAccount().getLocale());
+        return locale(appSession.getUserAccount().getLocale());
     }
 
     private static Locale locale(String localeString) {

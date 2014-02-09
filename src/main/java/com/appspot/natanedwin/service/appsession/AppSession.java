@@ -1,6 +1,8 @@
 package com.appspot.natanedwin.service.appsession;
 
 import com.appspot.natanedwin.app.AppUI;
+import com.appspot.natanedwin.entity.Establishment;
+import com.appspot.natanedwin.entity.UserAccount;
 import com.appspot.natanedwin.service.user.UserCredentials;
 import com.vaadin.server.VaadinSession;
 
@@ -14,9 +16,16 @@ public interface AppSession {
 
     public AppUI getAppUI();
 
-    public UserCredentials getUserCredentials();
-
-    public void setUserCredentials(UserCredentials uc);
-
     public void shutdown();
+
+    public boolean isSuperAdmin();
+
+    public UserAccount getUserAccount();
+
+    public Establishment getEstablishment();
+
+    public void setEstablishment(Establishment establishment);
+
+    public void parseUserCredentials(UserCredentials uc);
+
 }

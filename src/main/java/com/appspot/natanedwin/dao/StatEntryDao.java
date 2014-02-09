@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.dao;
 
 import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.StatEntry;
 import com.appspot.natanedwin.service.ofy.Ofy;
+import com.googlecode.objectify.Ref;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +20,11 @@ public class StatEntryDao implements Dao<StatEntry> {
     @Override
     public StatEntry byId(long id) {
         return ofy.ofy().load().type(StatEntry.class).id(id).safe();
+    }
+
+    @Override
+    public StatEntry byRef(Ref<StatEntry> ref) {
+        return ofy.ofy().load().now(ref.getKey());
     }
 
     @Override

@@ -25,7 +25,7 @@ public class RfidCard implements Serializable {
     @Index
     private String uuid = UUID.randomUUID().toString();
     @Unindex
-    private RfidCardType rfidCardType;
+    private RfidCardType rfidCardType = RfidCardType.Vacant;
     @Unindex
     private RfidCardNature rfidCardNature = RfidCardNature.Regular;
     @Index

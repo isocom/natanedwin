@@ -41,9 +41,7 @@ public class HomeView extends VerticalLayout implements View {
         addComponent(title);
 
         addComponent(new Label("Bieżąca wersja: " + applicationName + " / " + applicationVersion));
-        String google = (appSession.getUserCredentials().getPrincipalName() != null) ? (" -> " + appSession.getUserCredentials().getPrincipalName()) : "";
-        addComponent(new Label("Typ użytkownika: " + userAccount.getUserAccountType() + google));
-        addComponent(new Label("Id użytkownika: " + userAccount.getId() + " / " + userAccount.getUserId()));
+        addComponent(new Label("Użytkownik: " + userAccount.toString()));
         addComponent(new Label("Organizacja: " + establishment.getName()));
         addComponent(new Label("Ważność licencji: " + establishment.getLicenseValidity()));
     }

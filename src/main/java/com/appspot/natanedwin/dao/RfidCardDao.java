@@ -7,6 +7,7 @@ import com.appspot.natanedwin.entity.RfidCard;
 import com.appspot.natanedwin.service.memcache.MemCache;
 import com.appspot.natanedwin.service.ofy.Ofy;
 import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,11 @@ public class RfidCardDao implements Dao<RfidCard> {
         return ofy.ofy().load().type(RfidCard.class).id(id).safe();
     }
 
+    @Override
+    public RfidCard byRef(Ref<RfidCard> ref) {
+        return ofy.ofy().load().now(ref.getKey());
+    }
+
     public List<RfidCard> findAll() {
         Query<RfidCard> query = ofy.ofy().load().type(RfidCard.class);
         List<RfidCard> list = query.list();
@@ -47,6 +53,10 @@ public class RfidCardDao implements Dao<RfidCard> {
 
     public List<RfidCard> findHumanUnassigned() {
         return ofy.ofy().load().type(RfidCard.class).filter("human == ", null).list();
+    }
+
+    public List<RfidCard> findRecent(int limit) {
+        return ofy.ofy().load().type(RfidCard.class).limit(limit).order("-firstTimeSeen").list();
     }
 
     public void assignHuman(RfidCard rfidCard, Human human) {

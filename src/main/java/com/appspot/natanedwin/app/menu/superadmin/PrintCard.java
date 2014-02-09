@@ -1,6 +1,5 @@
 package com.appspot.natanedwin.app.menu.superadmin;
 
-import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.GcsFile;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.RfidCard;

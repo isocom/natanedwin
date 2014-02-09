@@ -48,7 +48,7 @@ public class AppUI extends UI {
         LOGGER.info("Zalogowano: " + userCredentials);
 
         AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
-        appSession.setUserCredentials(userCredentials);
+        appSession.parseUserCredentials(userCredentials);
 
         // OK, we can fire application, as we have user credentials
         appSession.getVaadinSession().setErrorHandler(new AppErrorListener());

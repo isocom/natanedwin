@@ -32,7 +32,7 @@ public class TR610Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        metricRegistry.counter(MetricRegistry.name(TR610Servlet.class, "doGet", "call")).inc();
+//        metricRegistry.counter(MetricRegistry.name(TR610Servlet.class, "doGet", "call")).inc();
         if (Strings.isNullOrEmpty(req.getParameter("cmd"))) {
             resp.sendError(500, "F1");
             return;

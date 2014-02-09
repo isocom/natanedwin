@@ -11,10 +11,10 @@ public class RfidCardItem extends EntityItem<RfidCard> {
 
     public RfidCardItem(RfidCard bean) {
         super(bean);
+        addItemProperty("Numer karty", new MethodProperty(bean, "cardNumber"));
         addItemProperty("Typ karty", new MethodProperty(bean, "rfidCardType"));
         addItemProperty("Natura karty", new MethodProperty(bean, "rfidCardNature"));
         addItemProperty("Numer seryjny", new MethodProperty(bean, "serialNumber"));
-        addItemProperty("Numer karty", new MethodProperty(bean, "cardNumber"));
     }
 
     @Override

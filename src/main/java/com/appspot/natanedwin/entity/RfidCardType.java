@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.entity;
 
 /**
@@ -10,5 +6,5 @@ package com.appspot.natanedwin.entity;
  */
 public enum RfidCardType {
 
-    Mifare1k, EPCGen2;
+    Vacant, Mifare1k, EPCGen2;
 }

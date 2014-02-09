@@ -36,11 +36,6 @@ public class UserAccount implements Serializable {
     @Index
     private Ref<Establishment> establishment = Ref.create(Key.create(Establishment.class, 2329008L));
 
-    @Override
-    public String toString() {
-        return getClass() + ":" + id + "/" + userId + "/" + email;
-    }
-
     ////////////////////////////////////////////////////////////////////////////
     // Standard EQUALLS and HASHCODE ///////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -59,6 +54,11 @@ public class UserAccount implements Serializable {
     @Override
     public int hashCode() {
         return uuid.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return id + "/" + userId + "/" + email;
     }
 
     ////////////////////////////////////////////////////////////////////////////

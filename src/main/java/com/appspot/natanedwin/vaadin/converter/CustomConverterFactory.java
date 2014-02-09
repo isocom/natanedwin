@@ -1,11 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.vaadin.converter;
 
 import com.appspot.natanedwin.vaadin.converter.bigtable.StringToPostalAddress;
 import com.appspot.natanedwin.vaadin.converter.bigtable.StringToEmail;
+import com.appspot.natanedwin.vaadin.converter.entity.StringToRfidCardNature;
 import com.appspot.natanedwin.vaadin.converter.entity.StringToRfidCardType;
 import com.appspot.natanedwin.vaadin.converter.entity.StringToUserAccountType;
 import com.vaadin.data.util.converter.Converter;
@@ -19,12 +16,13 @@ import java.util.List;
  */
 public class CustomConverterFactory extends DefaultConverterFactory {
 
-    private List<Converter> converters = new ArrayList<>();
+    private final List<Converter> converters = new ArrayList<>();
 
     public CustomConverterFactory() {
         add(new StringToEmail());
         add(new StringToPostalAddress());
 
+        add(new StringToRfidCardNature());
         add(new StringToRfidCardType());
         add(new StringToUserAccountType());
     }

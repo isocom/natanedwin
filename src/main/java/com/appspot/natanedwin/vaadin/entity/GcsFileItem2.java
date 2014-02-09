@@ -7,14 +7,11 @@ import com.appspot.natanedwin.service.spring.SpringContext;
 import com.appspot.natanedwin.vaadin.EntityItem;
 import com.vaadin.data.util.MethodProperty;
 
-public class GcsFileItem extends EntityItem<GcsFile> {
+public class GcsFileItem2 extends EntityItem<GcsFile> {
 
-    public GcsFileItem(GcsFile bean) {
+    public GcsFileItem2(GcsFile bean) {
         super(bean);
-        addItemProperty("Koszyk", new MethodProperty(bean, "bucketName"));
         addItemProperty("Nazwa pliku", new MethodProperty(bean, "objectName"));
-        addItemProperty("md5 hash", new MethodProperty(bean, "md5sum"));
-        addItemProperty("sha1 hash", new MethodProperty(bean, "sha1sum"));
         addItemProperty("opis", new MethodProperty(bean, "description"));
     }
 

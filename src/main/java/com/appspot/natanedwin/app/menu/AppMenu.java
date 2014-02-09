@@ -38,7 +38,7 @@ public final class AppMenu extends MenuBar {
         AccessControlMenu.build(this);
         KinderGartenMenu.build(this);
         TimeAttendanceMenu.build(this);
-        if (appSession.getUserCredentials().isUserAdmin()) {
+        if (appSession.isSuperAdmin()) {
             SuperAdmin.buildMenuSuperAdmin(this);
         }
     }

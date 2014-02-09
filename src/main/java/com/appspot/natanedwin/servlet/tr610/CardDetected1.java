@@ -18,6 +18,11 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -39,12 +44,7 @@ public class CardDetected1 {
 
         RfidCard rfidCard = rfidCardDao.findBySerialNumber(serialNumber);
         if (rfidCard == null) {
-            rfidCard = new RfidCard();
-            rfidCard.setRfidCardType(RfidCardType.Mifare1k);
-            rfidCard.setSerialNumber(serialNumber);
-            rfidCard.setCardNumber(cardNumber.generate());
-            rfidCardDao.save(rfidCard);
-            TR610Response.display2(resp, "Dodano nowa karte", rfidCard.getCardNumber());
+            newCard(resp, serialNumber);
             return;
         }
 
@@ -66,6 +66,41 @@ public class CardDetected1 {
             case Kindergarten:
                 kindergarten(req, resp, rfidCard, human);
                 break;
+        }
+    }
+
+    private void newCard(PrintWriter resp, final String serialNumber) {
+        List<RfidCard> rfidCards = rfidCardDao.findHumanUnassigned();
+        rfidCards = new ArrayList<>(rfidCards);
+        Collections.sort(rfidCards, new Comparator<RfidCard>() {
+
+            @Override
+            public int compare(RfidCard o1, RfidCard o2) {
+                return -o1.getFirstTimeSeen().compareTo(o2.getFirstTimeSeen());
+            }
+        });
+        Iterator<RfidCard> iterator = rfidCards.iterator();
+        while (iterator.hasNext()) {
+            RfidCard next = iterator.next();
+            if (next.getRfidCardType() != RfidCardType.Vacant) {
+                iterator.remove();
+            }
+        }
+
+        if (rfidCards.isEmpty()) {
+            // no newly added card to be 
+            RfidCard rfidCard = new RfidCard();
+            rfidCard.setRfidCardType(RfidCardType.Mifare1k);
+            rfidCard.setSerialNumber(serialNumber);
+            rfidCard.setCardNumber(cardNumber.generate());
+            rfidCardDao.save(rfidCard);
+            TR610Response.display2(resp, "Dodano karte", rfidCard.getCardNumber());
+        } else {
+            RfidCard rfidCard = rfidCards.get(0);
+            rfidCard.setRfidCardType(RfidCardType.Mifare1k);
+            rfidCard.setSerialNumber(serialNumber);
+            rfidCardDao.save(rfidCard);
+            TR610Response.display2(resp, "Zakodowano", rfidCard.getCardNumber());
         }
     }
 
