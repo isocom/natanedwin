@@ -70,7 +70,7 @@ public class CardDetected1 {
     }
 
     private void newCard(PrintWriter resp, final String serialNumber) {
-        List<RfidCard> rfidCards = rfidCardDao.findHumanUnassigned();
+        List<RfidCard> rfidCards = rfidCardDao.findRecent(20);
         rfidCards = new ArrayList<>(rfidCards);
         Collections.sort(rfidCards, new Comparator<RfidCard>() {
 

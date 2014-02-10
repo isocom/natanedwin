@@ -39,7 +39,7 @@ public class Example_03_CC {
             pdf.close();
             return baos.toByteArray();
         } catch (Throwable t) {
-            throw new AppError("PDF problem", t.getMessage());
+            throw new AppError("PDF problem: " + t.getMessage(), t.getMessage());
         }
     }
 

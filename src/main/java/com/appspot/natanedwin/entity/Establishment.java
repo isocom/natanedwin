@@ -9,6 +9,7 @@ import com.googlecode.objectify.annotation.Unindex;
 import com.googlecode.objectify.condition.IfNotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -70,6 +71,7 @@ public class Establishment implements Serializable {
         for (Ref<Human> hr : humans) {
             hh.add(hr.safe());
         }
+        Collections.sort(hh);
         return hh;
     }
 

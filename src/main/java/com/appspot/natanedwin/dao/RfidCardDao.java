@@ -4,6 +4,7 @@ import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.GcsFile;
 import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.RfidCard;
+import com.appspot.natanedwin.entity.RfidCardType;
 import com.appspot.natanedwin.service.memcache.MemCache;
 import com.appspot.natanedwin.service.ofy.Ofy;
 import com.googlecode.objectify.Objectify;
@@ -69,17 +70,18 @@ public class RfidCardDao implements Dao<RfidCard> {
 
     public void assignOverprint(RfidCard rfidCard, GcsFile overprint) {
         Objectify objectify = ofy.ofy();
-        rfidCard = objectify.load().entity(rfidCard).get();
-        if (rfidCard.getOverprint() != null) {
-            throw new RuntimeException("Nadruk już jest przypisany");
-        }
-        overprint = objectify.load().entity(overprint).get();
+        rfidCard = objectify.load().entity(rfidCard).now();
+        overprint = objectify.load().entity(overprint).now();
         rfidCard.setOverprint(overprint);
         objectify.save().entity(rfidCard);
     }
 
     @Override
     public RfidCard delete(final RfidCard entity) {
+        if (entity.getRfidCardType() == RfidCardType.Vacant) {
+            ofy.ofy().delete().entity(entity);
+            return entity;
+        }
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
     }
 

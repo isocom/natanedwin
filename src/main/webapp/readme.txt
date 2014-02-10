@@ -3,6 +3,7 @@ SELECT * FROM Human WHERE name='Jachna-Szmigielska Klara'
 
  ===== RfidCard =====
 SELECT * FROM RfidCard WHERE human=NULL
+SELECT * FROM RfidCard where cardNumber='9616 1463 0332 1010'
 SELECT * FROM RfidCard where serialNumber='81315AA4'
 SELECT * FROM RfidCard ORDER BY firstTimeSeen DESC LIMIT 1
 

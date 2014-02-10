@@ -9,6 +9,7 @@ import com.appspot.natanedwin.app.menu.superadmin.ShowDevices;
 import com.appspot.natanedwin.app.menu.superadmin.ShowEstablishments;
 import com.appspot.natanedwin.app.menu.superadmin.ShowGcsFiles;
 import com.appspot.natanedwin.app.menu.superadmin.ShowHumans;
+import com.appspot.natanedwin.app.menu.superadmin.ShowRecentHumans;
 import com.appspot.natanedwin.app.menu.superadmin.ShowRecentRfidCards;
 import com.appspot.natanedwin.app.menu.superadmin.ShowRfidCards;
 import com.appspot.natanedwin.app.menu.superadmin.ShowUserAccounts;
@@ -25,8 +26,15 @@ public class SuperAdmin {
     public static void buildMenuSuperAdmin(MenuBar menuBar) {
         MenuBar.MenuItem menu = menuBar.addItem("Superadmin", null);
 
-        
-        menu.addItem("Przełącz podmiot", new SwitchEstablishment());
+        MenuBar.MenuItem menuOla = menu.addItem("Obsługa kart", null);
+        menuOla.addItem("Dodaj osobę fizyczną", new AddHuman());
+        menuOla.addItem("Dodaj kartę transponderową", new AddRfidCard());
+        menuOla.addSeparator();
+        menuOla.addItem("Pokaż niedawne karty", new ShowRecentRfidCards());
+        menuOla.addItem("Pokaż niedawne osoby", new ShowRecentHumans());
+        menuOla.addSeparator();
+        menuOla.addItem("Przełącz podmiot", new SwitchEstablishment());
+
         menu.addSeparator();
         MenuBar.MenuItem menuAdd = menu.addItem("Dodaj", null);
         menuAdd.addItem("Dodaj konto użytkownika", new AddUserAccount());
@@ -36,7 +44,6 @@ public class SuperAdmin {
         menuAdd.addItem("Dodaj kartę transponderową", new AddRfidCard());
 
         MenuBar.MenuItem menuShow = menu.addItem("Pokaż", null);
-        menuShow.addItem("Pokaż niedawne karty", new ShowRecentRfidCards());
         menuShow.addItem("Pokaż karty transponderowe", new ShowRfidCards());
         menuShow.addItem("Pokaż konta użytkowników", new ShowUserAccounts());
         menuShow.addItem("Pokaż organizacje", new ShowEstablishments());

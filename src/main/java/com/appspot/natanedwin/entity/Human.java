@@ -5,6 +5,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -19,6 +20,8 @@ public class Human implements Serializable, Comparable<Human> {
     private Long id;
     @Index
     private String uuid = UUID.randomUUID().toString();
+    @Index
+    private Date firstTimeSeen = new Date();
     @Index
     private String name = "";
     private boolean active = true;
@@ -95,6 +98,14 @@ public class Human implements Serializable, Comparable<Human> {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Date getFirstTimeSeen() {
+        return firstTimeSeen;
+    }
+
+    public void setFirstTimeSeen(Date firstTimeSeen) {
+        this.firstTimeSeen = firstTimeSeen;
     }
 
 }

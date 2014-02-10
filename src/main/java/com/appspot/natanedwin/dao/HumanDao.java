@@ -29,6 +29,11 @@ public class HumanDao implements Dao<Human> {
         return ofy.ofy().load().now(ref.getKey());
     }
 
+    @Override
+    public Human delete(Human entity) {
+        throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
+    }
+
     public List<Human> findAll() {
         Query<Human> query = ofy.ofy().load().type(Human.class);
         List<Human> list = query.list();
@@ -36,13 +41,15 @@ public class HumanDao implements Dao<Human> {
         return list;
     }
 
-    @Override
-    public Human delete(Human entity) {
-        throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
+    public List<Human> findRecent(int limit) {
+        return ofy.ofy().load().type(Human.class).limit(limit).order("-firstTimeSeen").list();
     }
 
     @Override
     public Human save(Human e) {
+        if (e.getName() == null) {
+            throw new AppError("Can't save when name is empty", "Bład zapisu do BigTable");
+        }
         ofy.ofy().save().entity(e).now();
         return e;
     }

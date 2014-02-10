@@ -21,12 +21,12 @@ public class FixServlet extends HttpServlet {
 
         try {
 //        DeviceFix.fixAddWebDevice(writer);
-//        HumanFix.fixReSave(writer);
+            HumanFix.fixReSave(writer);
 //        RfidCardFix.fixCardOverprint(writer);
 //        RfidCardFix.addPrzedszkole1(writer);
 //        RfidCardFix.addPrzedszkole2(writer);
 //        RfidCardFix.addPrzedszkole3(writer);
-            RfidCardFix.fixReSave(writer);
+//            RfidCardFix.fixReSave(writer);
 //        EstablishmentFix.fixResDruk1(writer);
 //        UserAccountFix.fixRefEstablishment(writer);
 //        UserAccountFix.fixReSave(writer);
