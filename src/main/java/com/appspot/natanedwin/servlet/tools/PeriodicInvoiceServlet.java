@@ -66,8 +66,8 @@ public class PeriodicInvoiceServlet extends HttpServlet {
         email.addTo(new EmailAddress("Karolina", "karolina.wysocka.prokop@gmail.com"));
         email.addCc(new EmailAddress("ISOCOM", "edziecko@isocom.eu"));
         email.addBcc(new EmailAddress("JA SAM", "prokop.bart@gmail.com"));
-        email.setSubject("test pl znaki ... Miesięczna podstawa fakturowania");
-        email.setTextBody("Patrz załącznik.");
+        email.setSubject("Miesięczna podstawa fakturowania");
+        email.setTextBody("Rozliczenie - patrz załącznik.");
         email.addAttachment(new TextFileAttachment("rozliczenie.txt", sb.toString()));
         mailer.send(email);
     }

@@ -14,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
@@ -91,6 +92,23 @@ public class TimeAttendanceView1 extends VerticalLayout {
         table1.setSelectable(true);
         content.addComponent(table1);
 //        content.setExpandRatio(table1, 1);
+
+        HorizontalLayout buttons = new HorizontalLayout();
+        buttons.addComponent(new Button("Usuń zdarzenie OD", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Notification.show("Będzie w następnej wersji...");
+            }
+        }));
+        buttons.addComponent(new Button("Usuń zdarzenie DO", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Notification.show("Będzie w następnej wersji...");
+            }
+        }));
+        content.addComponent(buttons);
 
         final Table table2 = new Table(LISTA_NIEOBECNYCH, report.asVaadinData().get(LISTA_NIEOBECNYCH));
         table2.setSizeFull();

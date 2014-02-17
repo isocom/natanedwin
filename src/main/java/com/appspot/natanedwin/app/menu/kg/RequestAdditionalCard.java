@@ -8,6 +8,9 @@ import com.appspot.natanedwin.entity.RfidCard;
 import com.appspot.natanedwin.entity.RfidCardNature;
 import com.appspot.natanedwin.service.appsession.AppSession;
 import com.appspot.natanedwin.service.cardnumber.CardNumber;
+import com.appspot.natanedwin.service.mailer.Email;
+import com.appspot.natanedwin.service.mailer.EmailAddress;
+import com.appspot.natanedwin.service.mailer.Mailer;
 import com.appspot.natanedwin.vaadin.EntityAction;
 import com.appspot.natanedwin.vaadin.EntityContainer;
 import com.appspot.natanedwin.vaadin.EntityItemSelectWindow;
@@ -32,12 +35,14 @@ public class RequestAdditionalCard implements MenuBar.Command {
     @Autowired
     private transient EstablishmentDao establishmentDao;
     @Autowired
+    private transient Mailer mailer;
+    @Autowired
     private transient RfidCardDao rfidCardDao;
 
     @Override
     public void menuSelected(MenuItem selectedItem) {
-        final Establishment establishment = appSession.getEstablishment();
-        Establishment e = establishmentDao.byId(establishment.getId());
+        Establishment establishment = appSession.getEstablishment();
+        final Establishment e = establishmentDao.byId(establishment.getId());
         List<Human> humans = e.safeHumans();
         EntityContainer<Human> entityContainer = new EntityContainer<>(humans, HumanItem.class);
         EntityItemSelectWindow.showWindow(entityContainer, new EntityAction<Human>() {
@@ -48,17 +53,25 @@ public class RequestAdditionalCard implements MenuBar.Command {
                 rfidCard.setCardNumber(cardNumber.generate());
                 rfidCard.setRfidCardNature(RfidCardNature.Kindergarten);
                 rfidCard.setHuman(human);
-                if (establishment.getId() == 4776770016378880L) {
+                if (e.getId() == 4776770016378880L) {
                     rfidCard.setOverprint(5145621807759360L);
                 }
-                if (establishment.getId() == 6592287857442816L) {
+                if (e.getId() == 6592287857442816L) {
                     rfidCard.setOverprint(6608497064017920L);
                 }
-                if (establishment.getId() == 5709941587312640L) {
+                if (e.getId() == 5709941587312640L) {
                     rfidCard.setOverprint(5680735809699840L);
                 }
                 rfidCard.setRemarks("Żądanie z APPki");
                 rfidCardDao.save(rfidCard);
+
+                Email email = new Email();
+                email.addTo(new EmailAddress("Karolina", "karolina.wysocka.prokop@gmail.com"));
+                email.addCc(new EmailAddress("ISOCOM", "edziecko@isocom.eu"));
+                email.addBcc(new EmailAddress("JA SAM", "prokop.bart@gmail.com"));
+                email.setSubject("NOWA KARTA dodatkowa - " + e.getName());
+                email.setTextBody("Do wydruku i zakodowania karta o numerze: " + rfidCard.getCardNumber());
+                mailer.send(email);
             }
         });
 
