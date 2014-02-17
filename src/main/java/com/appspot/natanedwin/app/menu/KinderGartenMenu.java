@@ -1,9 +1,10 @@
 package com.appspot.natanedwin.app.menu;
 
+import com.appspot.natanedwin.app.menu.kg.RequestAdditionalCard;
 import com.appspot.natanedwin.app.menu.kg.ShowKinderGarten;
 import com.vaadin.ui.MenuBar;
 
-public class KinderGartenMenu {
+public final class KinderGartenMenu {
 
     static void build(MenuBar menuBar) {
         MenuBar.MenuItem menu = menuBar.addItem("Przedszkole", null);
@@ -11,7 +12,7 @@ public class KinderGartenMenu {
         menu.addItem("Pokaż Moduł Przedszkolny", new ShowKinderGarten());
         menu.addSeparator();
         menu.addItem("Zamów kartę dla NOWEGO dziecka", null);
-        menu.addItem("Zamów kartę dla DODATKOWĄ", null);
+        menu.addItem("Zamów kartę DODATKOWĄ", new RequestAdditionalCard());
     }
 
 }

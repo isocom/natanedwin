@@ -23,6 +23,8 @@ public class TimeAttendanceView extends VerticalLayout implements View {
         tabSheet.addTab(new TimeAttendanceView1(), "Stan dnia");
         tabSheet.addTab(new TimeAttendanceView2(), "Raport miesięczny");
         tabSheet.addTab(tab3(), "Raport Przyszły 1");
+        tabSheet.addTab(tab3(), "Raport Przyszły 2");
+        tabSheet.addTab(tab3(), "Raport Przyszły 3");
         setExpandRatio(tabSheet, 1);
     }
 

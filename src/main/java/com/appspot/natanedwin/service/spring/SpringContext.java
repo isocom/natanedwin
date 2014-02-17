@@ -18,9 +18,17 @@ public enum SpringContext {
      */
     INSTANCE;
     private final ApplicationContext applicationContext;
+    private final String[] PACKAGES = new String[]{
+        "com.appspot.natanedwin.app",
+        "com.appspot.natanedwin.dao",
+        "com.appspot.natanedwin.report",
+        "com.appspot.natanedwin.service",
+        "com.appspot.natanedwin.servlet",
+        "com.appspot.natanedwin.vaadin"
+    };
 
     private SpringContext() {
-        applicationContext = new AnnotationConfigApplicationContext("com.appspot.natanedwin");
+        applicationContext = new AnnotationConfigApplicationContext(PACKAGES);
     }
 
     public ApplicationContext getApplicationContext() {

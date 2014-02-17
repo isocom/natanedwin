@@ -33,7 +33,7 @@ public class AccessControlView extends VerticalLayout implements View {
 
         report = new DayStatus(new Date());
 
-        final Label label = new Label(report.asHTML(), ContentMode.HTML);
+        final Label label = new Label("----", ContentMode.HTML);
 
         final HorizontalLayout toolbar = new HorizontalLayout();
         final PopupDateField popupDateField = new PopupDateField("Podaj dzień raportu", new Date());
@@ -48,7 +48,7 @@ public class AccessControlView extends VerticalLayout implements View {
                     return;
                 }
                 report = new DayStatus(value);
-                label.setValue(report.asHTML());
+                label.setValue("");
             }
         }));
         toolbar.addComponent(new Button("Generuj Excel", new Button.ClickListener() {

@@ -11,6 +11,10 @@ import com.appspot.natanedwin.report.DummyPDFReport;
 import com.appspot.natanedwin.report.Report;
 import com.appspot.natanedwin.service.appsession.AppSession;
 import com.appspot.natanedwin.service.appsession.AppSessionHelper;
+import com.vaadin.data.Container;
+import com.vaadin.data.Item;
+import com.vaadin.data.util.IndexedContainer;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -48,72 +52,11 @@ public class DayStatus implements Report {
         events = rfidEventDao.find(this.date, humans);
         DateTimeFormatter mediumDate = AppSessionHelper.mediumDate(appSession);
         fileName = "RPC Stan dnia " + mediumDate.print(this.date);
-
-//        Iterator<RfidEvent> i = events.iterator();
-//        while (i.hasNext()) {
-////            Human human = i.next().safeRfidCard().getHuman().safe();
-//            Human human = i.next().safeHuman();
-//            if (human == null) {
-//                continue;
-//            }
-//            if (!humans.contains(human)) {
-//                i.remove();
-//            }
-//        }
     }
 
     @Override
     public String getFileName() {
         return fileName;
-    }
-
-    @Override
-    public String asHTML() {
-        DateTimeFormatter mediumTime = AppSessionHelper.mediumTime(appSession);
-        PeriodFormatter hms = AppSessionHelper.hms();
-
-        Map<Human, DailyReportRow> reportRows = calcDailyReportRows();
-        StringBuilder sb = new StringBuilder();
-        int rowNo = 0;
-        sb.append("<body>");
-
-        sb.append("<h1>Raport dzienny</h1>");
-        sb.append("<h2>").append(fileName).append("</h2>");
-
-        sb.append("<h3>Raport dzienny</h3>");
-        sb.append("<table border=1>");
-        sb.append("<tr>");
-        sb.append("<th>Lp</th>");
-        sb.append("<th>Pracownik</th>");
-        sb.append("<th>Zdarzenie od</th>");
-        sb.append("<th>Czas od</th>");
-        sb.append("<th>Zdarzenie do</th>");
-        sb.append("<th>Czas do</th>");
-        sb.append("<th>Czas łączny</th>");
-        sb.append("</tr>");
-        for (DailyReportRow row : reportRows.values()) {
-            sb.append("<tr>");
-            sb.append("<td>").append(++rowNo).append("</td>");
-            sb.append("<td>").append(row.human.getName()).append("</td>");
-            sb.append("<td title=\"id:").append(row.fromEventId).append("\">").append(row.fromEvent).append("</td>");
-            sb.append("<td>").append(mediumTime.print(row.from)).append("</td>");
-            sb.append("<td title=\"id:").append(row.toEventId).append("\">").append(row.toEvent).append("</td>");
-            sb.append("<td>").append(mediumTime.print(row.to)).append("</td>");
-            sb.append("<td>").append(hms.print(new Period(row.duration()))).append("</td>");
-            sb.append("</tr>");
-        }
-        sb.append("</table>");
-        sb.append("Ilość rekordów: ").append(reportRows.size()).append(".<br>");
-
-        sb.append("<h3>Lista nieobecnych</h3>");
-        sb.append("<ol>");
-        for (Human human : calcAbsences(reportRows)) {
-            sb.append("<li>").append(human.getName()).append("</li>");
-        }
-        sb.append("</ol>");
-
-        sb.append("</body>");
-        return sb.toString();
     }
 
     @Override
@@ -164,7 +107,7 @@ public class DayStatus implements Report {
         return events;
     }
 
-    class DailyReportRow {
+    class DailyReportRow implements Serializable {
 
         final Human human;
         DateTime from = new DateTime(Long.MAX_VALUE);
@@ -182,4 +125,63 @@ public class DayStatus implements Report {
             return to.getMillis() - from.getMillis();
         }
     }
+
+    public static final String RAPORT_DZIENNY = "Raport dzienny";
+    private static final String LP = "Lp.";
+    private static final String PRACOWNIK = "Pracownik";
+    private static final String ZDARZENIE_OD = "Zdarzenie od";
+    private static final String CZAS_OD = "Czas od";
+    private static final String ZDARZENIE_DO = "Zdarzenie do";
+    private static final String CZAS_DO = "Czas do";
+    private static final String CZAS_RAZEM = "Czas pobytu";
+    private static final String ID_OD = "GAE ID od";
+    private static final String ID_DO = "GAE ID do";
+    public static final String LISTA_NIEOBECNYCH = "Lista nieobecnych";
+
+    @Override
+    public Map<String, Container> asVaadinData() {
+        final HashMap<String, Container> hashMap = new HashMap<>();
+        final DateTimeFormatter mediumTime = AppSessionHelper.mediumTime(appSession);
+        final PeriodFormatter hms = AppSessionHelper.hms();
+        final Map<Human, DailyReportRow> reportRows = calcDailyReportRows();
+
+        int rowNo = 0;
+        IndexedContainer indexedContainer = new IndexedContainer();
+        indexedContainer.addContainerProperty(LP, Integer.class, null);
+        indexedContainer.addContainerProperty(PRACOWNIK, String.class, null);
+        indexedContainer.addContainerProperty(ZDARZENIE_OD, String.class, null);
+        indexedContainer.addContainerProperty(CZAS_OD, String.class, null);
+        indexedContainer.addContainerProperty(ZDARZENIE_DO, String.class, null);
+        indexedContainer.addContainerProperty(CZAS_DO, String.class, null);
+        indexedContainer.addContainerProperty(CZAS_RAZEM, String.class, null);
+        indexedContainer.addContainerProperty(ID_OD, Long.class, null);
+        indexedContainer.addContainerProperty(ID_DO, Long.class, null);
+        for (DailyReportRow row : reportRows.values()) {
+            final Item item = indexedContainer.addItem(row);
+            item.getItemProperty(LP).setValue(++rowNo);
+            item.getItemProperty(PRACOWNIK).setValue(row.human.getName());
+            item.getItemProperty(ZDARZENIE_OD).setValue(row.fromEvent.toString());
+            item.getItemProperty(CZAS_OD).setValue(mediumTime.print(row.from));
+            item.getItemProperty(ZDARZENIE_DO).setValue(row.toEvent.toString());
+            item.getItemProperty(CZAS_DO).setValue(mediumTime.print(row.to));
+            item.getItemProperty(CZAS_RAZEM).setValue(hms.print(new Period(row.duration())));
+            item.getItemProperty(ID_OD).setValue(row.fromEventId);
+            item.getItemProperty(ID_DO).setValue(row.toEventId);
+        }
+        hashMap.put(RAPORT_DZIENNY, indexedContainer);
+
+        rowNo = 0;
+        indexedContainer = new IndexedContainer();
+        indexedContainer.addContainerProperty(LP, Integer.class, null);
+        indexedContainer.addContainerProperty(PRACOWNIK, String.class, null);
+        for (Human human : calcAbsences(reportRows)) {
+            final Item item = indexedContainer.addItem(human);
+            item.getItemProperty(LP).setValue(++rowNo);
+            item.getItemProperty(PRACOWNIK).setValue(human.getName());
+        }
+        hashMap.put(LISTA_NIEOBECNYCH, indexedContainer);
+
+        return hashMap;
+    }
+
 }

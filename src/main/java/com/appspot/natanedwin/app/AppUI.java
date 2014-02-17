@@ -7,6 +7,7 @@ import com.appspot.natanedwin.service.spring.SpringContext;
 import com.appspot.natanedwin.service.user.UserCredentials;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.WrappedSession;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -24,6 +25,7 @@ public class AppUI extends UI {
     private AppNavigator appNavigator;
     private DownloadArea downloadArea;
     private AppMenu appMenu;
+    private SideBar sideBar;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -65,11 +67,21 @@ public class AppUI extends UI {
         appMenu = new AppMenu();
         content.addComponent(appMenu);
 
-        VerticalLayout centerArea = new VerticalLayout();
-        appNavigator = new AppNavigator(this, centerArea);
+        HorizontalLayout centerArea = new HorizontalLayout();
+        centerArea.setSizeFull();
+        
+        sideBar = new SideBar();
+        centerArea.addComponent(sideBar);
+        
+        VerticalLayout navigatorArea = new VerticalLayout();
+        navigatorArea.setSizeFull();
+        appNavigator = new AppNavigator(this, navigatorArea);
+        centerArea.addComponent(navigatorArea);
+        centerArea.setExpandRatio(navigatorArea, 1);
+
         content.addComponent(centerArea);
         content.setExpandRatio(centerArea, 1);
-
+        
         downloadArea = new DownloadArea();
         content.addComponent(downloadArea);
 
