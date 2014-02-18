@@ -141,8 +141,14 @@ public class CardDetected1 {
         cn = cardNumber.compress(cn);
         String line4 = "ERROR";
 
+        List<RfidCard> rfidCards = rfidCardDao.findByHuman(human);
+        StringBuilder sb = new StringBuilder();
+        for (RfidCard card : rfidCards) {
+            sb.append(cardNumber.compress(card.getCardNumber())).append(",");
+        }
+
         try {
-            URL url = new URL("http://e-dziecko.appspot.com/NatanEdwin?cn=" + cn);
+            URL url = new URL("http://e-dziecko.appspot.com/NatanEdwin?cn=" + cn + "&cns=" + sb);
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
                 line4 = reader.readLine();
             }

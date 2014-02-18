@@ -1,6 +1,7 @@
 package com.appspot.natanedwin.servlet.tools;
 
 import com.appspot.natanedwin.dao.RfidCardDao;
+import com.appspot.natanedwin.entity.Human;
 import com.appspot.natanedwin.entity.RfidCard;
 import com.appspot.natanedwin.entity.RfidCardType;
 import java.io.IOException;
@@ -25,6 +26,29 @@ public class TestServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/plain");
+        PrintWriter writer = resp.getWriter();
+        writer.println("Test servlet");
+
+        try {
+            String cn = req.getParameter("cn");
+
+            RfidCard rfidCard = rfidCardDao.findByCardNumber(cn);
+            Human human = rfidCard.getHumanChecked();
+            List<RfidCard> rfidCards = rfidCardDao.findByHuman(human);
+            writer.println("1");
+            StringBuilder sb = new StringBuilder();
+            for (RfidCard card : rfidCards) {
+                writer.println(card.getFirstTimeSeen() + " " + card.getRfidCardType() + " / " + card.getCardNumber());
+                sb.append(card.getCardNumber()).append(",");
+            }
+            writer.println("2 - " + sb);
+        } catch (Exception e) {
+            e.printStackTrace(writer);
+        }
+    }
+
+    private void old001(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/plain");
         PrintWriter writer = resp.getWriter();
         writer.println("Test servlet");
@@ -64,5 +88,4 @@ public class TestServlet extends HttpServlet {
             e.printStackTrace(writer);
         }
     }
-
 }

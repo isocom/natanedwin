@@ -52,8 +52,21 @@ public class RfidCardDao implements Dao<RfidCard> {
         return retVal;
     }
 
+    public RfidCard findByCardNumber(final String cardNumber) {
+//        RfidCard retVal = memCache.get(MC_SN_PREFIX + serialNumber, RfidCard.class);
+//        if (retVal != null) {
+//            return retVal;
+//        }
+        RfidCard retVal = ofy.ofy().load().type(RfidCard.class).filter("cardNumber = ", cardNumber).first().now();
+        return retVal;
+    }
+
     public List<RfidCard> findHumanUnassigned() {
         return ofy.ofy().load().type(RfidCard.class).filter("human == ", null).list();
+    }
+
+    public List<RfidCard> findByHuman(Human human) {
+        return ofy.ofy().load().type(RfidCard.class).filter("human == ", human).list();
     }
 
     public List<RfidCard> findRecent(int limit) {
