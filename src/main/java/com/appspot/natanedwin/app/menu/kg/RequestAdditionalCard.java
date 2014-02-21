@@ -70,7 +70,7 @@ public class RequestAdditionalCard implements MenuBar.Command {
                 email.addCc(new EmailAddress("ISOCOM", "edziecko@isocom.eu"));
                 email.addBcc(new EmailAddress("JA SAM", "prokop.bart@gmail.com"));
                 email.setSubject("NOWA KARTA dodatkowa - " + e.getName());
-                email.setTextBody("Do wydruku i zakodowania karta o numerze: " + rfidCard.getCardNumber());
+                email.setTextBody("Do wydruku i zakodowania karta o numerze: " + rfidCard.getCardNumber() + "\nOsoba: " + human.getName());
                 mailer.send(email);
             }
         });
