@@ -9,6 +9,8 @@ import com.vaadin.ui.VerticalLayout;
 
 public class BogusView extends VerticalLayout implements View {
 
+    static final long serialVersionUID = -781607100828386538L;
+
     public BogusView() {
         setSizeFull();
 

@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class ShowEstablishments implements MenuBar.Command {
     
+static final long serialVersionUID = 3902344791938885595L;
     private final Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
     @Autowired
     private transient EstablishmentDao establishmentDao;

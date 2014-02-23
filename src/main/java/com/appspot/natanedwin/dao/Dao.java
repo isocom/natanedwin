@@ -25,5 +25,7 @@ public interface Dao<E> {
 
     public E delete(E entity);
 
+    public void delete(long id);
+
     public E save(E entity);
 }

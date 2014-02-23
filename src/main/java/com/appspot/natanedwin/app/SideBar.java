@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class SideBar extends VerticalLayout {
 
+    static final long serialVersionUID = -8245696392571705757L;
     @Autowired
     private transient AppSession appSession;
 

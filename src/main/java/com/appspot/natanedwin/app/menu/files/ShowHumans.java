@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class ShowHumans implements MenuBar.Command {
 
+    static final long serialVersionUID = -2411280886012618462L;
     @Autowired
     private transient AppSession appSession;
     @Autowired

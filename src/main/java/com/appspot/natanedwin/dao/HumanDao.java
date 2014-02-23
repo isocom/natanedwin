@@ -34,6 +34,11 @@ public class HumanDao implements Dao<Human> {
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
     }
 
+    @Override
+    public void delete(long id) {
+        throw new AppError("Can't delete " + id, "Nie można usuwać tego typu obiektów");
+    }
+
     public List<Human> findAll() {
         Query<Human> query = ofy.ofy().load().type(Human.class);
         List<Human> list = query.list();

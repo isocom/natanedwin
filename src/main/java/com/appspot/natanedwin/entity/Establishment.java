@@ -7,6 +7,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
 import com.googlecode.objectify.condition.IfNotNull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -102,10 +103,12 @@ public class Establishment implements Serializable {
         this.name = name;
     }
 
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public Date getLicenseValidity() {
         return licenseValidity;
     }
 
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public void setLicenseValidity(Date licenseValidity) {
         this.licenseValidity = licenseValidity;
     }

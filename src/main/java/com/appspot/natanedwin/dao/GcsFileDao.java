@@ -1,5 +1,6 @@
 package com.appspot.natanedwin.dao;
 
+import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.GcsFile;
 import com.appspot.natanedwin.service.gcs.Gcs;
 import com.appspot.natanedwin.service.gcs.GcsMimeType;
@@ -33,6 +34,11 @@ public class GcsFileDao implements Dao<GcsFile> {
         ofy.ofy().delete().entity(entity).now();
         gcs.delete(entity.getBucketName(), entity.getObjectName());
         return entity;
+    }
+
+    @Override
+    public void delete(long id) {
+        throw new AppError("Can't delete " + id, "Nie można usuwać tego typu obiektów");
     }
 
     @Override

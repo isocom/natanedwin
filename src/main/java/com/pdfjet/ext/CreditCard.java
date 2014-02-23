@@ -1,11 +1,14 @@
 package com.pdfjet.ext;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Used to specify PDF page with size <strong>CreditCard</strong>. For more
  * information about the page size classes - A3, A4, A5, B5, Executive, Letter,
  * Legal and Tabloid - see the Page class.
  *
  */
+@SuppressFBWarnings
 public class CreditCard {
 
     /**

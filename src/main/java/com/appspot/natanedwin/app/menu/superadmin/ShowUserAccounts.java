@@ -23,6 +23,7 @@ import java.util.Map;
  */
 public class ShowUserAccounts implements MenuBar.Command {
 
+static final long serialVersionUID = 4634489009555078877L;
     private final Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
 
     public ShowUserAccounts() {
@@ -36,7 +37,7 @@ public class ShowUserAccounts implements MenuBar.Command {
         EntityContainerWindow.showWindow(new EntityContainer<>(userAccountDao.findAll(), UserAccountItem.class), additionalActions);
     }
 
-    private class AssignUserAccountToEstablishment1 implements EntityAction<UserAccount> {
+    private static class AssignUserAccountToEstablishment1 implements EntityAction<UserAccount> {
 
         @Override
         public void execute(UserAccount entity) {
@@ -49,7 +50,7 @@ public class ShowUserAccounts implements MenuBar.Command {
 
     }
 
-    private class AssignUserAccountToEstablishment2 implements EntityAction<Establishment> {
+    private static class AssignUserAccountToEstablishment2 implements EntityAction<Establishment> {
 
         private final UserAccount userAccount;
 
@@ -66,7 +67,7 @@ public class ShowUserAccounts implements MenuBar.Command {
         }
     }
 
-    private class ResetPassword implements EntityAction<UserAccount> {
+    private static class ResetPassword implements EntityAction<UserAccount> {
 
         @Override
         public void execute(UserAccount entity) {

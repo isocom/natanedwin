@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
 import com.googlecode.objectify.condition.IfNotNull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -44,11 +45,16 @@ public class RfidEvent implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (id == null) {
+        if (this.id == null) {
             return false;
         }
-        if (obj != null && obj instanceof RfidEvent) {
-            return id == ((RfidEvent) obj).id;
+        if (!(obj instanceof RfidEvent)) {
+            return false;
+        }
+
+        RfidEvent other = (RfidEvent) obj;
+        if (other.id != null) {
+            return this.id.longValue() == other.id.longValue();
         } else {
             return false;
         }
@@ -129,10 +135,12 @@ public class RfidEvent implements Serializable {
         this.rfidEventType = rfidEventType;
     }
 
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public Date getEventDate() {
         return eventDate;
     }
 
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }

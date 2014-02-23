@@ -33,6 +33,11 @@ public class StatEntryDao implements Dao<StatEntry> {
     }
 
     @Override
+    public void delete(long id) {
+        throw new AppError("Can't delete " + id, "Nie można usuwać tego typu obiektów");
+    }
+
+    @Override
     public StatEntry save(StatEntry e) {
         ofy.ofy().save().entity(e);
         return e;

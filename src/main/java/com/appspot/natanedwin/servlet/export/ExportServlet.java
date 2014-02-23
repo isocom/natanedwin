@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ExportServlet extends HttpServlet {
 
+    static final long serialVersionUID = 5327364976416188117L;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain;charset=UTF-8");
@@ -52,7 +54,7 @@ public class ExportServlet extends HttpServlet {
                 Key<Human> humanKey = rfidCard.getHuman().getKey();
                 Human human = new Human();
                 human.setId(humanKey.getId());
-                out.print("cardOwner=\"" + (humanKey != null ? ofy.ofy().load().entity(human).get().getName() : "--NIEPRZYPISANA--") + "\" ");
+                out.print("cardOwner=\"" + ( ofy.ofy().load().entity(human).get().getName() ) + "\" ");
                 out.print("cardNumber=\"" + rfidCard.getCardNumber() + "\" ");
                 out.print("/>");
                 out.println();

@@ -1,42 +1,41 @@
 /**
- *  Table.java
+ * Table.java
  *
-Copyright (c) 2013, Innovatics Inc.
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and / or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-
+ * Copyright (c) 2013, Innovatics Inc. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation and
+ * / or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
 package com.pdfjet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.*;
 
-
 /**
- *  Used to create table objects and draw them on a page.
+ * Used to create table objects and draw them on a page.
  *
- *  Please see Example_08.
+ * Please see Example_08.
  */
+@SuppressFBWarnings
 public class Table {
 
     public static int DATA_HAS_0_HEADER_ROWS = 0;
@@ -62,119 +61,112 @@ public class Table {
     private float padding = 1f;
     private float bottom_margin = 30f;
 
-
     /**
-     *  Create a table object.
+     * Create a table object.
      *
      */
     public Table() {
         tableData = new ArrayList<List<Cell>>();
     }
 
-
     /**
-     *  Sets the position (x, y) of the top left corner of this table on the page.
+     * Sets the position (x, y) of the top left corner of this table on the
+     * page.
      *
-     *  @param x the x coordinate of the top left point of the table.
-     *  @param y the y coordinate of the top left point of the table.
+     * @param x the x coordinate of the top left point of the table.
+     * @param y the y coordinate of the top left point of the table.
      */
     public void setPosition(double x, double y) {
         this.x1 = (float) x;
         this.y1 = (float) y;
     }
 
-
     /**
-     *  Sets the position (x, y) of the top left corner of this table on the page.
+     * Sets the position (x, y) of the top left corner of this table on the
+     * page.
      *
-     *  @param x the x coordinate of the top left point of the table.
-     *  @param y the y coordinate of the top left point of the table.
+     * @param x the x coordinate of the top left point of the table.
+     * @param y the y coordinate of the top left point of the table.
      */
     public void setPosition(float x, float y) {
         setLocation(x, y);
     }
 
-
     /**
-     *  Sets the location (x, y) of the top left corner of this table on the page.
+     * Sets the location (x, y) of the top left corner of this table on the
+     * page.
      *
-     *  @param x the x coordinate of the top left point of the table.
-     *  @param y the y coordinate of the top left point of the table.
+     * @param x the x coordinate of the top left point of the table.
+     * @param y the y coordinate of the top left point of the table.
      */
     public void setLocation(float x, float y) {
         this.x1 = x;
         this.y1 = y;
     }
 
-
     /**
-     *  Sets the padding around the cells of this table.
+     * Sets the padding around the cells of this table.
      *
-     *  @param padding the cell padding.
+     * @param padding the cell padding.
      */
     public void setCellPadding(double padding) {
         this.padding = (float) padding;
     }
 
-
     /**
-     *  Sets the padding around the cells of this table.
+     * Sets the padding around the cells of this table.
      *
-     *  @param padding the padding.
+     * @param padding the padding.
      */
     public void setCellPadding(float padding) {
         this.padding = padding;
     }
 
-
     /**
-     *  Sets the margin around the cells of this table.
+     * Sets the margin around the cells of this table.
      *
-     *  @param margin the margin.
+     * @param margin the margin.
      */
     public void setCellMargin(double margin) {
         this.padding = (float) margin;
     }
 
-
     /**
-     *  Sets the margin around the cells of this table.
+     * Sets the margin around the cells of this table.
      *
-     *  @param margin the margin.
+     * @param margin the margin.
      */
     public void setCellMargin(float margin) {
         this.padding = margin;
     }
 
-
     /**
-     *  Sets the bottom margin for this table.
+     * Sets the bottom margin for this table.
      *
-     *  @param bottom_margin the margin.
+     * @param bottom_margin the margin.
      */
     public void setBottomMargin(double bottom_margin) {
         this.bottom_margin = (float) bottom_margin;
     }
 
-
     /**
-     *  Sets the bottom margin for this table.
+     * Sets the bottom margin for this table.
      *
-     *  @param bottom_margin the margin.
+     * @param bottom_margin the margin.
      */
     public void setBottomMargin(float bottom_margin) {
         this.bottom_margin = bottom_margin;
     }
 
-
     /**
-     *  Sets the table data.
+     * Sets the table data.
      *
-     *  The table data is a perfect grid of cells.
-     *  All cell should be an unique object and you can not reuse blank cell objects.
-     *  Even if one or more cells have colspan bigger than zero the number of cells in the row will not change.
+     * The table data is a perfect grid of cells. All cell should be an unique
+     * object and you can not reuse blank cell objects. Even if one or more
+     * cells have colspan bigger than zero the number of cells in the row will
+     * not change.
      *
-     *  @param tableData the table data.
+     * @param tableData the table data.
      */
     public void setData(
             List<List<Cell>> tableData) throws Exception {
@@ -183,12 +175,11 @@ public class Table {
         this.rendered = numOfHeaderRows;
     }
 
-
     /**
-     *  Sets the table data and specifies the number of header rows in this data.
+     * Sets the table data and specifies the number of header rows in this data.
      *
-     *  @param tableData the table data.
-     *  @param numOfHeaderRows the number of header rows in this data.
+     * @param tableData the table data.
+     * @param numOfHeaderRows the number of header rows in this data.
      */
     public void setData(
             List<List<Cell>> tableData, int numOfHeaderRows) throws Exception {
@@ -197,9 +188,9 @@ public class Table {
         this.rendered = numOfHeaderRows;
     }
 
-
     /**
-     *  Auto adjusts the widths of all columns so that they are just wide enough to hold the text without truncation.
+     * Auto adjusts the widths of all columns so that they are just wide enough
+     * to hold the text without truncation.
      */
     public void autoAdjustColumnWidths() {
         // Find the maximum text width for each column
@@ -211,8 +202,8 @@ public class Table {
                 if (cell.getColSpan() == 1) {
                     if (cell.text != null) {
                         cell.setWidth(cell.font.stringWidth(cell.text));
-                        if (max_col_widths[j] == 0.0 ||
-                                cell.getWidth() > max_col_widths[j]) {
+                        if (max_col_widths[j] == 0.0
+                                || cell.getWidth() > max_col_widths[j]) {
                             max_col_widths[j] = cell.width;
                         }
                     }
@@ -224,14 +215,13 @@ public class Table {
             List<Cell> row = tableData.get(i);
             for (int j = 0; j < row.size(); j++) {
                 Cell cell = row.get(j);
-                cell.setWidth(max_col_widths[j] + 3*padding);
+                cell.setWidth(max_col_widths[j] + 3 * padding);
             }
         }
     }
 
-
     /**
-     *  Sets the alignment of the numbers to the right.
+     * Sets the alignment of the numbers to the right.
      */
     public void rightAlignNumbers() {
         for (int i = numOfHeaderRows; i < tableData.size(); i++) {
@@ -263,9 +253,8 @@ public class Table {
         }
     }
 
-
     /**
-     *  Removes the horizontal lines between the rows from index1 to index2.
+     * Removes the horizontal lines between the rows from index1 to index2.
      */
     public void removeLineBetweenRows(
             int index1, int index2) throws Exception {
@@ -283,12 +272,12 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the text alignment in the specified column.
+     * Sets the text alignment in the specified column.
      *
-     *  @param index the index of the specified column.
-     *  @param alignment the specified alignment. Supported values: Align.LEFT, Align.RIGHT, Align.CENTER and Align.JUSTIFY.
+     * @param index the index of the specified column.
+     * @param alignment the specified alignment. Supported values: Align.LEFT,
+     * Align.RIGHT, Align.CENTER and Align.JUSTIFY.
      */
     public void setTextAlignInColumn(
             int index, int alignment) throws Exception {
@@ -300,12 +289,11 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the color of the text in the specified column.
+     * Sets the color of the text in the specified column.
      *
-     *  @param index the index of the specified column.
-     *  @param color the color specified as an integer.
+     * @param index the index of the specified column.
+     * @param color the color specified as an integer.
      */
     public void setTextColorInColumn(
             int index, int color) throws Exception {
@@ -317,14 +305,15 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the font and font size for the specified column.
-     *  @deprecated  As of version 4.00, replaced by {@link #setFontInColumn(int, Font)}
+     * Sets the font and font size for the specified column.
      *
-     *  @param index the index of the specified column.
-     *  @param font the font.
-     *  @param size the font size.
+     * @deprecated As of version 4.00, replaced by
+     * {@link #setFontInColumn(int, Font)}
+     *
+     * @param index the index of the specified column.
+     * @param font the font.
+     * @param size the font size.
      */
     @Deprecated
     public void setTextFontInColumn(
@@ -338,12 +327,11 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the font and font size for the specified column.
+     * Sets the font and font size for the specified column.
      *
-     *  @param index the index of the specified column.
-     *  @param font the font.
+     * @param index the index of the specified column.
+     * @param font the font.
      */
     public void setFontInColumn(int index, Font font) throws Exception {
         for (int i = 0; i < tableData.size(); i++) {
@@ -354,12 +342,11 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the color of the text in the specified row.
+     * Sets the color of the text in the specified row.
      *
-     *  @param index the index of the specified row.
-     *  @param color the color specified as an integer.
+     * @param index the index of the specified row.
+     * @param color the color specified as an integer.
      */
     public void setTextColorInRow(
             int index, int color) throws Exception {
@@ -369,14 +356,15 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the font and font size for the text in the specified row.
-     *  @deprecated  As of version 4.00, replaced by {@link #setFontInRow(int, Font)}
+     * Sets the font and font size for the text in the specified row.
      *
-     *  @param index the index of the specified row.
-     *  @param font the font.
-     *  @param size the font size.
+     * @deprecated As of version 4.00, replaced by
+     * {@link #setFontInRow(int, Font)}
+     *
+     * @param index the index of the specified row.
+     * @param font the font.
+     * @param size the font size.
      */
     @Deprecated
     public void setTextFontInRow(
@@ -388,12 +376,11 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the font and font size for the text in the specified row.
+     * Sets the font and font size for the text in the specified row.
      *
-     *  @param index the index of the specified row.
-     *  @param font the font.
+     * @param index the index of the specified row.
+     * @param font the font.
      */
     public void setFontInRow(int index, Font font) throws Exception {
         List<Cell> row = tableData.get(index);
@@ -402,12 +389,11 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the width of the column with the specified index.
+     * Sets the width of the column with the specified index.
      *
-     *  @param index the index of specified column.
-     *  @param width the specified width.
+     * @param index the index of specified column.
+     * @param width the specified width.
      */
     public void setColumnWidth(
             int index, double width) throws Exception {
@@ -419,25 +405,23 @@ public class Table {
         }
     }
 
-
     /**
-     *  Returns the column width of the column at the specified index.
+     * Returns the column width of the column at the specified index.
      *
-     *  @param index the index of the column.
-     *  @return the width of the column.
+     * @param index the index of the column.
+     * @return the width of the column.
      */
     public float getColumnWidth(int index) throws Exception {
-        return getCellAtRowColumn(0, index).getWidth(); 
+        return getCellAtRowColumn(0, index).getWidth();
     }
 
-
     /**
-     *  Returns the cell at the specified row and column.
+     * Returns the cell at the specified row and column.
      *
-     *  @param row the specified row.
-     *  @param col the specified column.
+     * @param row the specified row.
+     * @param col the specified column.
      *
-     *  @return the cell at the specified row and column.
+     * @return the cell at the specified row and column.
      */
     public Cell getCellAt(
             int row, int col) throws Exception {
@@ -447,43 +431,39 @@ public class Table {
         return tableData.get(tableData.size() + row).get(col);
     }
 
-
     /**
-     *  Returns the cell at the specified row and column.
+     * Returns the cell at the specified row and column.
      *
-     *  @param row the specified row.
-     *  @param col the specified column.
+     * @param row the specified row.
+     * @param col the specified column.
      *
-     *  @return the cell at the specified row and column.
+     * @return the cell at the specified row and column.
      */
     public Cell getCellAtRowColumn(int row, int col) throws Exception {
         return getCellAt(row, col);
     }
 
-
     /**
-     *  Returns a list of cell for the specified row.
+     * Returns a list of cell for the specified row.
      *
-     *  @param index the index of the specified row.
+     * @param index the index of the specified row.
      *
-     *  @return the list of cells.
+     * @return the list of cells.
      */
     public List<Cell> getRow(int index) throws Exception {
         return tableData.get(index);
     }
 
-
     public List<Cell> getRowAtIndex(int index) throws Exception {
         return getRow(index);
     }
 
-
     /**
-     *  Returns a list of cell for the specified column.
+     * Returns a list of cell for the specified column.
      *
-     *  @param index the index of the specified column.
+     * @param index the index of the specified column.
      *
-     *  @return the list of cells.
+     * @return the list of cells.
      */
     public List<Cell> getColumn(int index) throws Exception {
         List<Cell> column = new ArrayList<Cell>();
@@ -496,18 +476,17 @@ public class Table {
         return column;
     }
 
-
     public List<Cell> getColumnAtIndex(int index) throws Exception {
         return getColumn(index);
     }
 
-
     /**
-     *  Returns the total number of pages that are required to draw this table on.
+     * Returns the total number of pages that are required to draw this table
+     * on.
      *
-     *  @param page the type of pages we are drawing this table on.
+     * @param page the type of pages we are drawing this table on.
      *
-     *  @return the number of pages.
+     * @return the number of pages.
      */
     public int getNumberOfPages(Page page) throws Exception {
         numOfPages = 1;
@@ -518,26 +497,25 @@ public class Table {
         return numOfPages;
     }
 
-
     /**
-     *  Draws this table on the specified page.
+     * Draws this table on the specified page.
      *
-     *  @param page the page to draw this table on.
+     * @param page the page to draw this table on.
      *
-     *  @return Point the point on the page where to draw the next component.
+     * @return Point the point on the page where to draw the next component.
      */
     public Point drawOn(Page page) throws Exception {
         return drawOn(page, true);
     }
 
-
     /**
-     *  Draws this table on the specified page.
+     * Draws this table on the specified page.
      *
-     *  @param page the page to draw this table on.
-     *  @param draw if false - do not draw the table. Use to only find out where the table ends.
+     * @param page the page to draw this table on.
+     * @param draw if false - do not draw the table. Use to only find out where
+     * the table ends.
      *
-     *  @return Point the point on the page where to draw the next component.
+     * @return Point the point on the page where to draw the next component.
      */
     public Point drawOn(Page page, boolean draw) throws Exception {
         float x = x1;
@@ -550,7 +528,7 @@ public class Table {
             List<Cell> dataRow = tableData.get(i);
             for (int j = 0; j < dataRow.size(); j++) {
                 Cell cell = dataRow.get(j);
-                float cellHeight = cell.getHeight() + 2*padding;
+                float cellHeight = cell.getHeight() + 2 * padding;
                 if (cellHeight > cell_h) {
                     cell_h = cellHeight;
                 }
@@ -576,7 +554,7 @@ public class Table {
             List<Cell> dataRow = tableData.get(i);
             for (int j = 0; j < dataRow.size(); j++) {
                 Cell cell = dataRow.get(j);
-                float cellHeight = cell.getHeight() + 2*padding;
+                float cellHeight = cell.getHeight() + 2 * padding;
                 if (cellHeight > cell_h) {
                     cell_h = cellHeight;
                 }
@@ -601,7 +579,7 @@ public class Table {
                 List<Cell> nextRow = tableData.get(i + 1);
                 for (int j = 0; j < nextRow.size(); j++) {
                     Cell cell = nextRow.get(j);
-                    float cellHeight = cell.getHeight() + 2*padding;
+                    float cellHeight = cell.getHeight() + 2 * padding;
                     if (cellHeight > cell_h) {
                         cell_h = cellHeight;
                     }
@@ -611,8 +589,7 @@ public class Table {
             if ((y + cell_h) > (page.height - bottom_margin)) {
                 if (i == tableData.size() - 1) {
                     rendered = -1;
-                }
-                else {
+                } else {
                     rendered = i + 1;
                     numOfPages++;
                 }
@@ -625,19 +602,18 @@ public class Table {
         return new Point(x, y);
     }
 
-
     /**
-     *  Returns true if the table contains more data that needs to be drawn on a page.
+     * Returns true if the table contains more data that needs to be drawn on a
+     * page.
      */
     public boolean hasMoreData() {
         return rendered != -1;
     }
 
-
     /**
-     *  Returns the width of this table when drawn on a page.
+     * Returns the width of this table when drawn on a page.
      *
-     *  @return the widht of this table.
+     * @return the widht of this table.
      */
     public float getWidth() {
         float table_width = 0.0f;
@@ -648,19 +624,17 @@ public class Table {
         return table_width;
     }
 
-
     /**
-     *  Returns the number of data rows that have been rendered so far.
+     * Returns the number of data rows that have been rendered so far.
      *
-     *  @return the number of data rows that have been rendered so far.
+     * @return the number of data rows that have been rendered so far.
      */
     public int getRowsRendered() {
         return rendered == -1 ? rendered : rendered - numOfHeaderRows;
     }
 
-
     /**
-     *  Wraps around the text in all cells so it fits the column width.
+     * Wraps around the text in all cells so it fits the column width.
      *
      */
     public void wrapAroundCellText() {
@@ -708,8 +682,7 @@ public class Table {
 
                     if (j == 0) {
                         cell2.setText(cell.getText());
-                    }
-                    else if (j > 0) {
+                    } else if (j > 0) {
                         cell2.setBorder(Border.TOP, false);
                         if (j < (maxNumVerCells - 1)) {
                             cell2.setBorder(Border.BOTTOM, false);
@@ -731,8 +704,7 @@ public class Table {
                     StringBuilder sb = new StringBuilder();
                     if (tokens.length == 1) {
                         sb.append(tokens[0]);
-                    }
-                    else {
+                    } else {
                         for (int k = 0; k < tokens.length; k++) {
                             String token = tokens[k];
                             if (cell.font.stringWidth(sb.toString() + " " + token)
@@ -740,8 +712,7 @@ public class Table {
                                 tableData2.get(i + n).get(j).setText(sb.toString());
                                 sb = new StringBuilder(token);
                                 n++;
-                            }
-                            else {
+                            } else {
                                 if (k > 0) {
                                     sb.append(" ");
                                 }
@@ -757,9 +728,8 @@ public class Table {
         tableData = tableData2;
     }
 
-
     /**
-     *  Sets all table cells borders to <strong>false</strong>.
+     * Sets all table cells borders to <strong>false</strong>.
      *
      */
     public void setNoCellBorders() {
@@ -771,11 +741,10 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the color of the cell border lines.
+     * Sets the color of the cell border lines.
      *
-     *  @param color the color of the cell border lines.
+     * @param color the color of the cell border lines.
      */
     public void setCellBordersColor(int color) {
         for (int i = 0; i < tableData.size(); i++) {
@@ -786,11 +755,10 @@ public class Table {
         }
     }
 
-
     /**
-     *  Sets the width of the cell border lines.
+     * Sets the width of the cell border lines.
      *
-     *  @param width the width of the border lines.
+     * @param width the width of the border lines.
      */
     public void setCellBordersWidth(float width) {
         for (int i = 0; i < tableData.size(); i++) {
@@ -801,10 +769,9 @@ public class Table {
         }
     }
 
-
     /**
-     * Resets the rendered pages count.
-     * Call this method if you have to draw this table more than one time.
+     * Resets the rendered pages count. Call this method if you have to draw
+     * this table more than one time.
      */
     public void resetRenderedPagesCount() {
         this.rendered = numOfHeaderRows;

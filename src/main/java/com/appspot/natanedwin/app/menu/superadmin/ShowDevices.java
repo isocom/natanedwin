@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ShowDevices implements MenuBar.Command {
 
+static final long serialVersionUID = -6127764612718067706L;
     @Override
     public void menuSelected(MenuItem selectedItem) {
         Ofy ofy = SpringContext.INSTANCE.getBean(Ofy.class);

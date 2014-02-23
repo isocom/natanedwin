@@ -17,8 +17,8 @@ public class PDFReport {
     private final Font fontTimesRoman10;
     private final Font fontHelvetica10;
     private final Font fontHelvetica6;
-    protected double x_pos;
-    protected double y_pos;
+//    protected double x_pos;
+//    protected double y_pos;
     private int pageNumber;
 
     public PDFReport() {
@@ -54,8 +54,8 @@ public class PDFReport {
     public Page newPage() {
         try {
             page = new Page(pdf, A4.PORTRAIT);
-            x_pos = 20.0;
-            y_pos = 20.0;
+//            x_pos = 20.0;
+//            y_pos = 20.0;
             pageNumber++;
             return page;
         } catch (Exception t) {

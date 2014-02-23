@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable(preConstruction = true)
 public class MonthSummary implements Report {
 
+    static final long serialVersionUID = -8010124028431018198L;
     @Autowired
     private transient AppSession appSession;
     @Autowired
@@ -105,7 +106,7 @@ public class MonthSummary implements Report {
         final HashMap<String, Container> hashMap = new HashMap<>();
         final DateTimeZone dateTimeZone = AppSessionHelper.dateTimeZone(appSession);
         final DateTimeFormatter mediumDateTime = AppSessionHelper.mediumDateTime(appSession);
-        final DateTimeFormatter mediumTime = AppSessionHelper.mediumTime(appSession);
+//        final DateTimeFormatter mediumTime = AppSessionHelper.mediumTime(appSession);
         final PeriodFormatter hms = AppSessionHelper.hms();
 
         int rowNo1 = 0;
@@ -156,8 +157,9 @@ public class MonthSummary implements Report {
 //        }
     }
 
-    class HumanDay implements Serializable {
+    public static class HumanDay implements Serializable {
 
+        static final long serialVersionUID = 7399239188174064410L;
         Date from;
         Date to;
     }

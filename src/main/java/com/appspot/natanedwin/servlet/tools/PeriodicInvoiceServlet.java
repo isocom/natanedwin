@@ -20,10 +20,11 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class PeriodicInvoiceServlet extends HttpServlet {
 
+    static final long serialVersionUID = 4669692008294503447L;
     @Autowired
-    private EstablishmentDao establishmentDao;
+    private transient EstablishmentDao establishmentDao;
     @Autowired
-    private Mailer mailer;
+    private transient Mailer mailer;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

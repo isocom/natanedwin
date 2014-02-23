@@ -11,6 +11,8 @@ import com.vaadin.ui.MenuBar.MenuItem;
  */
 public class ShowKinderGarten implements MenuBar.Command {
 
+    static final long serialVersionUID = -9084624444383082935L;
+
     @Override
     public void menuSelected(MenuItem selectedItem) {
         AppNavigator appNavigator = AppSessionHelper.getAppNavigator();

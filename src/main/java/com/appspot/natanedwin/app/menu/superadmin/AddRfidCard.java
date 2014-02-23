@@ -12,6 +12,8 @@ import com.vaadin.ui.MenuBar.MenuItem;
  */
 public class AddRfidCard implements MenuBar.Command {
 
+    static final long serialVersionUID = -2260999470984426045L;
+
     @Override
     public void menuSelected(MenuItem selectedItem) {
         EntityItemWindow.showWindow(new RfidCardItem(new RfidCard()));

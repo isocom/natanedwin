@@ -35,6 +35,11 @@ public class EstablishmentDao implements Dao<Establishment> {
     }
 
     @Override
+    public void delete(long id) {
+        throw new AppError("Can't delete " + id, "Nie można usuwać tego typu obiektów");
+    }
+
+    @Override
     public Establishment save(Establishment e) {
         ofy.ofy().save().entity(e).now();
         return e;

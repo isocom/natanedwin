@@ -22,6 +22,8 @@ import java.util.List;
 
 public class UserAccountView extends VerticalLayout implements View {
 
+    static final long serialVersionUID = -4680276191171446291L;
+
     public UserAccountView() {
         setSizeFull();
     }

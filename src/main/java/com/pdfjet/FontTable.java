@@ -29,7 +29,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+
+@SuppressFBWarnings
 class FontTable {
     protected String name;
     protected long checkSum;

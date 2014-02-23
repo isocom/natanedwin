@@ -77,7 +77,7 @@ public class Example_23 {
         table.wrapAroundCellText();
         // table.setNoCellBorders();
 
-        int numOfPages = table.getNumberOfPages(page);
+//        int numOfPages = table.getNumberOfPages(page);
         while (true) {
             table.drawOn(page);
             if (!table.hasMoreData()) break;

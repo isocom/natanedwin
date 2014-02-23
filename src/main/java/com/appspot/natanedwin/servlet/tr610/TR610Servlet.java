@@ -23,12 +23,13 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class TR610Servlet extends HttpServlet {
 
+    static final long serialVersionUID = 8412974669752828656L;
     @Autowired
-    private DeviceDao deviceDao;
+    private transient DeviceDao deviceDao;
+//    @Autowired
+//    private transient MetricRegistry metricRegistry;
     @Autowired
-    private MetricRegistry metricRegistry;
-
-    private final CardDetected1 cardDetected1 = new CardDetected1();
+    private transient CardDetected1 cardDetected1;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,6 +62,7 @@ public class TR610Servlet extends HttpServlet {
         }
 
         resp.setContentType("text/plain");
+        resp.setCharacterEncoding("US-ASCII");
         PrintWriter writer = resp.getWriter();
 
         switch (command) {
@@ -84,7 +86,7 @@ public class TR610Servlet extends HttpServlet {
         try {
             JSONObject conf = device.getJsonConfiguration();
             final String k1 = "enableTTSoft";
-            if (conf.has(k1) && "true".equalsIgnoreCase(conf.getString(k1))) {
+            if (conf.has(k1) && conf.getBoolean(k1)) {
                 TR610Response.enableLocalTTSoftDevices(writer);
             }
         } catch (JSONException jsone) {

@@ -4,12 +4,16 @@
  */
 package com.appspot.natanedwin.service.spring;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +37,8 @@ public class SpringInformationServlet extends HttpServlet {
         doIt(req, resp);
     }
 
-    protected void doIt(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @SuppressFBWarnings
+    private void doIt(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Cache-Control", "no-cache");
@@ -122,62 +127,84 @@ public class SpringInformationServlet extends HttpServlet {
             }
             out.println("</table><hr>");
 
-            // HTTP Request Content
-            out.println("<b>The request content</b><br><pre>");
-            BufferedReader reader = request.getReader();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                out.println(line);
-            }
-            out.println("</pre><hr>");
-
-            // JAVA ENVIROMENT
-            out.println("<table border=1><tr><th colspan=2>JAVA system properties</th></tr>");
-            out.println("<tr><td>java.version</td><td>" + System.getProperty("java.version") + "</td></tr>");
-            out.println("<tr><td>java.vendor</td><td>" + System.getProperty("java.vendor") + "</td></tr>");
-            out.println("<tr><td>java.vendor.url</td><td>" + System.getProperty("java.vendor.url") + "</td></tr>");
-            out.println("<tr><td>java.home</td><td>" + System.getProperty("java.home") + "</td></tr>");
-            out.println("<tr><td>java.vm.specification.version</td><td>" + System.getProperty("java.vm.specification.version") + "</td></tr>");
-            out.println("<tr><td>java.vm.specification.vendor</td><td>" + System.getProperty("java.vm.specification.vendor") + "</td></tr>");
-            out.println("<tr><td>java.vm.specification.name</td><td>" + System.getProperty("java.vm.specification.name") + "</td></tr>");
-            out.println("<tr><td>java.vm.version</td><td>" + System.getProperty("java.vm.version") + "</td></tr>");
-            out.println("<tr><td>java.vm.vendor</td><td>" + System.getProperty("java.vm.vendor") + "</td></tr>");
-            out.println("<tr><td>java.vm.name</td><td>" + System.getProperty("java.vm.name") + "</td></tr>");
-            out.println("<tr><td>java.specification.version</td><td>" + System.getProperty("java.specification.version") + "</td></tr>");
-            out.println("<tr><td>java.specification.vendor</td><td>" + System.getProperty("java.specification.vendor") + "</td></tr>");
-            out.println("<tr><td>java.specification.name</td><td>" + System.getProperty("java.specification.name") + "</td></tr>");
-            out.println("<tr><td>java.class.version</td><td>" + System.getProperty("java.class.version") + "</td></tr>");
-            out.println("<tr><td>java.class.path</td><td>" + System.getProperty("java.class.path") + "</td></tr>");
-            out.println("<tr><td>java.library.path</td><td>" + System.getProperty("java.library.path") + "</td></tr>");
-            out.println("<tr><td>java.io.tmpdid</td><td>" + System.getProperty("java.io.tmpdir") + "</td></tr>");
-            out.println("<tr><td>java.compiler</td><td>" + System.getProperty("java.compiler") + "</td></tr>");
-            out.println("<tr><td>java.ext.dirs</td><td>" + System.getProperty("java.ext.dirs") + "</td></tr>");
-            out.println("<tr><td>os.name</td><td>" + System.getProperty("os.name") + "</td></tr>");
-            out.println("<tr><td>os.arch</td><td>" + System.getProperty("os.arch") + "</td></tr>");
-            out.println("<tr><td>os.version</td><td>" + System.getProperty("os.version") + "</td></tr>");
-            out.println("<tr><td>file.separator</td><td>" + System.getProperty("file.separator") + "</td></tr>");
-            out.println("<tr><td>path.separator</td><td>" + System.getProperty("path.separator") + "</td></tr>");
-            out.println("<tr><td>line.separator</td><td>" + System.getProperty("line.separator") + "</td></tr>");
-            out.println("<tr><td>user.dir</td><td>" + System.getProperty("user.dir") + "</td></tr>");
-            out.println("<tr><td>user.home</td><td>" + System.getProperty("user.home") + "</td></tr>");
-            out.println("<tr><td>user.name</td><td>" + System.getProperty("user.name") + "</td></tr>");
-            out.println("</table><hr>");
-
-            out.println("<h2>DateTimeZone.getAvailableIDs()</h2>");
-            for (String s : DateTimeZone.getAvailableIDs()) {
-                out.println(s + ", ");
-            }
-
-            out.println("<h2>Locale.getAvailableLocales()</h2>");
-            for (Locale l : Locale.getAvailableLocales()) {
-                out.println(l + ", ");
-            }
-        } catch (Exception e) {
+            doItRequestContent(request, out);
+            doItTimeZones(out);
+            doItLocales(out);
+            doItSystemProperties(out);
+            doItCharset(out);
+        } catch (IOException e) {
             e.printStackTrace(out);
         } finally {
             out.println("</body></html>");
             out.flush();
             out.close();
         }
+    }
+
+    private void doItRequestContent(HttpServletRequest request, PrintWriter out) throws IOException {
+        out.println("<b>The request content</b><br><pre>");
+        BufferedReader reader = request.getReader();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            out.println(line);
+        }
+        out.println("</pre>----------------------<br><hr>");
+    }
+
+    private void doItTimeZones(PrintWriter out) {
+        out.println("<h1>DateTimeZone.getAvailableIDs()</h1>");
+        for (String s : DateTimeZone.getAvailableIDs()) {
+            out.println(s + ", ");
+        }
+    }
+
+    private void doItLocales(PrintWriter out) {
+        out.println("<h1>Locale.getAvailableLocales()</h1>");
+        for (Locale l : Locale.getAvailableLocales()) {
+            out.println(l + ", ");
+        }
+    }
+
+    private void doItSystemProperties(PrintWriter out) {
+        out.println("<h1>System.getProperty()</h1><ul>");
+        out.println("<table border=1><tr><th colspan=2>JAVA system properties</th></tr>");
+        out.println("<tr><td>java.version</td><td>" + System.getProperty("java.version") + "</td></tr>");
+        out.println("<tr><td>java.vendor</td><td>" + System.getProperty("java.vendor") + "</td></tr>");
+        out.println("<tr><td>java.vendor.url</td><td>" + System.getProperty("java.vendor.url") + "</td></tr>");
+        out.println("<tr><td>java.home</td><td>" + System.getProperty("java.home") + "</td></tr>");
+        out.println("<tr><td>java.vm.specification.version</td><td>" + System.getProperty("java.vm.specification.version") + "</td></tr>");
+        out.println("<tr><td>java.vm.specification.vendor</td><td>" + System.getProperty("java.vm.specification.vendor") + "</td></tr>");
+        out.println("<tr><td>java.vm.specification.name</td><td>" + System.getProperty("java.vm.specification.name") + "</td></tr>");
+        out.println("<tr><td>java.vm.version</td><td>" + System.getProperty("java.vm.version") + "</td></tr>");
+        out.println("<tr><td>java.vm.vendor</td><td>" + System.getProperty("java.vm.vendor") + "</td></tr>");
+        out.println("<tr><td>java.vm.name</td><td>" + System.getProperty("java.vm.name") + "</td></tr>");
+        out.println("<tr><td>java.specification.version</td><td>" + System.getProperty("java.specification.version") + "</td></tr>");
+        out.println("<tr><td>java.specification.vendor</td><td>" + System.getProperty("java.specification.vendor") + "</td></tr>");
+        out.println("<tr><td>java.specification.name</td><td>" + System.getProperty("java.specification.name") + "</td></tr>");
+        out.println("<tr><td>java.class.version</td><td>" + System.getProperty("java.class.version") + "</td></tr>");
+        out.println("<tr><td>java.class.path</td><td>" + System.getProperty("java.class.path") + "</td></tr>");
+        out.println("<tr><td>java.library.path</td><td>" + System.getProperty("java.library.path") + "</td></tr>");
+        out.println("<tr><td>java.io.tmpdid</td><td>" + System.getProperty("java.io.tmpdir") + "</td></tr>");
+        out.println("<tr><td>java.compiler</td><td>" + System.getProperty("java.compiler") + "</td></tr>");
+        out.println("<tr><td>java.ext.dirs</td><td>" + System.getProperty("java.ext.dirs") + "</td></tr>");
+        out.println("<tr><td>os.name</td><td>" + System.getProperty("os.name") + "</td></tr>");
+        out.println("<tr><td>os.arch</td><td>" + System.getProperty("os.arch") + "</td></tr>");
+        out.println("<tr><td>os.version</td><td>" + System.getProperty("os.version") + "</td></tr>");
+        out.println("<tr><td>file.separator</td><td>" + System.getProperty("file.separator") + "</td></tr>");
+        out.println("<tr><td>path.separator</td><td>" + System.getProperty("path.separator") + "</td></tr>");
+        out.println("<tr><td>line.separator</td><td>" + System.getProperty("line.separator") + "</td></tr>");
+        out.println("<tr><td>user.dir</td><td>" + System.getProperty("user.dir") + "</td></tr>");
+        out.println("<tr><td>user.home</td><td>" + System.getProperty("user.home") + "</td></tr>");
+        out.println("<tr><td>user.name</td><td>" + System.getProperty("user.name") + "</td></tr>");
+        out.println("</table><hr>");
+
+    }
+
+    private void doItCharset(PrintWriter out) {
+        out.println("<h1>Charset.availableCharsets()</h1><ul>");
+        for (Map.Entry<String, Charset> entry : Charset.availableCharsets().entrySet()) {
+            out.println("<li>" + entry.getKey() + " = " + entry.getValue());
+        }
+        out.println("</ul>");
     }
 }

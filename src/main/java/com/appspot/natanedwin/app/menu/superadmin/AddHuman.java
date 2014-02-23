@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public class AddHuman implements MenuBar.Command {
 
+    static final long serialVersionUID = 6198839062656772552L;
     private Map<String, EntityAction> additionalActions = new LinkedHashMap<String, EntityAction>();
 
     public AddHuman() {

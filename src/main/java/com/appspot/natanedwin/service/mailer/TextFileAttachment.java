@@ -21,7 +21,7 @@ public class TextFileAttachment extends EmailAttachment {
         try {
             return content.getBytes("UTF-8");
         } catch (UnsupportedEncodingException uee) {
-            return uee.getMessage().getBytes();
+            throw new RuntimeException(uee);
         }
     }
 }

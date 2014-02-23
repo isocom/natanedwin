@@ -21,6 +21,7 @@ import java.util.Date;
 
 public class AccessControlView extends VerticalLayout implements View {
 
+    static final long serialVersionUID = -2458479558009921324L;
     private Report report;
 
     public AccessControlView() {

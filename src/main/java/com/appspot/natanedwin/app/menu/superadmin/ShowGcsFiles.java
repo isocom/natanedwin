@@ -14,6 +14,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
  */
 public class ShowGcsFiles implements MenuBar.Command {
 
+static final long serialVersionUID = 1288871531635171986L;
     @Override
     public void menuSelected(MenuItem selectedItem) {
         GcsFileDao gcsFileDao = SpringContext.INSTANCE.getBean(GcsFileDao.class);

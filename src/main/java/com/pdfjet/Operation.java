@@ -29,11 +29,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 
 /**
  *  Used to specify the 'stroke', 'close' and 'fill' operations.
  *
  */
+@SuppressFBWarnings
 public class Operation {
     public static char STROKE = 'S';
     public static char CLOSE = 's';

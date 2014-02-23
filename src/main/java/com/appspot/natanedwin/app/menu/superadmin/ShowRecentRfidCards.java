@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class ShowRecentRfidCards implements MenuBar.Command {
 
+    static final long serialVersionUID = 1614197159755896135L;
     private final Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
     @Autowired
     private transient AppSession appSession;
@@ -116,7 +117,7 @@ public class ShowRecentRfidCards implements MenuBar.Command {
 
                 @Override
                 public int compare(Human o1, Human o2) {
-                    return -o1.getFirstTimeSeen().compareTo(o2.getFirstTimeSeen());
+                    return o2.getFirstTimeSeen().compareTo(o1.getFirstTimeSeen());
                 }
             });
             EntityContainer<Human> entityContainer = new EntityContainer<>(humans, HumanItem.class);

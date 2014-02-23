@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class SwitchEstablishment implements MenuBar.Command {
     
+static final long serialVersionUID = 8013884163795622008L;
     @Autowired
     private transient AppSession appSession;
     @Autowired

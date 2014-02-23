@@ -55,11 +55,11 @@ public final class DayStatusXLS {
             for (DayStatus.DailyReportRow row : reportRows.values()) {
                 c = 0;
                 writableSheet.addCell(new Label(c++, r, "" + r));
-                writableSheet.addCell(new Label(c++, r, row.human.getName()));
-                writableSheet.addCell(new Label(c++, r, row.fromEvent.toString()));
-                writableSheet.addCell(new Label(c++, r, mediumTime.print(row.from)));
-                writableSheet.addCell(new Label(c++, r, row.toEvent.toString()));
-                writableSheet.addCell(new Label(c++, r, mediumTime.print(row.to)));
+                writableSheet.addCell(new Label(c++, r, row.getHuman().getName()));
+                writableSheet.addCell(new Label(c++, r, row.getFromEvent().toString()));
+                writableSheet.addCell(new Label(c++, r, mediumTime.print(row.getFrom())));
+                writableSheet.addCell(new Label(c++, r, row.getToEvent().toString()));
+                writableSheet.addCell(new Label(c++, r, mediumTime.print(row.getTo())));
                 writableSheet.addCell(new Label(c++, r, hms().print(new Period(row.duration()))));
                 r++;
             }

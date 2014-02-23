@@ -36,6 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.*;
 
 
@@ -44,6 +45,7 @@ import java.util.*;
  *
  *
  */
+@SuppressFBWarnings
 public class CompositeTextLine implements Drawable {
 
     private static final int X = 0;

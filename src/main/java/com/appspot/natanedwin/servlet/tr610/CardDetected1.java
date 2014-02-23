@@ -13,38 +13,37 @@ import com.appspot.natanedwin.service.cardnumber.CardNumber;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
 
-@Configurable
+@Component
 public class CardDetected1 {
 
     @Autowired
-    private CardNumber cardNumber;
+    private transient CardNumber cardNumber;
     @Autowired
-    private HumanDao humanDao;
+    private transient HumanDao humanDao;
     @Autowired
-    private RfidCardDao rfidCardDao;
+    private transient RfidCardDao rfidCardDao;
     @Autowired
-    private RfidEventDao rfidEventDao;
+    private transient RfidEventDao rfidEventDao;
 
-    public void cardDetected1(Device device, HttpServletRequest req, PrintWriter resp) {
+    public void cardDetected1(final Device device, final HttpServletRequest req, final PrintWriter resp) {
         final String serialNumber = req.getParameter("cn");
 
         RfidCard rfidCard = rfidCardDao.findBySerialNumber(serialNumber);
         if (rfidCard == null) {
-            newCard(resp, serialNumber);
+            newCard(resp, device, serialNumber);
             return;
         }
 
@@ -69,14 +68,29 @@ public class CardDetected1 {
         }
     }
 
-    private void newCard(PrintWriter resp, final String serialNumber) {
+    private void newCard(PrintWriter resp, final Device device, final String serialNumber) {
+        try {
+            JSONObject conf = device.getJsonConfiguration();
+            final String confkey = "handleNewCards";
+            if (!conf.has(confkey)) {
+                TR610Response.display3(resp, "UWAGA NOWA KARTA !!!", "Brak konfiguacji dla", confkey);
+                return;
+            }
+            if (!conf.getBoolean(confkey)) {
+                TR610Response.display2(resp, "UWAGA NOWA KARTA !!!", "Kodowanie wylaczone");
+                return;
+            }
+        } catch (JSONException jsone) {
+            return;
+        }
+
         List<RfidCard> rfidCards = rfidCardDao.findRecent(20);
         rfidCards = new ArrayList<>(rfidCards);
         Collections.sort(rfidCards, new Comparator<RfidCard>() {
 
             @Override
             public int compare(RfidCard o1, RfidCard o2) {
-                return -o1.getFirstTimeSeen().compareTo(o2.getFirstTimeSeen());
+                return o2.getFirstTimeSeen().compareTo(o1.getFirstTimeSeen());
             }
         });
         Iterator<RfidCard> iterator = rfidCards.iterator();
@@ -88,7 +102,7 @@ public class CardDetected1 {
         }
 
         if (rfidCards.isEmpty()) {
-            // no newly added card to be 
+            // no Vacant cards - just add a new card
             RfidCard rfidCard = new RfidCard();
             rfidCard.setRfidCardType(RfidCardType.Mifare1k);
             rfidCard.setSerialNumber(serialNumber);
@@ -96,6 +110,7 @@ public class CardDetected1 {
             rfidCardDao.save(rfidCard);
             TR610Response.display2(resp, "Dodano karte", rfidCard.getCardNumber());
         } else {
+            // encode the detected card to top Vacant card...
             RfidCard rfidCard = rfidCards.get(0);
             rfidCard.setRfidCardType(RfidCardType.Mifare1k);
             rfidCard.setSerialNumber(serialNumber);
@@ -149,7 +164,7 @@ public class CardDetected1 {
 
         try {
             URL url = new URL("http://e-dziecko.appspot.com/NatanEdwin?cn=" + cn + "&cns=" + sb);
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "US-ASCII"))) {
                 line4 = reader.readLine();
             }
         } catch (IOException e) {
@@ -163,30 +178,7 @@ public class CardDetected1 {
         if (line4 == null) {
             line4 = "NULL";
         }
-        final String line2 = human.getName();
-        TR610Response.display4(resp, "Przedszkolak", line2, rfidCard.getCardNumber(), line4);
+        TR610Response.display4(resp, "Przedszkolak", human.getName(), rfidCard.getCardNumber(), line4);
     }
 
-    private void post() {
-        try {
-            String message = URLEncoder.encode("my message", "UTF-8");
-            URL url = new URL("http://www.example.com/comment");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-
-            try (OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())) {
-                writer.write("message=" + message);
-            }
-
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
-            } else {
-                // Server returned HTTP error code.
-            }
-        } catch (IOException e) {
-            // ...
-        }
-    }
 }

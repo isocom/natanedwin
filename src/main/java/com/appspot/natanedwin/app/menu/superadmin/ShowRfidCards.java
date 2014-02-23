@@ -18,6 +18,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
  */
 public class ShowRfidCards implements MenuBar.Command {
 
+static final long serialVersionUID = 260050275846529314L;
     @Override
     public void menuSelected(MenuItem selectedItem) {
         RfidCardDao rfidCardDao = SpringContext.INSTANCE.getBean(RfidCardDao.class);

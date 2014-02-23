@@ -9,6 +9,7 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -64,10 +65,12 @@ public class StatEntry implements Serializable {
         this.id = id;
     }
 
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public Date getDate() {
         return date;
     }
 
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public void setDate(Date date) {
         this.date = date;
     }

@@ -18,6 +18,8 @@ import com.vaadin.ui.Notification;
  */
 public class ChangePassword implements MenuBar.Command {
 
+    static final long serialVersionUID = 2581487018090710349L;
+
     @Override
     public void menuSelected(MenuBar.MenuItem selectedItem) {
         AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);

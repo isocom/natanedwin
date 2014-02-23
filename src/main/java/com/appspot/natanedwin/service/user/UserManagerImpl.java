@@ -6,6 +6,7 @@ import com.appspot.natanedwin.entity.UserAccountType;
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
@@ -95,10 +96,10 @@ public class UserManagerImpl implements UserManager {
     public String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] digest = md.digest(password.getBytes());
+            byte[] digest = md.digest(password.getBytes("UTF-8"));
             return Hex.encodeHexString(digest);
-        } catch (NoSuchAlgorithmException e) {
-            return null;
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
     }
 

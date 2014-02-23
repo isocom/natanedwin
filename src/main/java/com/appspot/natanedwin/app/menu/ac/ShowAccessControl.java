@@ -10,7 +10,9 @@ import com.vaadin.ui.MenuBar.MenuItem;
  * @author prokob01
  */
 public class ShowAccessControl implements MenuBar.Command {
-    
+
+    static final long serialVersionUID = -6696445644366731342L;
+
     @Override
     public void menuSelected(MenuItem selectedItem) {
         AppNavigator appNavigator = AppSessionHelper.getAppNavigator();

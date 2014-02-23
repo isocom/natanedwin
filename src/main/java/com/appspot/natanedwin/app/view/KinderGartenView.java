@@ -9,6 +9,8 @@ import com.vaadin.ui.VerticalLayout;
 
 public class KinderGartenView extends VerticalLayout implements View {
 
+    static final long serialVersionUID = 6971801592541138056L;
+
     public KinderGartenView() {
         setSizeFull();
 

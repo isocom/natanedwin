@@ -17,6 +17,8 @@ import java.util.List;
  */
 public class AssignCardToHuman1 implements EntityAction<Human> {
 
+    static final long serialVersionUID = 3049986742601981020L;
+
     @Override
     public void execute(final Human human) {
         final RfidCardDao rfidCardDao = SpringContext.INSTANCE.getBean(RfidCardDao.class);

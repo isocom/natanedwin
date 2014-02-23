@@ -10,6 +10,8 @@ import com.vaadin.ui.MenuBar.MenuItem;
  */
 public class AddRfidEvent implements MenuBar.Command {
 
+    static final long serialVersionUID = 2117727807339680518L;
+
     @Override
     public void menuSelected(MenuItem selectedItem) {
         AddRfidEventWindow.show();

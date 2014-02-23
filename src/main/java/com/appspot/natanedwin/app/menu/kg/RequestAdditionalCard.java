@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class RequestAdditionalCard implements MenuBar.Command {
 
+    static final long serialVersionUID = -7853950875003684892L;
     @Autowired
     private transient AppSession appSession;
     @Autowired

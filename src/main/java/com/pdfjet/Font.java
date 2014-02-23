@@ -29,6 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.InputStream;
 import java.util.HashSet;
 
@@ -38,6 +39,7 @@ import java.util.HashSet;
  *  The font objects must added to the PDF before they can be used to draw text.
  *
  */
+@SuppressFBWarnings
 public class Font {
 
     protected String name;

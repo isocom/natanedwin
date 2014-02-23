@@ -12,6 +12,8 @@ import com.appspot.natanedwin.vaadin.EntityAction;
  */
 public class AssignCardToHuman2 implements EntityAction<RfidCard> {
 
+    static final long serialVersionUID = 2173311972798376357L;
+
     private final Human human;
 
     public AssignCardToHuman2(final Human human) {

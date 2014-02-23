@@ -107,8 +107,7 @@ public class EntityContainerWindow extends Window {
             Object newEntity = entityContainer.getEntityClass().newInstance();
             Constructor entityItemConstructor = entityContainer.getEntityItemClass().getConstructor(entityContainer.getEntityClass());
             EntityItem entityItem = (EntityItem) entityItemConstructor.newInstance(newEntity);
-            EntityItemWindow entityItemWindow = EntityItemWindow.showWindow(entityItem);
-
+            EntityItemWindow.showWindow(entityItem);
             entityContainer.addEntityItem(entityItem);
         } catch (Exception e) {
             throw new RuntimeException(e);

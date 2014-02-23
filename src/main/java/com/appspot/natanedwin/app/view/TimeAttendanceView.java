@@ -9,6 +9,8 @@ import com.vaadin.ui.VerticalLayout;
 
 public class TimeAttendanceView extends VerticalLayout implements View {
 
+    static final long serialVersionUID = -7111949890940265422L;
+
     public TimeAttendanceView() {
         setSizeFull();
 

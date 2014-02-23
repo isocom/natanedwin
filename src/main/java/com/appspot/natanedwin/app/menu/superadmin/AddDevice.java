@@ -12,6 +12,8 @@ import com.vaadin.ui.MenuBar.MenuItem;
  */
 public class AddDevice implements MenuBar.Command {
 
+    static final long serialVersionUID = 1189079840546455668L;
+
     @Override
     public void menuSelected(MenuItem selectedItem) {
         EntityItemWindow.showWindow(new DeviceItem(new Device()));

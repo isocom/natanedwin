@@ -50,6 +50,11 @@ public class DeviceDao implements Dao<Device> {
     }
 
     @Override
+    public void delete(long id) {
+        ofy.ofy().delete().type(Device.class).id(id);
+    }
+
+    @Override
     public Device delete(Device entity) {
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
     }

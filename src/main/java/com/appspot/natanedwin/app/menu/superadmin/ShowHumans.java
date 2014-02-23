@@ -17,6 +17,7 @@ import java.util.Map;
  */
 public class ShowHumans implements MenuBar.Command {
 
+static final long serialVersionUID = 3835510527187529890L;
     private final Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
 
     public ShowHumans() {

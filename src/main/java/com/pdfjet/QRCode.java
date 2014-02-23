@@ -14,6 +14,7 @@ DENSO WAVE INCORPORATED
 
 package com.pdfjet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.UnsupportedEncodingException;
 
 
@@ -22,6 +23,7 @@ import java.io.UnsupportedEncodingException;
  * 
  * @author Kazuhiko Arase
  */
+@SuppressFBWarnings
 public class QRCode implements Drawable {
 
     private static final int PAD0 = 0xEC;

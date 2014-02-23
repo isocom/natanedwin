@@ -59,6 +59,11 @@ public class UserAccountDao implements Dao<UserAccount> {
     }
 
     @Override
+    public void delete(long id) {
+        throw new AppError("Can't delete " + id, "Nie można usuwać tego typu obiektów");
+    }
+
+    @Override
     public UserAccount save(UserAccount e) {
         boolean sendWelcomeEmail = e.getId() == null;
         String password = null;

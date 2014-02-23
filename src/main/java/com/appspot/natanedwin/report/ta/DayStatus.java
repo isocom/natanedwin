@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable(preConstruction = true)
 public class DayStatus implements Report {
 
+    static final long serialVersionUID = 7955832338496147669L;
     final private DateTime date;
     final private List<RfidEvent> events;
     final private List<Human> humans;
@@ -107,21 +108,50 @@ public class DayStatus implements Report {
         return events;
     }
 
-    class DailyReportRow implements Serializable {
+    public static class DailyReportRow implements Serializable {
 
-        final Human human;
-        DateTime from = new DateTime(Long.MAX_VALUE);
-        DateTime to = new DateTime(0);
-        RfidEventType fromEvent = null;
-        RfidEventType toEvent = null;
-        long fromEventId = 0;
-        long toEventId = 0;
+        static final long serialVersionUID = -449249150340878109L;
+        private final Human human;
+        private DateTime from = new DateTime(Long.MAX_VALUE);
+        private DateTime to = new DateTime(0);
+        private RfidEventType fromEvent = null;
+        private RfidEventType toEvent = null;
+        private long fromEventId = 0;
+        private long toEventId = 0;
 
         private DailyReportRow(final Human human) {
             this.human = human;
         }
 
-        long duration() {
+        public Human getHuman() {
+            return human;
+        }
+
+        public DateTime getFrom() {
+            return from;
+        }
+
+        public DateTime getTo() {
+            return to;
+        }
+
+        public RfidEventType getFromEvent() {
+            return fromEvent;
+        }
+
+        public RfidEventType getToEvent() {
+            return toEvent;
+        }
+
+        public long getFromEventId() {
+            return fromEventId;
+        }
+
+        public long getToEventId() {
+            return toEventId;
+        }
+
+        public long duration() {
             return to.getMillis() - from.getMillis();
         }
     }

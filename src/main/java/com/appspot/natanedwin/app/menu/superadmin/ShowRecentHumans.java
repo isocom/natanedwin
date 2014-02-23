@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class ShowRecentHumans implements MenuBar.Command {
 
+static final long serialVersionUID = -8776209143284555850L;
     private final Map<String, EntityAction> additionalActions = new LinkedHashMap<>();
     @Autowired
     private transient EstablishmentDao establishmentDao;

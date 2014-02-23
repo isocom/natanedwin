@@ -4,12 +4,13 @@ import java.io.*;
 import java.util.*;
 
 import com.pdfjet.*;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- *  Example_34.java
+ * Example_34.java
  *
  */
+@SuppressFBWarnings
 public class Example_34 {
 
     public Example_34() throws Exception {
@@ -30,11 +31,11 @@ public class Example_34 {
 
         FlexTable table = new FlexTable();
         List<List<AbstractCell>> tableData = getData(
-        		"data/world-communications.txt", "|", Table.DATA_HAS_2_HEADER_ROWS, f1, f2);
+                "data/world-communications.txt", "|", Table.DATA_HAS_2_HEADER_ROWS, f1, f2);
         table.setData(tableData, Table.DATA_HAS_2_HEADER_ROWS);
 
-        BufferedInputStream bis =
-                new BufferedInputStream(new FileInputStream("images/fruit.jpg"));
+        BufferedInputStream bis
+                = new BufferedInputStream(new FileInputStream("images/fruit.jpg"));
         tableData.get(5).set(2, new ImageCell(new Image(pdf, bis, ImageType.JPG)));
 
         // table.setCellBordersWidth(1.2f);
@@ -42,11 +43,11 @@ public class Example_34 {
         table.setTextColorInRow(6, Color.blue);
         table.setTextColorInRow(39, Color.red);
         table.setFontInRow(26, f3);
-        table.removeLineBetweenRows(0, 1);  
+        table.removeLineBetweenRows(0, 1);
         table.autoAdjustColumnWidths();
         table.setColumnWidth(0, 120.0f);
         table.rightAlignNumbers();
-        int numOfPages = table.getNumberOfPages(page);
+//        int numOfPages = table.getNumberOfPages(page);
         while (true) {
             Point point = table.drawOn(page);
             // TO DO: Draw "Page 1 of N" here
@@ -60,8 +61,7 @@ public class Example_34 {
 
         pdf.close();
     }
-    
-    
+
     public List<List<AbstractCell>> getData(
             String fileName,
             String delimiter,
@@ -69,43 +69,42 @@ public class Example_34 {
             Font f1,
             Font f2) throws Exception {
 
-        List<List<AbstractCell>> tableData = new ArrayList<List<AbstractCell>>();
+        List<List<AbstractCell>> tableData = new ArrayList<>();
 
         int currentRow = 0;
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            List<AbstractCell> row = new ArrayList<AbstractCell>();
-            String[] cols = null;
-            if (delimiter.equals("|")) {
-                cols = line.split("\\|", -1);
-            }
-            else if (delimiter.equals("\t")) {
-                cols = line.split("\t", -1);
-            }
-            else {
-                throw new Exception(
-                		"Only pipes and tabs can be used as delimiters");
-            }
-            for (int i = 0; i < cols.length; i++) {
-                String text = cols[i].trim();
-                if (currentRow < numOfHeaderRows) {
-                    row.add(new TextCell(f1, text));
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                List<AbstractCell> row = new ArrayList<>();
+                String[] cols = null;
+                switch (delimiter) {
+                    case "|":
+                        cols = line.split("\\|", -1);
+                        break;
+                    case "\t":
+                        cols = line.split("\t", -1);
+                        break;
+                    default:
+                        throw new Exception(
+                                "Only pipes and tabs can be used as delimiters");
                 }
-                else {
-                    row.add(new TextCell(f2, text));
+                for (String col : cols) {
+                    String text = col.trim();
+                    if (currentRow < numOfHeaderRows) {
+                        row.add(new TextCell(f1, text));
+                    } else {
+                        row.add(new TextCell(f2, text));
+                    }
                 }
+                tableData.add(row);
+                currentRow++;
             }
-            tableData.add(row);
-            currentRow++;
         }
-        reader.close();
 
         appendMissingCells(tableData, f2);
-        
+
         return tableData;
     }
-    
 
     private void appendMissingCells(List<List<AbstractCell>> tableData, Font f2) {
         List<AbstractCell> firstRow = tableData.get(0);
@@ -121,7 +120,6 @@ public class Example_34 {
             }
         }
     }
-
 
     public static void main(String[] args) throws Exception {
         long time0 = System.currentTimeMillis();

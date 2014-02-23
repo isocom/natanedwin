@@ -33,7 +33,7 @@ public class GcsFile implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (obj != null && obj instanceof Establishment) {
+        if (obj != null && obj instanceof GcsFile) {
             return uuid.equalsIgnoreCase(((GcsFile) obj).uuid);
         } else {
             return false;

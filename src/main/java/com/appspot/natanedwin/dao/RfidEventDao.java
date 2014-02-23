@@ -60,6 +60,11 @@ public class RfidEventDao implements Dao<RfidEvent> {
     }
 
     @Override
+    public void delete(long id) {
+        ofy.ofy().delete().type(RfidEvent.class).id(id);
+    }
+
+    @Override
     public RfidEvent save(RfidEvent event) {
         ofy.ofy().save().entity(event);
         return event;

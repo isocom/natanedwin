@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class PrintCard implements EntityAction<RfidCard> {
 
+static final long serialVersionUID = -8368429256084555956L;
     @Autowired
     private transient AppSession appSession;
     @Autowired

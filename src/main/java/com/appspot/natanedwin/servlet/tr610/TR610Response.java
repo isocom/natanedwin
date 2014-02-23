@@ -118,6 +118,8 @@ public final class TR610Response {
                 case 'ź':
                     c = 'z';
                     break;
+                default:
+                    break;
             }
             sb.append(c);
         }

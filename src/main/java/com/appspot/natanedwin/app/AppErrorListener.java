@@ -7,13 +7,22 @@ import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.ErrorEvent;
 import com.vaadin.ui.Notification;
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 /**
  *
  * @author prokob01
  */
+@Configurable
 public class AppErrorListener extends DefaultErrorHandler {
+
+    static final long serialVersionUID = -8047759949255433960L;
+    @Autowired
+    private transient Mailer mailer;
 
     @Override
     public void error(ErrorEvent event) {
@@ -27,7 +36,6 @@ public class AppErrorListener extends DefaultErrorHandler {
     }
 
     private void displayAppError(ErrorEvent event) {
-        StringBuilder sb = new StringBuilder();
         AppError appError = (AppError) event.getThrowable();
         Notification.show(appError.getMessage(), appError.getDescription(), Notification.Type.HUMANIZED_MESSAGE);
     }
@@ -65,13 +73,14 @@ public class AppErrorListener extends DefaultErrorHandler {
             }
         }
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        PrintWriter printWriter = new PrintWriter(byteArrayOutputStream);
-        event.getThrowable().printStackTrace(printWriter);
-        printWriter.flush();
-        printWriter.close();
-        sb.append(byteArrayOutputStream.toString());
-
-        Mailer mailer = SpringContext.INSTANCE.getBean(Mailer.class);
+        try {
+            try (PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(byteArrayOutputStream, "UTF-8"))) {
+                event.getThrowable().printStackTrace(printWriter);
+                printWriter.flush();
+            }
+            sb.append(byteArrayOutputStream.toString("UTF-8"));
+        } catch (UnsupportedEncodingException uee) {
+        }
         mailer.sendToAdmins("ISOCOM: Exception: " + subject, sb.toString());
     }
 }

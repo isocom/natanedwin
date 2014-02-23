@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Configurable(preConstruction = true)
 public class HomeView extends VerticalLayout implements View {
 
+    static final long serialVersionUID = -649456819485588358L;
     @Value("${natanedwin.version}")
     private String applicationVersion;
     @Value("${natanedwin.appname}")

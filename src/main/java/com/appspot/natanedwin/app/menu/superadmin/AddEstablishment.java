@@ -12,6 +12,8 @@ import com.vaadin.ui.MenuBar.MenuItem;
  */
 public class AddEstablishment implements MenuBar.Command {
 
+    static final long serialVersionUID = 1057399301514507321L;
+
     @Override
     public void menuSelected(MenuItem selectedItem) {
         EntityItemWindow.showWindow(new EstablishmentItem(new Establishment()));

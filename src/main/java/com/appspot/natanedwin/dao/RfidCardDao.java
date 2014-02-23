@@ -95,7 +95,16 @@ public class RfidCardDao implements Dao<RfidCard> {
             ofy.ofy().delete().entity(entity);
             return entity;
         }
+        if (entity.getRfidCardType() == RfidCardType.Mifare1k && entity.getHuman() == null) {
+            ofy.ofy().delete().entity(entity);
+            return entity;
+        }
         throw new AppError("Can't delete " + entity.getClass().getSimpleName(), "Nie można usuwać tego typu obiektów");
+    }
+
+    @Override
+    public void delete(long id) {
+        throw new AppError("Can't delete " + id, "Nie można usuwać tego typu obiektów");
     }
 
     @Override

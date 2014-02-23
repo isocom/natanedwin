@@ -22,8 +22,9 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Configurable
 public class GcsFileUploadServlet extends HttpServlet {
 
+    static final long serialVersionUID = 270327454305674861L;
     @Autowired
-    private GcsFileDao gcsFileDao;
+    private transient GcsFileDao gcsFileDao;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

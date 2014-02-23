@@ -29,12 +29,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.pdfjet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 
 /**
  *  Used to specify the cap style of a line.
  *  See the Line class for more information.
  *
  */
+@SuppressFBWarnings
 public class Cap {
     public static int BUTT = 0;
     public static int ROUND = 1;

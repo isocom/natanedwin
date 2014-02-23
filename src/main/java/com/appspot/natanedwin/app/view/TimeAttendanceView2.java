@@ -13,9 +13,11 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Map;
+import java.util.Set;
 
 public class TimeAttendanceView2 extends VerticalLayout {
 
+    static final long serialVersionUID = -143053168695824840L;
     private VerticalLayout content = new VerticalLayout();
 
     public TimeAttendanceView2() {
@@ -61,10 +63,10 @@ public class TimeAttendanceView2 extends VerticalLayout {
         Map<String, Container> vaadinData = report.asVaadinData();
         Accordion accordion = new Accordion();
         accordion.setSizeFull();
-        for (String key : vaadinData.keySet()) {
-            Table table = new Table(key, vaadinData.get(key));
+        for (Map.Entry<String, Container> e : vaadinData.entrySet()) {
+            Table table = new Table(e.getKey(), e.getValue());
             table.setSizeFull();
-            accordion.addTab(table, key);
+            accordion.addTab(table, e.getKey());
         }
         content.removeAllComponents();
         content.addComponent(accordion);

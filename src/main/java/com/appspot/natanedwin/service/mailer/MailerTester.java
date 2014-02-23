@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.mailer;
 
 import com.appspot.natanedwin.service.spring.SpringContext;
+import java.io.UnsupportedEncodingException;
 
 /**
  *
@@ -27,8 +24,12 @@ public class MailerTester {
         mail.setHtmlBody("Mail <b>formatowany</b> <i>HTML</i> z obrazkiem w treści:<br>"
                 + "<img src=\"http://natanedwin.appspot.com/images/logo.png\" /><br>"
                 + "pchnąć w tę łódź jeża lub ośm skrzyń fig");
-        mail.addAttachment(new ByteArrayAttachment("text/plain", "Tekst1.txt", "Ala ma kota 1".getBytes()));
-        mail.addAttachment(new ByteArrayAttachment("text/plain", "Tekst2.txt", "Ala ma kota 2".getBytes()));
+        try {
+            mail.addAttachment(new ByteArrayAttachment("text/plain", "Tekst1.txt", "Ala ma kota 1\nĄĆĘŁÓ\n---".getBytes("UTF-8")));
+            mail.addAttachment(new ByteArrayAttachment("text/plain", "Tekst2.txt", "Ala ma kota 2\nąćęłó\n---".getBytes("UTF-8")));
+        } catch (UnsupportedEncodingException uee) {
+            throw new RuntimeException(uee);
+        }
         return mail;
     }
 }
