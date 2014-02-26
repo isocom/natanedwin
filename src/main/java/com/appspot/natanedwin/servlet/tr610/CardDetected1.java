@@ -66,6 +66,8 @@ public class CardDetected1 {
                 kindergarten(req, resp, rfidCard, human);
                 break;
         }
+
+        TR610Response.beep(resp, "*B*B");
     }
 
     private void newCard(PrintWriter resp, final Device device, final String serialNumber) {
@@ -181,4 +183,29 @@ public class CardDetected1 {
         TR610Response.display4(resp, "Przedszkolak", human.getName(), rfidCard.getCardNumber(), line4);
     }
 
+    public void cardTTSoft(final HttpServletRequest req, final PrintWriter resp, final Device device) {
+        final String serialNumber = req.getParameter("cn");
+        final String readerAddress = req.getParameter("rid");
+
+        final String line1 = serialNumber + "@" + readerAddress;
+        RfidCard rfidCard = rfidCardDao.findBySerialNumber(serialNumber);
+        if (rfidCard == null) {
+            TR610Response.display2(resp, line1, "Karta nieznaleziona");
+            return;
+        }
+        final String line2 = rfidCard.getCardNumber();
+        if (rfidCard.getHuman() == null) {
+            TR610Response.display3(resp, line1, line2, "Osoba nieprzypisana");
+            return;
+        }
+        Human human = humanDao.byId(rfidCard.getHuman().getKey().getId());
+        final String line3 = human.getName();
+        if (!human.isActive()) {
+            TR610Response.display4(resp, line1, line2, line3, "Osoba nieaktywna");
+            return;
+        }
+        TR610Response.ttsoftOpenRelay(resp, Integer.parseInt(readerAddress));
+        TR610Response.display4(resp, line1, line2, line3, "Otwarto drzwi");
+        TR610Response.beep(resp, "*B-*B-B-B");
+    }
 }

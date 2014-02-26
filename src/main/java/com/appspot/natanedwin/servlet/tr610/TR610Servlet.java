@@ -75,6 +75,9 @@ public class TR610Servlet extends HttpServlet {
             case Hello1:
                 hello1(writer, device);
                 break;
+            case TTSoftCard:
+                cardDetected1.cardTTSoft(req, writer, device);
+                break;
         }
 
         writer.flush();

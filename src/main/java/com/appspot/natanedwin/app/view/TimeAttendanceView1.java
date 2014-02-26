@@ -111,6 +111,7 @@ public class TimeAttendanceView1 extends VerticalLayout {
                 }
                 DayStatus.DailyReportRow row = (DayStatus.DailyReportRow) value;
                 rfidEventDao.delete(row.getFromEventId());
+                Notification.show("Usunięto zdarzenie: " + row.getFromEventId());
             }
         }));
         buttons.addComponent(new Button("Usuń zdarzenie DO", new Button.ClickListener() {
@@ -124,6 +125,7 @@ public class TimeAttendanceView1 extends VerticalLayout {
                 }
                 DayStatus.DailyReportRow row = (DayStatus.DailyReportRow) value;
                 rfidEventDao.delete(row.getToEventId());
+                Notification.show("Usunięto zdarzenie: " + row.getToEventId());
             }
         }));
         content.addComponent(buttons);

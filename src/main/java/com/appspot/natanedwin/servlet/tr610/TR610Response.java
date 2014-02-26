@@ -56,6 +56,10 @@ public final class TR610Response {
         resp.println(CMD_ESC + "Display4" + CMD_DEL + line1 + CMD_DEL + line2 + CMD_DEL + line3 + CMD_DEL + line4 + CMD_END);
     }
 
+    public static void beep(PrintWriter resp, String pattern) {
+        resp.println(CMD_ESC + "Beep" + CMD_DEL + pattern + CMD_END);
+    }
+
     public static void ttsoftOpenRelay(PrintWriter resp, int addr) {
         resp.println(CMD_ESC + "TTSoftOpen" + CMD_DEL + addr + CMD_END);
     }

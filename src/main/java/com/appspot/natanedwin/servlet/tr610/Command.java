@@ -6,5 +6,5 @@ package com.appspot.natanedwin.servlet.tr610;
  */
 public enum Command {
 
-    HeartBeat1, Hello1, CardDetected1;
+    HeartBeat1, Hello1, CardDetected1, TTSoftCard;
 }
