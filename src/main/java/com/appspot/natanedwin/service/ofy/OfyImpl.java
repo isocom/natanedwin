@@ -17,6 +17,7 @@ public class OfyImpl implements Ofy {
     private void construct() {
         factory().register(com.appspot.natanedwin.entity.Device.class);
         factory().register(com.appspot.natanedwin.entity.Establishment.class);
+        factory().register(com.appspot.natanedwin.entity.FiscalPrinterDocument.class);
         factory().register(com.appspot.natanedwin.entity.GcsFile.class);
         factory().register(com.appspot.natanedwin.entity.Human.class);
         factory().register(com.appspot.natanedwin.entity.RfidCard.class);

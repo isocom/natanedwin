@@ -7,6 +7,7 @@ import com.appspot.natanedwin.service.ofy.Ofy;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -31,6 +32,14 @@ public class DeviceDao implements Dao<Device> {
     @Override
     public Device byRef(Ref<Device> ref) {
         return ofy.ofy().load().now(ref.getKey());
+    }
+
+    public Device byUUID(final UUID uuid) {
+        return byUUID(uuid.toString());
+    }
+
+    public Device byUUID(final String uuid) {
+        return ofy.ofy().load().type(Device.class).filter("uuid = ", uuid).first().now();
     }
 
     public List<Device> findAll() {

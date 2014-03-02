@@ -8,6 +8,7 @@ import com.appspot.natanedwin.service.ofy.Ofy;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +28,13 @@ public class GcsFileDao implements Dao<GcsFile> {
     @Override
     public GcsFile byRef(Ref<GcsFile> ref) {
         return ofy.ofy().load().now(ref.getKey());
+    }
+    public GcsFile byUUID(final UUID uuid) {
+        return byUUID(uuid.toString());
+    }
+
+    public GcsFile byUUID(final String uuid) {
+        return ofy.ofy().load().type(GcsFile.class).filter("uuid = ", uuid).first().now();
     }
 
     @Override

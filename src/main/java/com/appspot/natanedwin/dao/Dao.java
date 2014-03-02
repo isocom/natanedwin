@@ -1,6 +1,7 @@
 package com.appspot.natanedwin.dao;
 
 import com.googlecode.objectify.Ref;
+import java.util.UUID;
 
 /**
  *

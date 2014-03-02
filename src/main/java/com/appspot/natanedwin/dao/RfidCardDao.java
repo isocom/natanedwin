@@ -11,6 +11,7 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -35,6 +36,13 @@ public class RfidCardDao implements Dao<RfidCard> {
     @Override
     public RfidCard byRef(Ref<RfidCard> ref) {
         return ofy.ofy().load().now(ref.getKey());
+    }
+    public RfidCard byUUID(final UUID uuid) {
+        return byUUID(uuid.toString());
+    }
+
+    public RfidCard byUUID(final String uuid) {
+        return ofy.ofy().load().type(RfidCard.class).filter("uuid = ", uuid).first().now();
     }
 
     public List<RfidCard> findAll() {

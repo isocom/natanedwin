@@ -6,6 +6,7 @@ import com.appspot.natanedwin.service.ofy.Ofy;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.cmd.Query;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +28,13 @@ public class HumanDao implements Dao<Human> {
     @Override
     public Human byRef(Ref<Human> ref) {
         return ofy.ofy().load().now(ref.getKey());
+    }
+    public Human byUUID(final UUID uuid) {
+        return byUUID(uuid.toString());
+    }
+
+    public Human byUUID(final String uuid) {
+        return ofy.ofy().load().type(Human.class).filter("uuid = ", uuid).first().now();
     }
 
     @Override
