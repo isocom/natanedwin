@@ -6,7 +6,9 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -17,9 +19,11 @@ public class FiscalPrinterDocument implements Serializable {
     @Index
     private String uuid = UUID.randomUUID().toString();
     @Index
+    private Date created = new Date();
+    @Index
     private Ref<Establishment> establishment;
     @Unindex
-    private String document;
+    private String document = "{}";
     @Unindex
     private String status = "{}";
     ////////////////////////////////////////////////////////////////////////////
@@ -91,6 +95,16 @@ public class FiscalPrinterDocument implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @SuppressFBWarnings("EI_EXPOSE_REP")
+    public Date getCreated() {
+        return created;
+    }
+
+    @SuppressFBWarnings("EI_EXPOSE_REP")
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
 }

@@ -4,6 +4,8 @@ import com.appspot.natanedwin.app.AppError;
 import com.appspot.natanedwin.entity.FiscalPrinterDocument;
 import com.appspot.natanedwin.service.ofy.Ofy;
 import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.cmd.Query;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -23,6 +25,7 @@ public class FiscalPrinterDocumentDao implements Dao<FiscalPrinterDocument> {
     public FiscalPrinterDocument byRef(Ref<FiscalPrinterDocument> ref) {
         return ofy.ofy().load().now(ref.getKey());
     }
+
     public FiscalPrinterDocument byUUID(final UUID uuid) {
         return byUUID(uuid.toString());
     }
@@ -39,6 +42,12 @@ public class FiscalPrinterDocumentDao implements Dao<FiscalPrinterDocument> {
     @Override
     public void delete(long id) {
         throw new AppError("Can't delete " + id, "Nie można usuwać tego typu obiektów");
+    }
+
+    public List<FiscalPrinterDocument> findAll() {
+        Query<FiscalPrinterDocument> query = ofy.ofy().load().type(FiscalPrinterDocument.class);
+        List<FiscalPrinterDocument> list = query.list();
+        return list;
     }
 
     @Override

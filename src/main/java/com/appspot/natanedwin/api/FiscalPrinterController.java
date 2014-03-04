@@ -42,13 +42,33 @@ public class FiscalPrinterController {
     @ResponseBody
     public String retrieveDocument(@RequestHeader(value = "API-Key", required = true) String apikey,
             @RequestParam(value = "documentId") String documentId) {
-        return fiscalPrinterDocumentDao.byUUID(documentId).getDocument();
+        Establishment establishment = establishmentDao.byUUID(apikey);
+        FiscalPrinterDocument fiscalPrinterDocument = fiscalPrinterDocumentDao.byUUID(documentId);
+        if (establishment == null || fiscalPrinterDocument == null) {
+            throw new ResourceNotFoundException();
+        }
+
+        if (apikey.equalsIgnoreCase(fiscalPrinterDocument.getEstablishment().safe().getUuid())) {
+            return fiscalPrinterDocument.getDocument();
+        } else {
+            throw new ResourceNotFoundException();
+        }
     }
 
     @RequestMapping(value = "/getPrintStatus", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ResponseBody
     public String retrieveStatus(@RequestHeader(value = "API-Key", required = true) String apikey,
             @RequestParam(value = "documentId") String documentId) {
-        return fiscalPrinterDocumentDao.byUUID(documentId).getStatus();
+        Establishment establishment = establishmentDao.byUUID(apikey);
+        FiscalPrinterDocument fiscalPrinterDocument = fiscalPrinterDocumentDao.byUUID(documentId);
+        if (establishment == null || fiscalPrinterDocument == null) {
+            throw new ResourceNotFoundException();
+        }
+
+        if (apikey.equalsIgnoreCase(fiscalPrinterDocument.getEstablishment().safe().getUuid())) {
+            return fiscalPrinterDocument.getDocument();
+        } else {
+            throw new ResourceNotFoundException();
+        }
     }
 }
