@@ -10,6 +10,14 @@ import java.io.PrintWriter;
 
 public class EstablishmentFix {
 
+    public static void fixReSave(PrintWriter writer) {
+        EstablishmentDao dao = SpringContext.INSTANCE.getBean(EstablishmentDao.class);
+        for (Establishment h : dao.findAll()) {
+            dao.save(h);
+            writer.println("Zapisano: " + h + " | " + h.getId());
+        }
+    }
+
     public static void fixMetalsprzet(PrintWriter writer) {
         EstablishmentDao dao = SpringContext.INSTANCE.getBean(EstablishmentDao.class);
         Establishment establishment = new Establishment();
@@ -100,13 +108,13 @@ public class EstablishmentFix {
         //Grzegorz Lenartowicz
         establishment.getHumans().add(Ref.create(Key.create(Human.class, 2349004)));
         //Józefczyk Ewa
-	establishment.getHumans().add(Ref.create(Key.create(Human.class,2429001)));
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2429001)));
         //Kustroń Mateusz
-	establishment.getHumans().add(Ref.create(Key.create(Human.class,2319003)));
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2319003)));
         //PRACOWNIK 1
-	establishment.getHumans().add(Ref.create(Key.create(Human.class,2419002)));
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2419002)));
         //PRACOWNIK 2
-	establishment.getHumans().add(Ref.create(Key.create(Human.class,2399001)));        
+        establishment.getHumans().add(Ref.create(Key.create(Human.class, 2399001)));
 
         dao.save(establishment);
         writer.println(establishment);

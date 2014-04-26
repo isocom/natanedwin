@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class RfidEventDao implements Dao<RfidEvent> {
+
+    private static final Logger logger = LoggerFactory.getLogger(RfidEventDao.class);
 
     @Autowired
     private Ofy ofy;
@@ -48,9 +52,12 @@ public class RfidEventDao implements Dao<RfidEvent> {
     }
 
     public List<RfidEvent> find(DateTime from, DateTime to, List<Human> humans) {
+        //Date f = new Date(from.toDate().getTime() + 24L * 1000 * 60 * 60 * 10);
         Date f = from.toDate();
         Date t = to.toDate();
         List<RfidEvent> list = ofy.ofy().load().type(RfidEvent.class).filter("eventDate > ", f).filter("eventDate < ", t).filter("human in", humans).list();
+        logger.error("Raport za " + f + " - " + t + " zawiera: " + list.size());
+        logger.error("Ostatni: " + list.get(list.size() - 1).getEventDate());
         return new ArrayList<>(list);
     }
 

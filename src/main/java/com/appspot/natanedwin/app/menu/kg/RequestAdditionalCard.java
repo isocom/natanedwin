@@ -68,10 +68,15 @@ public class RequestAdditionalCard implements MenuBar.Command {
 
                 Email email = new Email();
                 email.addTo(new EmailAddress("Karolina", "karolina.wysocka.prokop@gmail.com"));
-                email.addCc(new EmailAddress("ISOCOM", "edziecko@isocom.eu"));
-                email.addBcc(new EmailAddress("JA SAM", "prokop.bart@gmail.com"));
-                email.setSubject("NOWA KARTA dodatkowa - " + e.getName());
-                email.setTextBody("Do wydruku i zakodowania karta o numerze: " + rfidCard.getCardNumber() + "\nOsoba: " + human.getName());
+                email.addTo(new EmailAddress("Ola", "aleksandra.korczynska.prokop@gmail.com"));
+                email.addTo(new EmailAddress("Bart", "prokop.bart@gmail.com"));
+                email.addCc(new EmailAddress("Zamawiający", appSession.getUserAccount().getEmail().getEmail()));
+                email.addBcc(new EmailAddress("ISOCOM", "edziecko@isocom.eu"));
+                email.setSubject("Karta DODATKOWA - " + e.getName());
+                email.setTextBody("Do wydruku i zakodowania karta o numerze: " + rfidCard.getCardNumber()
+                        + "\nOsoba: " + human.getName() + "\n\n"
+                        + "rfidCard:" + rfidCard.getId() + "\n"
+                        + "human:" + human.getId() + "\n");
                 mailer.send(email);
             }
         });

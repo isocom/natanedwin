@@ -13,7 +13,6 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Map;
-import java.util.Set;
 
 public class TimeAttendanceView2 extends VerticalLayout {
 

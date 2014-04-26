@@ -33,6 +33,8 @@ public class Establishment implements Serializable {
     @Index(IfNotNull.class)
     private String plNip;
     private List<Ref<Human>> humans = new ArrayList<>();
+    @Unindex
+    private String configuration = "{}";
     ////////////////////////////////////////////////////////////////////////////
     // Standard EQUALLS and HASHCODE ///////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
@@ -127,5 +129,13 @@ public class Establishment implements Serializable {
 
     public void setHumans(List<Ref<Human>> humans) {
         this.humans = humans;
+    }
+
+    public String getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(String configuration) {
+        this.configuration = configuration;
     }
 }

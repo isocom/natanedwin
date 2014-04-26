@@ -25,7 +25,7 @@ public class AppSessionImpl implements AppSession {
     private EstablishmentDao establishmentDao;
     @Autowired
     private UserAccountDao userAccountDao;
-    private final Set<Long> adminSet = new HashSet<Long>();
+    private final Set<Long> adminSet = new HashSet<>();
 
     @Override
     public VaadinSession getVaadinSession() {

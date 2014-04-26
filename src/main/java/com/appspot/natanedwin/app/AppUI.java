@@ -56,8 +56,18 @@ public class AppUI extends UI {
         appSession.getVaadinSession().setErrorHandler(new AppErrorListener());
         appSession.getVaadinSession().setConverterFactory(new CustomConverterFactory());
 
+        validateSession();
+
         getPage().setTitle("ISOCOM");
         setContent(buildContent());
+    }
+
+    private void validateSession() {
+        AppSession appSession = SpringContext.INSTANCE.getBean(AppSession.class);
+        String email = appSession.getUserAccount().getEmail().getEmail().toString();
+        if ("".equals(email.trim())) {
+            throw new AppError("Session Invalid", "email address not set");
+        }
     }
 
     private VerticalLayout buildContent() {
@@ -69,10 +79,10 @@ public class AppUI extends UI {
 
         HorizontalLayout centerArea = new HorizontalLayout();
         centerArea.setSizeFull();
-        
+
         sideBar = new SideBar();
         centerArea.addComponent(sideBar);
-        
+
         VerticalLayout navigatorArea = new VerticalLayout();
         navigatorArea.setSizeFull();
         appNavigator = new AppNavigator(this, navigatorArea);
@@ -81,7 +91,7 @@ public class AppUI extends UI {
 
         content.addComponent(centerArea);
         content.setExpandRatio(centerArea, 1);
-        
+
         downloadArea = new DownloadArea();
         content.addComponent(downloadArea);
 
