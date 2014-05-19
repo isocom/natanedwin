@@ -25,6 +25,7 @@ public class TipOfDayWindow extends Window {
         VerticalLayout verticalLayout = new VerticalLayout();
         Panel panel = new Panel("Czy wiesz że...", new Label(readTipOfDay(), ContentMode.HTML));
         panel.setWidth(450, Unit.PIXELS);
+        panel.setHeight(200, Unit.PIXELS);
         verticalLayout.addComponent(panel);
         verticalLayout.addComponent(new Button("Zamknij", new Button.ClickListener() {
 
@@ -34,7 +35,7 @@ public class TipOfDayWindow extends Window {
             }
         }));
         setContent(verticalLayout);
-        
+
         center();
     }
 

@@ -60,6 +60,7 @@ public class AppUI extends UI {
 
         getPage().setTitle("Aplikacja by BP");
         setContent(buildContent());
+        TipOfDayWindow.show();
     }
 
     private void validateSession() {
