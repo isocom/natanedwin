@@ -22,6 +22,13 @@ public class SideBar extends VerticalLayout {
                 appSession.getAppUI().getAppNavigator().navigateTo(AppNavigator.ViewDestination.HOME);
             }
         }));
+        addComponent(new Button(" | ", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                TipOfDayWindow.show();
+            }
+        }));
     }
 
 }
