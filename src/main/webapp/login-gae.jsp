@@ -35,8 +35,8 @@
             <c:if test="${X}">
                 <div id="avatar" style="no-background-image:url(test.jpg)"></div>
                 <p class="greeting">Witaj, <b><%= userCredentials.getPrincipalName()%></b></p>
-                <p class="register_info">Kliknij <a href="<%= userCredentials.getGoogleAccountLogout()%>">ten link aby wylogować</a> się z <b>konta Google</b>.</p>
-                <a href="/app/" class="logoutButton">Uruchom</a>
+                <p class="register_info">Kliknij <a href="/app/">ten link aby uruchomić</a> aplikację <b>ISOCOM</b>.</p>
+                <a href="<%= userCredentials.getGoogleAccountLogout()%>" class="logoutButton">Wyloguj</a>
             </c:if>
             <c:if test="${!X}">
                 <a href="<%= userCredentials.getGoogleAccountLogin()%>" class="googleLoginButton">Sign in with Google</a>

@@ -81,6 +81,6 @@ public class AppErrorListener extends DefaultErrorHandler {
             sb.append(byteArrayOutputStream.toString("UTF-8"));
         } catch (UnsupportedEncodingException uee) {
         }
-        mailer.sendToAdmins("ISOCOM: Exception: " + subject, sb.toString());
+        mailer.sendToAdmins("GAE Problem: " + subject, sb.toString());
     }
 }

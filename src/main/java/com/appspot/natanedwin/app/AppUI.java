@@ -58,7 +58,7 @@ public class AppUI extends UI {
 
         validateSession();
 
-        getPage().setTitle("ISOCOM");
+        getPage().setTitle("Aplikacja by BP");
         setContent(buildContent());
     }
 
