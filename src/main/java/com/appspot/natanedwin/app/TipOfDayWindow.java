@@ -21,7 +21,6 @@ public class TipOfDayWindow extends Window {
 
     public TipOfDayWindow() {
         super("Porada dnia");
-        setCaption("Informacja o programie...");
         VerticalLayout verticalLayout = new VerticalLayout();
         Panel panel = new Panel("Czy wiesz że...", new Label(readTipOfDay(), ContentMode.HTML));
         panel.setWidth(450, Unit.PIXELS);
