@@ -8,6 +8,6 @@
     <cron>
         <url>/tools/PeriodicInvoice</url>
         <description>Monthly invoice</description>
-        <schedule>1st monday of month 09:00</schedule>
+        <schedule>1st day of month 17:00</schedule>
     </cron>
 </cronentries>
