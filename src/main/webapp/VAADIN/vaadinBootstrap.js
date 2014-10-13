@@ -67,7 +67,7 @@
 			// "v-app-loading" we have only received the HTML 
 			// but not yet started the widget set
 			// (UIConnector removes the v-app-loading div).
-			if (className && className.contains("v-app-loading")) {
+			if (className && className.indexOf("v-app-loading") != -1) {
 				return false;
 			}
 		}
@@ -101,34 +101,36 @@
 				return value;
 			};
 			
-			var fetchRootConfig = function() {
+			var fetchRootConfig = function(callback) {
 				log('Fetching root config');
 				var url = getConfig('browserDetailsUrl');
 				if (!url) {
 					// No special url defined, use the same URL that loaded this page (without the fragment)
 					url = window.location.href.replace(/#.*/,'');
 				}
-				url += ((/\?/).test(url) ? "&" : "?") + "v-browserDetails=1";
+				// Timestamp to avoid caching
+				url += ((/\?/).test(url) ? "&" : "?") + "v-" + (new Date()).getTime();		
+				
+				var params = "v-browserDetails=1";
 				var rootId = getConfig("v-rootId");
 				if (rootId !== undefined) {
-					url += "&v-rootId=" + rootId;
+					params += "&v-rootId=" + rootId;
 				}
 
 				// Tell the UI what theme it is configured to use
 				var theme = getConfig('theme');
 				if (theme !== undefined) {
-					url += '&theme=' + encodeURIComponent(theme);
+					params += '&theme=' + encodeURIComponent(theme);
 				}
+				
+				params += "&v-appId=" + appId;
 				
 				var extraParams = getConfig('extraParams')
 				if (extraParams !== undefined) {
-					url += extraParams;
+					params += extraParams;
 				}
 				
-				url += '&' + vaadin.getBrowserDetailsParameters(appId); 
-				
-				// Timestamp to avoid caching
-				url += '&v-' + (new Date()).getTime();
+				params += '&' + vaadin.getBrowserDetailsParameters(appId); 
 				
 				var r;
 				try {
@@ -139,6 +141,12 @@
 				r.open('POST', url, true);
 				r.onreadystatechange = function (aEvt) {  
 					if (r.readyState == 4) {
+						// Save responseStatus so as Offline Applications know what happened
+						// when loading root configuration from server, and depending on the
+						// error status display an error message or the offline UI.
+						config.rootResponseStatus = r.status;
+						config.rootResponseText = r.responseText;
+
 						var text = r.responseText;
 						if (r.status == 200){
 							log("Got root config response", text);
@@ -164,16 +172,24 @@
 							appDiv.innerHTML = text;
 							appDiv.style['overflow'] = 'auto';
 						}
+
+						// Run the fetchRootConfig callback if present.
+						callback && callback(r);
 					}  
 				};
-				r.send(null);
+				// send parameters as POST data
+				r.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				r.send(params);
 				
 				log('sending request to ', url);
 			};			
 			
 			//Export public data
 			var app = {
-				'getConfig': getConfig
+				getConfig: getConfig,
+				// Used when the app was started in offline, so as it is possible
+				// to defer root configuration loading until network is available.
+				fetchRootConfig: fetchRootConfig
 			};
 			apps[appId] = app;
 			
@@ -220,25 +236,36 @@
 			return app;
 		},
 		clients: {},
+		getAppIds: function() {
+			var ids = [ ];
+			for (var id in apps) {
+				if (apps.hasOwnProperty(id)) {
+					ids.push(id);
+				}
+			}
+			return ids;
+		},
 		getApp: function(appId) {
-			var app = apps[appId]; 
-			return app;
+			return apps[appId];
 		},
 		loadTheme: loadTheme,
 		registerWidgetset: function(widgetset, callback) {
 			log("Widgetset registered", widgetset);
-			widgetsets[widgetset].callback = callback;
-			for(var i = 0; i < widgetsets[widgetset].pendingApps.length; i++) {
-				var appId = widgetsets[widgetset].pendingApps[i];
-				log("Starting from register widgetset", appId);
-				callback(appId);
+			var ws = widgetsets[widgetset];
+			if (ws && ws.pendingApps) {
+				ws.callback = callback;
+				for(var i = 0; i < ws.pendingApps.length; i++) {
+					var appId = ws.pendingApps[i];
+					log("Starting from register widgetset", appId);
+					callback(appId);
+				}
+				ws.pendingApps = null;
 			}
-			widgetsets[widgetset].pendingApps = null;
 		},
 		getBrowserDetailsParameters: function(parentElementId) {
 			// Screen height and width
-			var url = 'v-sh=' + window.screen.height;
-			url += '&v-sw=' + window.screen.width;
+			var params = 'v-sh=' + window.screen.height;
+			params += '&v-sw=' + window.screen.width;
 			
 			// Window height and width
 			var cw = 0;
@@ -252,12 +279,12 @@
 				cw = document.documentElement.clientWidth;
 				ch = document.documentElement.clientHeight;
 			}
-			url += '&v-cw=' + cw + '&v-ch=' + ch;
+			params += '&v-cw=' + cw + '&v-ch=' + ch;
 			
 
 			var d = new Date();
 			
-			url += '&v-curdate=' + d.getTime();
+			params += '&v-curdate=' + d.getTime();
 			
 			var tzo1 = d.getTimezoneOffset(); // current offset
 			var dstDiff = 0;
@@ -274,29 +301,29 @@
 			}
 
 			// Time zone offset
-			url += '&v-tzo=' + tzo1;
+			params += '&v-tzo=' + tzo1;
 			
 			// DST difference
-			url += '&v-dstd=' + dstDiff;
+			params += '&v-dstd=' + dstDiff;
 			
 			// Raw time zone offset
-			url += '&v-rtzo=' + rtzo;
+			params += '&v-rtzo=' + rtzo;
 			
 			// DST in effect?
-			url += '&v-dston=' + (tzo1 != rtzo);
+			params += '&v-dston=' + (tzo1 != rtzo);
 			
 			var pe = document.getElementById(parentElementId);
 			if (pe) {
-				url += '&v-vw=' + pe.offsetWidth;
-				url += '&v-vh=' + pe.offsetHeight;
+				params += '&v-vw=' + pe.offsetWidth;
+				params += '&v-vh=' + pe.offsetHeight;
 			}
 			
 			// Location
-			url += '&v-loc=' + encodeURIComponent(location.href);
+			params += '&v-loc=' + encodeURIComponent(location.href);
 
 			// Window name
 			if (window.name) {
-				url += '&v-wn=' + encodeURIComponent(window.name);
+				params += '&v-wn=' + encodeURIComponent(window.name);
 			}
 			
 			// Detect touch device support
@@ -311,10 +338,10 @@
 			}
 
 			if (supportsTouch) {
-				url += "&v-td=1";
+				params += "&v-td=1";
 			}
    	        
-	        return url;
+	        return params;
 		}
 	};
 	

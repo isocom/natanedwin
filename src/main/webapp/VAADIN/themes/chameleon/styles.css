@@ -6,8 +6,26 @@
 	overflow: hidden;
 }
 
+@-webkit-keyframes v-notification-animate-out {
+		100% {
+		opacity: 0;
+	}
+	}
+
+@-moz-keyframes v-notification-animate-out {
+		100% {
+		opacity: 0;
+	}
+	}
+
+@keyframes v-notification-animate-out {
+		100% {
+		opacity: 0;
+	}
+	}
+
 .v-vaadin-version:after {
-	content: "7.1.10";
+	content: "7.3.2";
 }
 
 .v-generated-body {
@@ -22,294 +40,21 @@
 	overflow: hidden;
 }
 
-.v-debug-console {
-	background: #fff;
-	opacity: 0.9;
-	border: 1px solid #000;
-	font-family: sans-serif;
-}
-
-.v-debug-console-caption {
-	background: #000;
-	border-bottom: 1px solid grey;
-	color: white;
-	font-weight: bold;
-}
-
-.v-debug-console-content {
-	font-size: x-small;
-	overflow: auto;
-	white-space: pre;
-}
-
-.v-debug-console-content input {
-	font-size: xx-small;
-}
-
-.v-app .invalidlayout, .v-app .invalidlayout * {
-	background: #f99 !important;
-}
-
 @font-face {
-	font-family: "vdebugfont";
-	src: url(../base/debug/fonts/font.eot);
-	src: url(../base/debug/fonts/font.eot?#iefix) format("embedded-opentype"), url(../base/debug/fonts/font.woff) format("woff"), url(../base/debug/fonts/font.ttf) format("truetype"), url(../base/debug/fonts/font.svg#fontawesome) format("svg");
+	font-family: FontAwesome;
+	src: url(../base/fonts/fontawesome-webfont.eot);
+	src: url(../base/fonts/fontawesome-webfont.eot?#iefix) format("embedded-opentype"), url(../base/fonts/fontawesome-webfont.woff) format("woff"), url(../base/fonts/fontawesome-webfont.ttf) format("truetype"), url(../base/fonts/fontawesome-webfont.svg) format("svg");
 	font-weight: normal;
 	font-style: normal;
 }
 
-.v-debugwindow [data-icon]:before, .v-debugwindow-menu [data-icon]:before {
-	font-family: "vdebugfont";
-	content: attr(data-icon);
-	speak: none;
+.FontAwesome {
+	font-family: FontAwesome;
+	font-style: normal;
 	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
 	-webkit-font-smoothing: antialiased;
-	font-style: normal;
-	vertical-align: text-bottom;
-}
-
-.v-debugwindow {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	-moz-opacity: 0.8;
-	-webkit-opacity: 0.8;
-	opacity: 0.8;
-	color: #666;
-	font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif;
-	font-size: 13px;
-}
-
-.v-debugwindow .v-debugwindow-handle {
-	position: absolute;
-	bottom: 0;
-	background-color: #fff;
-	-moz-opacity: 0;
-	-webkit-opacity: 0;
-	opacity: 0;
-	z-index: 1000;
-}
-
-.v-debugwindow .v-debugwindow-handle-sw {
-	width: 7px;
-	height: 7px;
-}
-
-.v-debugwindow .v-debugwindow-handle-se {
-	right: 0;
-	width: 14px;
-	height: 14px;
-}
-
-.v-debugwindow:hover {
-	-moz-opacity: 1;
-	-webkit-opacity: 1;
-	opacity: 1;
-}
-
-.v-debugwindow * {
-	font-size: inherit !important;
-}
-
-.v-debugwindow-size0, .v-debugwindow-menu .v-debugwindow-button-size0 {
-	font-size: 10px;
-}
-
-.v-debugwindow-size1, .v-debugwindow-menu .v-debugwindow-button-size1 {
-	font-size: 13px;
-}
-
-.v-debugwindow-size2, .v-debugwindow-menu .v-debugwindow-button-size2 {
-	font-size: 16px;
-}
-
-.v-debugwindow-head {
-	text-align: right;
-	background-color: transparent;
-}
-
-.v-debugwindow-tabs {
+	-moz-osx-font-smoothing: grayscale;
 	display: inline-block;
-	background-color: #fff;
-}
-
-.v-debugwindow-tab, .v-debugwindow-controls > * {
-	width: 2em;
-	border: none;
-	margin: 0;
-	line-height: 1.5em;
-	background-color: #fff;
-	color: #666;
-}
-
-.v-debugwindow-tab {
-	position: relative;
-	top: 1px;
-	border-width: 1px 0 1px 1px;
-	border-style: solid;
-	border-color: #666;
-	border-radius: 2px 2px 0 0;
-}
-
-.v-debugwindow-tab-selected {
-	color: #666;
-	background-color: #fff;
-	border-bottom: 1px solid #fff;
-}
-
-.v-debugwindow-controls {
-	position: relative;
-	top: 1px;
-	display: inline-block;
-	background-color: #fff;
-	border: 1px solid #666;
-	border-radius: 2px 2px 0 0;
-}
-
-.v-debugwindow-section-head {
-	text-align: left;
-	background-color: #fff;
-	border: 1px solid #666;
-	border-bottom: 1px solid #999;
-	box-shadow: 0px 0px 7px 0 rgba(55, 55, 55, 0.6);
-	min-height: 1.5em;
-	line-height: 1.5em;
-	padding-left: 5px;
-}
-
-.v-debugwindow-button {
-	border: none;
-	background-color: transparent;
-	color: #666;
-}
-
-.v-debugwindow-button:hover {
-	color: #000;
-	text-decoration: underline;
-}
-
-.v-debugwindow-button-active {
-	color: #666;
-	box-shadow: 1px 1px 3px 0 inset;
-}
-
-.v-debugwindow-content {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	box-shadow: 0px 0px 7px 0 rgba(55, 55, 55, 0.6);
-	background-color: #fff;
-	border: 1px solid #666;
-	border-top: none;
-}
-
-.v-debugwindow-menu {
-	background-color: #fff;
-	padding: 4px;
-	border: 1px solid #999;
-	border-top: none;
-	border-radius: 0 0 5px 5px;
-	box-shadow: 0px 0px 7px 0 rgba(55, 55, 55, 0.6);
-}
-
-.v-debugwindow-menu-content {
-	min-width: 100px;
-}
-
-.v-debugwindow-menu-content .v-debugwindow-button {
-	line-height: 22px;
-}
-
-.v-debugwindow-menu-content > div > .v-debugwindow-button {
-	width: 33%;
-}
-
-.v-debugwindow-row {
-	display: table-row;
-}
-
-.v-debugwindow-row:nth-child(odd) {
-	background-color: rgba(0, 61, 255, 0.11);
-}
-
-.v-debugwindow-row > span {
-	display: table-cell;
-	padding: 4px;
-}
-
-.v-debugwindow-row.SEVERE {
-	color: #550000;
-	background-color: #FFC5C5;
-}
-
-.v-debugwindow-row.WARNING {
-	background-color: #FFFF99;
-}
-
-.v-debugwindow-row.FINE {
-	color: #777;
-}
-
-.v-debugwindow-row.FINER {
-	color: #888;
-}
-
-.v-debugwindow-row.FINEST {
-	color: #888;
-}
-
-.v-debugwindow-row > span.caption {
-	color: #999;
-	text-align: right;
-	white-space: nowrap;
-}
-
-.v-debugwindow-row > span.value {
-	width: 100%;
-}
-
-.v-debugwindow-log {
-	font-family: monospace;
-}
-
-.v-debugwindow-log .v-debugwindow-reset {
-	color: #fff;
-	background-color: #4C92ED;
-	padding: 4px;
-}
-
-.v-debugwindow-log .v-debugwindow-time {
-	text-align: right;
-	color: #999;
-}
-
-.v-debugwindow-log .v-debugwindow-message {
-	white-space: nowrap;
-	width: 100%;
-}
-
-.v-debugwindow-log .v-debugwindow-message:hover {
-	white-space: normal;
-	word-wrap: break-word;
-}
-
-.v-debugwindow-log .v-debugwindow-message em {
-	background-color: #C4E6F8;
-}
-
-.v-debugwindow-hierarchy .v-debugwindow-info {
-	padding: 1em;
-}
-
-.v-debugwindow-network .v-debugwindow-row {
-	display: block !important;
-}
-
-.v-debugwindow-network .v-debugwindow-row > span {
-	display: inline;
 }
 
 .chameleon .v-widget {
@@ -1133,6 +878,14 @@
 	cursor: default;
 }
 
+.chameleon .v-window {
+	box-shadow: 0 5px 18px 0 rgba(0, 0, 0, 0.5);
+}
+
+.chameleon .v-datefield-popup, .chameleon .v-filterselect-suggestpopup, .chameleon .v-menubar-popup, .chameleon .v-slider-feedback, .chameleon .v-popupview-popup, .chameleon .v-contextmenu {
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+}
+
 body .chameleon.v-app .v-app-loading {
 	background-image: url(../base/common/img/loading-indicator.gif);
 	background-repeat: no-repeat;
@@ -1205,6 +958,7 @@ body .chameleon.v-app .v-app-loading {
 .chameleon .v-tooltip {
 	cursor: default;
 	background: #fff;
+	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
 }
 
 .chameleon .v-tooltip-text {
@@ -1225,6 +979,11 @@ body .chameleon.v-app .v-app-loading {
 	padding: 0;
 	border: 0;
 	margin: 0;
+}
+
+.chameleon .v-contextmenu .gwt-MenuBar {
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .chameleon .v-contextmenu .gwt-MenuItem div {
@@ -1305,6 +1064,10 @@ body .chameleon.v-app .v-app-loading {
 	overflow: auto;
 	font-size: 0;
 	line-height: normal;
+}
+
+.v-ff .chameleon .v-scrollable {
+	font-size: 13px;
 }
 
 .v-ios.v-webkit .chameleon .v-scrollable {
@@ -1542,10 +1305,6 @@ body .chameleon.v-app .v-app-loading {
 	padding-right: 12px;
 }
 
-.chameleon .v-customcomponent {
-	overflow: hidden;
-}
-
 .chameleon .v-customlayout {
 	overflow: hidden;
 }
@@ -1617,7 +1376,7 @@ body .chameleon.v-app .v-app-loading {
 	border: 1px solid #ddd;
 }
 
-.chameleon .v-disabled .v-datefield-calendarpanel-day, .chameleon .v-disabled .v-datefield-calendarpanel-day-today {
+.chameleon .v-disabled .v-datefield-calendarpanel-day, .chameleon .v-disabled .v-datefield-calendarpanel-day-today, .chameleon .v-disabled.v-datefield-popupcalendar .v-datefield-button {
 	cursor: default;
 }
 
@@ -1654,6 +1413,10 @@ body .chameleon.v-app .v-app-loading {
 
 .chameleon .v-datefield-popup {
 	background: #fff;
+}
+
+.v-ie9 .chameleon .v-datefield-popup, .v-ie10 .chameleon .v-datefield-popup, .v-ie11 .chameleon .v-datefield-popup {
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
 }
 
 .chameleon .v-datefield-popupcalendar input.v-datefield-textfield {
@@ -1729,7 +1492,7 @@ body .chameleon.v-app .v-app-loading {
 	border: 1px solid #ddd;
 }
 
-.chameleon .v-disabled .v-inline-datefield-calendarpanel-day, .chameleon .v-disabled .v-inline-datefield-calendarpanel-day-today {
+.chameleon .v-disabled .v-inline-datefield-calendarpanel-day, .chameleon .v-disabled .v-inline-datefield-calendarpanel-day-today, .chameleon .v-disabled.v-inline-datefield-popupcalendar .v-inline-datefield-button {
 	cursor: default;
 }
 
@@ -1768,6 +1531,10 @@ body .chameleon.v-app .v-app-loading {
 	background: #fff;
 }
 
+.v-ie9 .chameleon .v-inline-datefield-popup, .v-ie10 .chameleon .v-inline-datefield-popup, .v-ie11 .chameleon .v-inline-datefield-popup {
+	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
 .chameleon .v-inline-datefield-popupcalendar input.v-inline-datefield-textfield {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -1780,6 +1547,8 @@ body .chameleon.v-app .v-app-loading {
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 	position: relative;
+	-ms-touch-action: none;
+	touch-action: none;
 }
 
 .chameleon [draggable=true] {
@@ -2056,7 +1825,7 @@ body .chameleon.v-app .v-app-loading {
 	width: 200px;
 }
 
-.chameleon .v-app-loginpage .v-button, .chameleon .v-app-loginpage .v-button {
+.chameleon .v-app-loginpage .v-button {
 	float: left;
 }
 
@@ -2167,6 +1936,8 @@ body .chameleon.v-app .v-app-loading {
 	overflow: hidden;
 	padding: 1em;
 	max-width: 85%;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
 }
 
 .chameleon .v-Notification h1, .chameleon .v-Notification p, .chameleon .v-Notification-error h1, .chameleon .v-Notification-error p, .chameleon .v-Notification-warning h1, .chameleon .v-Notification-warning p {
@@ -2192,13 +1963,38 @@ body .chameleon.v-app .v-app-loading {
 
 .chameleon .v-Notification-system {
 	background-color: red;
-	opacity: 0.7;
-	filter: alpha(opacity=70);
 }
 
 .chameleon .v-Notification-system h1 {
 	display: block;
 	margin: 0;
+}
+
+.chameleon .v-Notification-animate-out {
+	-webkit-animation: v-notification-animate-out 400ms;
+	-moz-animation: v-notification-animate-out 400ms;
+	animation: v-notification-animate-out 400ms;
+}
+
+.chameleon .v-Notification.v-position-top {
+	top: 0;
+}
+
+.chameleon .v-Notification.v-position-right {
+	right: 0;
+}
+
+.chameleon .v-Notification.v-position-bottom {
+	bottom: 0;
+}
+
+.chameleon .v-Notification.v-position-left {
+	left: 0;
+}
+
+.chameleon .v-Notification.v-position-assistive {
+	top: -9999px;
+	left: -9999px;
 }
 
 .chameleon .v-orderedlayout, .chameleon .v-horizontallayout, .chameleon .v-verticallayout {
@@ -2531,6 +2327,12 @@ body .chameleon.v-app .v-app-loading {
 
 .chameleon .v-shadow {
 	position: absolute;
+	display: none;
+	pointer-events: none;
+}
+
+.v-ie8 .chameleon .v-shadow {
+	display: block;
 }
 
 .chameleon .v-shadow .top-left {
@@ -2641,6 +2443,8 @@ body .chameleon.v-app .v-app-loading {
 	height: 12px;
 	margin-top: -5px;
 	font-size: 0;
+	-ms-touch-action: none;
+	touch-action: none;
 }
 
 .chameleon .v-slider-vertical {
@@ -2696,6 +2500,8 @@ body .chameleon.v-app .v-app-loading {
 	background: #ddd;
 	cursor: e-resize;
 	cursor: col-resize;
+	-ms-touch-action: none;
+	touch-action: none;
 }
 
 .chameleon .v-disabled .v-splitpanel-hsplitter div {
@@ -2711,6 +2517,8 @@ body .chameleon.v-app .v-app-loading {
 	background: #ddd;
 	cursor: s-resize;
 	cursor: row-resize;
+	-ms-touch-action: none;
+	touch-action: none;
 }
 
 .chameleon .v-disabled .v-splitpanel-vsplitter div {
@@ -3121,6 +2929,14 @@ body .chameleon.v-app .v-app-loading {
 	cursor: default;
 }
 
+.chameleon .v-tabsheet-tabitem-focus .v-captiontext {
+	text-decoration: underline;
+}
+
+.chameleon .v-tabsheet-tabitem-selected.v-tabsheet-tabitem-focus .v-captiontext {
+	text-decoration: inherit;
+}
+
 .chameleon .v-tabsheet-content {
 	border: 1px solid #aaa;
 	border-top: none;
@@ -3408,7 +3224,6 @@ body .chameleon.v-app .v-app-loading {
 }
 
 .chameleon .v-treetable .v-table-row .v-table-cell-content, .chameleon .v-treetable .v-table-row-odd .v-table-cell-content {
-	position: relative;
 	z-index: 10;
 }
 
@@ -3602,6 +3417,12 @@ body .chameleon.v-app .v-app-loading {
 
 .chameleon .v-shadow-window {
 	position: absolute;
+	display: none;
+	pointer-events: none;
+}
+
+.v-ie8 .chameleon .v-shadow-window {
+	display: block;
 }
 
 .chameleon .v-shadow-window .top-left {
@@ -3722,7 +3543,7 @@ body .chameleon.v-app .v-app-loading {
 	border: none;
 }
 
-.chameleon.v-app, .chameleon .v-window, .chameleon .v-popupview-popup, .chameleon .v-tooltip, .chameleon.v-app input, .chameleon.v-app select, .chameleon.v-app button, .chameleon.v-app textarea, .chameleon .v-window input, .chameleon .v-window select, .chameleon .v-window button, .chameleon .v-window textarea, .chameleon .v-popupview-popup input, .chameleon .v-popupview-popup select, .chameleon .v-popupview-popup button, .chameleon .v-popupview-popup textarea, .chameleon .v-filterselect-suggestpopup, .chameleon .v-datefield-popup, .chameleon .v-contextmenu, .chameleon .v-Notification, .chameleon .v-menubar-submenu, .chameleon .v-table-header-drag, .chameleon .v-menubar-submenu, .chameleon .v-drag-element {
+.chameleon.v-app, .chameleon .v-window, .chameleon .v-popupview-popup, .chameleon .v-tooltip, .chameleon.v-app input, .chameleon.v-app select, .chameleon.v-app button, .chameleon.v-app textarea, .chameleon .v-window input, .chameleon .v-window select, .chameleon .v-window button, .chameleon .v-window textarea, .chameleon .v-popupview-popup input, .chameleon .v-popupview-popup select, .chameleon .v-popupview-popup button, .chameleon .v-popupview-popup textarea, .chameleon .v-filterselect-suggestpopup, .chameleon .v-datefield-popup, .chameleon .v-contextmenu, .chameleon .v-Notification, .chameleon .v-menubar-submenu, .chameleon .v-table-header-drag, .chameleon .v-drag-element {
 	font-family: Arial, Helvetica, "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana, sans-serif;
 	font-size: 13px;
 	line-height: 1.4;
@@ -3730,14 +3551,16 @@ body .chameleon.v-app .v-app-loading {
 }
 
 .chameleon .v-window, .chameleon .v-popupview-popup, .chameleon .v-filterselect-suggestpopup, .chameleon .v-datefield-popup, .chameleon .v-contextmenu, .chameleon .v-Notification, .chameleon .v-menubar-submenu {
-	background: #fff url(img/grad-light-top.png) repeat-x;
-	background-color: rgba(255, 255, 255, 0.85);
 	border: 1px solid #adadad;
 	border-color: rgba(0, 0, 0, 0.4);
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	overflow: hidden;
+}
+
+.chameleon .v-window, .chameleon .v-popupview-popup, .chameleon .v-filterselect-suggestpopup, .chameleon .v-datefield-popup, .chameleon .v-contextmenu, .chameleon .v-menubar-submenu {
+	background: rgba(232, 232, 232, 0.9) url(img/grad-light-top.png) repeat-x;
 }
 
 .chameleon .v-filterselect-suggestpopup, .chameleon .v-contextmenu, .chameleon .v-menubar-submenu {
@@ -4154,6 +3977,10 @@ body .chameleon.v-app .v-app-loading {
 	background-position: 0 -1px;
 }
 
+.chameleon .v-menubar-popup {
+	border-radius: 5px;
+}
+
 .chameleon div.v-Notification {
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
@@ -4162,6 +3989,8 @@ body .chameleon.v-app .v-app-loading {
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
 	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+	background: white url(components/img/grad-light-top.png) repeat-x;
+	background: rgba(255, 255, 255, 0.9) url(components/img/grad-light-top.png) repeat-x;
 }
 
 .chameleon .v-Notification p {
@@ -5607,6 +5436,7 @@ body .chameleon.v-app .v-app-loading {
 }
 
 .chameleon .v-tabsheet-scrollerPrev, .chameleon .v-tabsheet-scrollerNext, .chameleon .v-tabsheet-scrollerPrev-disabled, .chameleon .v-tabsheet-scrollerNext-disabled, .chameleon .v-tabsheet-scrollerPrev-disabled:active, .chameleon .v-tabsheet-scrollerNext-disabled:active {
+	padding-top: 12px;
 	border: 1px solid #b3b3b3;
 	border-width: 0;
 	background: transparent url(img/tab-arrows.png) no-repeat 6px 50%;
@@ -5680,6 +5510,10 @@ body .chameleon.v-app .v-app-loading {
 
 .chameleon .v-tree-connectors .v-tree-node-caption {
 	padding-bottom: 1px;
+}
+
+.chameleon .v-window {
+	border-radius: 3px;
 }
 
 .chameleon .v-window-closebox, .chameleon .v-window-restorebox, .chameleon .v-window-maximizebox {
@@ -5815,7 +5649,7 @@ body .chameleon.v-app .v-app-loading {
 	font-weight: bold;
 	letter-spacing: 0.03em;
 	padding: 1em 0.9em 0.3em;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+	text-shadow: 0 1px 0 white;
 }
 
 .chameleon .sidebar-menu .v-nativebutton {
