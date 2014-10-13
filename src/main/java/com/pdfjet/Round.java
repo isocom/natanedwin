@@ -27,9 +27,6 @@
  */
 package com.pdfjet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-@SuppressFBWarnings
 class Round {
 
     protected float value = 0.0f;

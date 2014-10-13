@@ -4,7 +4,6 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -101,12 +100,10 @@ public class Human implements Serializable, Comparable<Human> {
         this.active = active;
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_REP")
     public Date getFirstTimeSeen() {
         return firstTimeSeen;
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_REP")
     public void setFirstTimeSeen(Date firstTimeSeen) {
         this.firstTimeSeen = firstTimeSeen;
     }

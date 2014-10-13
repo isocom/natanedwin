@@ -10,7 +10,6 @@ import com.appspot.natanedwin.entity.RfidCardNature;
 import com.appspot.natanedwin.entity.RfidCardType;
 import com.appspot.natanedwin.service.cardnumber.CardNumber;
 import com.appspot.natanedwin.service.spring.SpringContext;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashSet;
@@ -63,7 +62,6 @@ public class RfidCardFix {
      * @param writer
      * @throws Exception
      */
-    @SuppressFBWarnings
     public static void addPrzedszkole1(PrintWriter writer) throws Exception {
         RfidCardDao rfidCardDao = SpringContext.INSTANCE.getBean(RfidCardDao.class);
         StringWriter stringWriter = new StringWriter();
@@ -101,7 +99,6 @@ public class RfidCardFix {
         }
     }
 
-    @SuppressFBWarnings
     public static void addPrzedszkole2(PrintWriter writer) throws Exception {
         RfidCardDao rfidCardDao = SpringContext.INSTANCE.getBean(RfidCardDao.class);
         EstablishmentDao establishmentDao = SpringContext.INSTANCE.getBean(EstablishmentDao.class);

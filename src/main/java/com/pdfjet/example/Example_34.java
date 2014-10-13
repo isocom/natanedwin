@@ -4,13 +4,11 @@ import java.io.*;
 import java.util.*;
 
 import com.pdfjet.*;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Example_34.java
  *
  */
-@SuppressFBWarnings
 public class Example_34 {
 
     public Example_34() throws Exception {

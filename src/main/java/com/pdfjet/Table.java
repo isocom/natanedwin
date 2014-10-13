@@ -27,7 +27,6 @@
  */
 package com.pdfjet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.*;
 
 /**
@@ -35,7 +34,6 @@ import java.util.*;
  *
  * Please see Example_08.
  */
-@SuppressFBWarnings
 public class Table {
 
     public static int DATA_HAS_0_HEADER_ROWS = 0;

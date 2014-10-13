@@ -16,7 +16,7 @@ public class WarmupListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ApplicationContext applicationContext = SpringContext.INSTANCE.getApplicationContext();
-
+//
         GenericWebApplicationContext webApplicationContext = new GenericWebApplicationContext();
         webApplicationContext.setParent(applicationContext);
         webApplicationContext.setServletContext(sce.getServletContext());

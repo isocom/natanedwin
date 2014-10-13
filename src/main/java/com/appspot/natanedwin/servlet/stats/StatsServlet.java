@@ -6,10 +6,8 @@ package com.appspot.natanedwin.servlet.stats;
 
 import com.appspot.natanedwin.dao.StatEntryDao;
 import com.appspot.natanedwin.entity.StatEntry;
-import com.appspot.natanedwin.service.ofy.Ofy;
 import com.appspot.natanedwin.service.spring.SpringContext;
 import com.google.appengine.api.datastore.Text;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
@@ -36,7 +34,6 @@ public class StatsServlet extends HttpServlet {
         process(req, resp);
     }
 
-    @SuppressFBWarnings
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         StatEntryDao statEntryDao = SpringContext.INSTANCE.getBean(StatEntryDao.class);
 

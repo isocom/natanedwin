@@ -5,7 +5,6 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Unindex;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -107,12 +106,10 @@ public class Device implements Serializable {
         this.serialNumber = serialNumber;
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_REP")
     public Date getFirstTimeSeen() {
         return firstTimeSeen;
     }
 
-    @SuppressFBWarnings("EI_EXPOSE_REP")
     public void setFirstTimeSeen(Date firstTimeSeen) {
         this.firstTimeSeen = firstTimeSeen;
     }

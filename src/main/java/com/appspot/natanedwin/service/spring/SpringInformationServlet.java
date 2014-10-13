@@ -4,7 +4,6 @@
  */
 package com.appspot.natanedwin.service.spring;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,7 +36,6 @@ public class SpringInformationServlet extends HttpServlet {
         doIt(req, resp);
     }
 
-    @SuppressFBWarnings
     private void doIt(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");

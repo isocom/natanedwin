@@ -1,29 +1,24 @@
 /**
  *
-Copyright (c) 2009 Kazuhiko Arase
-
-URL: http://www.d-project.com/
-
-Licensed under the MIT license:
-  http://www.opensource.org/licenses/mit-license.php
-
-The word "QR Code" is registered trademark of 
-DENSO WAVE INCORPORATED
-  http://www.denso-wave.com/qrcode/faqpatent-e.html
-*/
-
+ * Copyright (c) 2009 Kazuhiko Arase
+ *
+ * URL: http://www.d-project.com/
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * The word "QR Code" is registered trademark of DENSO WAVE INCORPORATED
+ * http://www.denso-wave.com/qrcode/faqpatent-e.html
+ */
 package com.pdfjet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.UnsupportedEncodingException;
-
 
 /**
  * Used to create 2D QR Code barcodes. Please see Example_20.
- * 
+ *
  * @author Kazuhiko Arase
  */
-@SuppressFBWarnings
 public class QRCode implements Drawable {
 
     private static final int PAD0 = 0xEC;
@@ -38,10 +33,9 @@ public class QRCode implements Drawable {
     private byte[] qrData;
     private float m1 = 2.0f;        // Module length
 
-
     /**
      * Used to create 2D QR Code barcodes.
-     * 
+     *
      * @param str the string to encode.
      * @param errorCorrectLevel the desired error correction level.
      * @throws UnsupportedEncodingException
@@ -51,69 +45,66 @@ public class QRCode implements Drawable {
         this.errorCorrectLevel = errorCorrectLevel;
         this.make(false, getBestMaskPattern());
     }
-    
+
     /**
-     *  Sets the position where this barcode will be drawn on the page.
+     * Sets the position where this barcode will be drawn on the page.
      *
-     *  @param x the x coordinate of the top left corner of the barcode.
-     *  @param y the y coordinate of the top left corner of the barcode.
+     * @param x the x coordinate of the top left corner of the barcode.
+     * @param y the y coordinate of the top left corner of the barcode.
      */
     public void setPosition(double x, double y) {
         setPosition((float) x, (float) y);
     }
 
     /**
-     *  Sets the position where this barcode will be drawn on the page.
+     * Sets the position where this barcode will be drawn on the page.
      *
-     *  @param x the x coordinate of the top left corner of the barcode.
-     *  @param y the y coordinate of the top left corner of the barcode.
+     * @param x the x coordinate of the top left corner of the barcode.
+     * @param y the y coordinate of the top left corner of the barcode.
      */
     public void setPosition(float x, float y) {
         setLocation(x, y);
     }
 
     /**
-     *  Sets the location where this barcode will be drawn on the page.
+     * Sets the location where this barcode will be drawn on the page.
      *
-     *  @param x the x coordinate of the top left corner of the barcode.
-     *  @param y the y coordinate of the top left corner of the barcode.
+     * @param x the x coordinate of the top left corner of the barcode.
+     * @param y the y coordinate of the top left corner of the barcode.
      */
     public void setLocation(float x, float y) {
         this.x = x;
         this.y = y;
     }
-    
+
     /**
-     *  Sets the module length of this barcode.
-     *  The default value is 2.0f
+     * Sets the module length of this barcode. The default value is 2.0f
      *
-     *  @param moduleLength the specified module length.
+     * @param moduleLength the specified module length.
      */
     public void setModuleLength(double moduleLength) {
         this.m1 = (float) moduleLength;
     }
 
-
     /**
-     *  Sets the module length of this barcode.
-     *  The default value is 2.0f
+     * Sets the module length of this barcode. The default value is 2.0f
      *
-     *  @param moduleLength the specified module length.
+     * @param moduleLength the specified module length.
      */
     public void setModuleLength(float moduleLength) {
         this.m1 = moduleLength;
     }
 
     /**
-     *  Draws this barcode on the specified page.
+     * Draws this barcode on the specified page.
      *
-     *  @param page the specified page.
+     * @param page the specified page.
      */
     public void drawOn(Page page) throws Exception {
         for (int row = 0; row < modules.length; row++) {
             for (int col = 0; col < modules.length; col++) {
                 if (isDark(row, col)) {
-                    page.fillRect(x + col*m1, y + row*m1, m1, m1);
+                    page.fillRect(x + col * m1, y + row * m1, m1, m1);
                 }
             }
         }
@@ -124,14 +115,13 @@ public class QRCode implements Drawable {
     }
 
     /**
-     *  @param row the row.
-     *  @param col the column.
+     * @param row the row.
+     * @param col the column.
      */
     protected boolean isDark(int row, int col) {
         if (modules[row][col] != null) {
             return modules[row][col];
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -147,7 +137,7 @@ public class QRCode implements Drawable {
         for (int i = 0; i < 8; i++) {
             make(true, i);
             int lostPoint = QRUtil.getLostPoint(this);
-            if (i == 0 || minLostPoint >  lostPoint) {
+            if (i == 0 || minLostPoint > lostPoint) {
                 minLostPoint = lostPoint;
                 pattern = i;
             }
@@ -177,7 +167,9 @@ public class QRCode implements Drawable {
         int byteIndex = 0;
 
         for (int col = moduleCount - 1; col > 0; col -= 2) {
-            if (col == 6) col--;
+            if (col == 6) {
+                col--;
+            }
             while (true) {
                 for (int c = 0; c < 2; c++) {
                     if (modules[row][col - c] == null) {
@@ -224,8 +216,8 @@ public class QRCode implements Drawable {
 
                 for (int r = -2; r <= 2; r++) {
                     for (int c = -2; c <= 2; c++) {
-                        modules[row + r][col + c] =
-                                r == -2 || r == 2 || c == -2 || c == 2 || (r == 0 && c == 0);
+                        modules[row + r][col + c]
+                                = r == -2 || r == 2 || c == -2 || c == 2 || (r == 0 && c == 0);
                     }
                 }
             }
@@ -240,10 +232,10 @@ public class QRCode implements Drawable {
                     continue;
                 }
 
-                modules[row + r][col + c] =
-                        (0 <= r && r <= 6 && (c == 0 || c == 6)) ||
-                        (0 <= c && c <= 6 && (r == 0 || r == 6)) ||
-                        (2 <= r && r <= 4 && 2 <= c && c <= 4);
+                modules[row + r][col + c]
+                        = (0 <= r && r <= 6 && (c == 0 || c == 6))
+                        || (0 <= c && c <= 6 && (r == 0 || r == 6))
+                        || (2 <= r && r <= 4 && 2 <= c && c <= 4);
             }
         }
     }
@@ -271,11 +263,9 @@ public class QRCode implements Drawable {
             Boolean mod = (!test && ((bits >> i) & 1) == 1);
             if (i < 6) {
                 modules[i][8] = mod;
-            }
-            else if (i < 8) {
+            } else if (i < 8) {
                 modules[i + 1][8] = mod;
-            }
-            else {
+            } else {
                 modules[moduleCount - 15 + i][8] = mod;
             }
         }
@@ -284,11 +274,9 @@ public class QRCode implements Drawable {
             Boolean mod = (!test && ((bits >> i) & 1) == 1);
             if (i < 8) {
                 modules[8][moduleCount - i - 1] = mod;
-            }
-            else if (i < 9) {
+            } else if (i < 9) {
                 modules[8][15 - i - 1 + 1] = mod;
-            }
-            else {
+            } else {
                 modules[8][15 - i - 1] = mod;
             }
         }
@@ -313,10 +301,10 @@ public class QRCode implements Drawable {
 
         if (buffer.getLengthInBits() > totalDataCount * 8) {
             throw new IllegalArgumentException("String length overflow. ("
-                + buffer.getLengthInBits()
-                + ">"
-                +  totalDataCount * 8
-                + ")");
+                    + buffer.getLengthInBits()
+                    + ">"
+                    + totalDataCount * 8
+                    + ")");
         }
 
         if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {

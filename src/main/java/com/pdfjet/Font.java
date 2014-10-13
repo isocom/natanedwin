@@ -1,45 +1,40 @@
 /**
- *  Font.java
+ * Font.java
  *
-Copyright (c) 2013, Innovatics Inc.
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and / or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-
+ * Copyright (c) 2013, Innovatics Inc. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation and
+ * / or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
 package com.pdfjet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.InputStream;
 import java.util.HashSet;
 
-
 /**
- *  Used to create font objects.
- *  The font objects must added to the PDF before they can be used to draw text.
+ * Used to create font objects. The font objects must added to the PDF before
+ * they can be used to draw text.
  *
  */
-@SuppressFBWarnings
 public class Font {
 
     protected String name;
@@ -93,79 +88,64 @@ public class Font {
     private int fontUnderlinePosition = 0;
     private int fontUnderlineThickness = 0;
 
-
     /**
-     *  Use this constructor to create font from data found in PDFobj.
+     * Use this constructor to create font from data found in PDFobj.
      *
-     *  @param pdf the PDF we want to add this font to.
-     *  @param obj the PDFobj containing the font data.
+     * @param pdf the PDF we want to add this font to.
+     * @param obj the PDFobj containing the font data.
      */
     public Font(PDF pdf, PDFobj obj) throws Exception {
         String fontName = obj.getValue("/BaseFont").substring(1);
         if (fontName.equals(Helvetica.name)) {
             addCoreFont(pdf, CoreFont.HELVETICA);
-        }
-        else if (fontName.equals(Helvetica_Bold.name)) {
+        } else if (fontName.equals(Helvetica_Bold.name)) {
             addCoreFont(pdf, CoreFont.HELVETICA_BOLD);
-        }
-        else if (fontName.equals(Helvetica_Oblique.name)) {
+        } else if (fontName.equals(Helvetica_Oblique.name)) {
             addCoreFont(pdf, CoreFont.HELVETICA_OBLIQUE);
-        }
-        else if (fontName.equals(Helvetica_BoldOblique.name)) {
+        } else if (fontName.equals(Helvetica_BoldOblique.name)) {
             addCoreFont(pdf, CoreFont.HELVETICA_BOLD_OBLIQUE);
-        }
-        else if (fontName.equals(Times_Roman.name)) {
+        } else if (fontName.equals(Times_Roman.name)) {
             addCoreFont(pdf, CoreFont.TIMES_ROMAN);
-        }
-        else if (fontName.equals(Times_Bold.name)) {
+        } else if (fontName.equals(Times_Bold.name)) {
             addCoreFont(pdf, CoreFont.TIMES_BOLD);
-        }
-        else if (fontName.equals(Times_Italic.name)) {
+        } else if (fontName.equals(Times_Italic.name)) {
             addCoreFont(pdf, CoreFont.TIMES_ITALIC);
-        }
-        else if (fontName.equals(Times_BoldItalic.name)) {
+        } else if (fontName.equals(Times_BoldItalic.name)) {
             addCoreFont(pdf, CoreFont.TIMES_BOLD_ITALIC);
-        }
-        else if (fontName.equals(Courier.name)) {
+        } else if (fontName.equals(Courier.name)) {
             addCoreFont(pdf, CoreFont.COURIER);
-        }
-        else if (fontName.equals(Courier_Bold.name)) {
+        } else if (fontName.equals(Courier_Bold.name)) {
             addCoreFont(pdf, CoreFont.COURIER_BOLD);
-        }
-        else if (fontName.equals(Courier_Oblique.name)) {
+        } else if (fontName.equals(Courier_Oblique.name)) {
             addCoreFont(pdf, CoreFont.COURIER_OBLIQUE);
-        }
-        else if (fontName.equals(Courier_BoldOblique.name)) {
+        } else if (fontName.equals(Courier_BoldOblique.name)) {
             addCoreFont(pdf, CoreFont.COURIER_BOLD_OBLIQUE);
-        }
-        else if (fontName.equals(Symbol.name)) {
+        } else if (fontName.equals(Symbol.name)) {
             addCoreFont(pdf, CoreFont.SYMBOL);
-        }
-        else if (fontName.equals(ZapfDingbats.name)) {
+        } else if (fontName.equals(ZapfDingbats.name)) {
             addCoreFont(pdf, CoreFont.ZAPF_DINGBATS);
         }
     }
 
-
     /**
-     *  Constructor for the 14 standard fonts.
-     *  Creates a font object and adds it to the PDF.
+     * Constructor for the 14 standard fonts. Creates a font object and adds it
+     * to the PDF.
      *
-     *  <pre>
+     * <pre>
      *  Examples:
      *      Font font1 = new Font(pdf, CoreFont.HELVETICA);
      *      Font font2 = new Font(pdf, CoreFont.TIMES_ITALIC);
      *      Font font3 = new Font(pdf, CoreFont.ZAPF_DINGBATS);
      *      ...
-     *  </pre>
+     * </pre>
      *
-     *  @param pdf the PDF to add this font to.
-     *  @param coreFont the core font. Must be one the names defined in the CoreFont class.
+     * @param pdf the PDF to add this font to.
+     * @param coreFont the core font. Must be one the names defined in the
+     * CoreFont class.
      */
     public Font(PDF pdf, CoreFont coreFont) throws Exception {
         addCoreFont(pdf, coreFont);
     }
-
 
     private void addCoreFont(PDF pdf, CoreFont coreFont) throws Exception {
         StandardFont font = StandardFont.getInstance(coreFont);
@@ -201,14 +181,13 @@ public class Font {
         pdf.fonts.add(this);
     }
 
-
     /**
-     *  Constructor for CJK - Chinese, Japanese and Korean fonts.
-     *  Please see Example_04.
+     * Constructor for CJK - Chinese, Japanese and Korean fonts. Please see
+     * Example_04.
      *
-     *  @param pdf the PDF to add this font to.
-     *  @param fontName the font name. Please see Example_04.
-     *  @param codePage the code page. Must be: CodePage.UNICODE
+     * @param pdf the PDF to add this font to.
+     * @param fontName the font name. Please see Example_04.
+     * @param codePage the code page. Must be: CodePage.UNICODE
      */
     public Font(PDF pdf, String fontName, int codePage) throws Exception {
         this.name = fontName;
@@ -295,12 +274,11 @@ public class Font {
         objNumber = pdf.objNumber;
 
         ascent = size;
-        descent = -ascent/4;
+        descent = -ascent / 4;
         body_height = ascent - descent;
 
         pdf.fonts.add(this);
     }
-
 
     // Constructor for the DejaVuLGCSerif.ttf font.
     public Font(PDF pdf, InputStream inputStream) throws Exception {
@@ -319,87 +297,73 @@ public class Font {
         pdf.fonts.add(this);
     }
 
-
     protected int getFontDescriptorObjNumber() {
         return fontDescriptorObjNumber;
     }
-
 
     protected int getCMapObjNumber() {
         return cMapObjNumber;
     }
 
-
     protected int getCidFontDictObjNumber() {
         return cidFontDictObjNumber;
     }
-
 
     protected int getToUnicodeCMapObjNumber() {
         return toUnicodeCMapObjNumber;
     }
 
-
     protected int getWidthsArrayObjNumber() {
         return widthsArrayObjNumber;
     }
-
 
     protected int getEncodingObjNumber() {
         return encodingObjNumber;
     }
 
-
     protected void setFontDescriptorObjNumber(int fontDescriptorObjNumber) {
         this.fontDescriptorObjNumber = fontDescriptorObjNumber;
     }
-
 
     protected void setCMapObjNumber(int cMapObjNumber) {
         this.cMapObjNumber = cMapObjNumber;
     }
 
-
     protected void setCidFontDictObjNumber(int cidFontDictObjNumber) {
         this.cidFontDictObjNumber = cidFontDictObjNumber;
     }
-
 
     protected void setToUnicodeCMapObjNumber(int toUnicodeCMapObjNumber) {
         this.toUnicodeCMapObjNumber = toUnicodeCMapObjNumber;
     }
 
-
     protected void setWidthsArrayObjNumber(int widthsArrayObjNumber) {
         this.widthsArrayObjNumber = widthsArrayObjNumber;
     }
-
 
     protected void setEncodingObjNumber(int encodingObjNumber) {
         this.encodingObjNumber = encodingObjNumber;
     }
 
-
     /**
-     *  Sets the size of this font.
+     * Sets the size of this font.
      *
-     *  @param fontSize specifies the size of this font.
+     * @param fontSize specifies the size of this font.
      */
     public void setSize(double fontSize) {
         setSize((float) fontSize);
     }
 
-
     /**
-     *  Sets the size of this font.
+     * Sets the size of this font.
      *
-     *  @param fontSize specifies the size of this font.
+     * @param fontSize specifies the size of this font.
      */
     public void setSize(float fontSize) {
         size = fontSize;
         if (isCJK) {
             ascent = size;
-            descent = -ascent/4;
+            descent = -ascent / 4;
             return;
         }
         ascent = bBoxURy * size / unitsPerEm;
@@ -410,34 +374,34 @@ public class Font {
         underlinePosition = fontUnderlinePosition * size / -unitsPerEm + underlineThickness / 2.0f;
     }
 
-
     /**
-     *  Returns the current font size.
+     * Returns the current font size.
      *
-     *  @return the current size of the font.
+     * @return the current size of the font.
      */
     public float getSize() {
         return size;
     }
 
-
     /**
-     *  Sets the kerning for the selected font to 'true' or 'false' depending on the passed value of kernPairs parameter.
-     *  The kerning is implemented only for the 14 standard fonts.
+     * Sets the kerning for the selected font to 'true' or 'false' depending on
+     * the passed value of kernPairs parameter. The kerning is implemented only
+     * for the 14 standard fonts.
      *
-     *  @param kernPairs if 'true' the kerning for this font is enabled.
+     * @param kernPairs if 'true' the kerning for this font is enabled.
      */
     public void setKernPairs(boolean kernPairs) {
         this.kernPairs = kernPairs;
     }
 
-
     /**
-     *  Returns the width of the specified string when drawn on the page with this font using the current font size.
+     * Returns the width of the specified string when drawn on the page with
+     * this font using the current font size.
      *
-     *  @param str the specified string.
+     * @param str the specified string.
      *
-     *  @return the width of the string when draw on the page with this font using the current selected size.
+     * @return the width of the string when draw on the page with this font
+     * using the current selected size.
      */
     public float stringWidth(String str) {
         if (str == null) {
@@ -457,7 +421,7 @@ public class Font {
                 }
                 c1 -= 32;
                 width += metrics[c1][1];
-    
+
                 if (kernPairs && i < (str.length() - 1)) {
                     int c2 = str.charAt(i + 1);
                     if (c2 < firstChar || c2 > lastChar) {
@@ -470,8 +434,7 @@ public class Font {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 if (c1 < firstChar || c1 > lastChar) {
                     width += advanceWidth[0];
                 } else {
@@ -482,7 +445,6 @@ public class Font {
 
         return width * size / unitsPerEm;
     }
-
 
     private int nonStandardFontGlyphWidth(int c1) {
         int width = 0;
@@ -512,67 +474,63 @@ public class Font {
         return width;
     }
 
-
     /**
-     *  Returns the ascent of this font.
+     * Returns the ascent of this font.
      *
-     *  @return the ascent of the font.
+     * @return the ascent of the font.
      */
     public float getAscent() {
         return ascent;
     }
 
-
     /**
-     *  Returns the descent of this font.
+     * Returns the descent of this font.
      *
-     *  @return the descent of the font.
+     * @return the descent of the font.
      */
     public float getDescent() {
         return -descent;
     }
 
-
     /**
-     *  Returns the height of this font.
+     * Returns the height of this font.
      *
-     *  @return the height of the font.
+     * @return the height of the font.
      */
     public float getHeight() {
         return ascent - descent;
     }
 
-
     /**
-     *  Returns the height of the body of the font.
+     * Returns the height of the body of the font.
      *
-     *  @return float the height of the body of the font.
+     * @return float the height of the body of the font.
      */
     public float getBodyHeight() {
         return body_height;
     }
 
-
     /**
-     *  Returns the number of characters from the specified string that will fit within the specified width.
+     * Returns the number of characters from the specified string that will fit
+     * within the specified width.
      *
-     *  @param str the specified string.
-     *  @param width the specified width.
+     * @param str the specified string.
+     * @param width the specified width.
      *
-     *  @return the number of characters that will fit.
+     * @return the number of characters that will fit.
      */
     public int getFitChars(String str, double width) {
         return getFitChars(str, (float) width);
     }
 
-
     /**
-     *  Returns the number of characters from the specified string that will fit within the specified width.
+     * Returns the number of characters from the specified string that will fit
+     * within the specified width.
      *
-     *  @param str the specified string.
-     *  @param width the specified width.
+     * @param str the specified string.
+     * @param width the specified width.
      *
-     *  @return the number of characters that will fit.
+     * @return the number of characters that will fit.
      */
     public int getFitChars(String str, float width) {
 
@@ -593,17 +551,17 @@ public class Font {
 
             if (c1 < firstChar || c1 > lastChar) {
                 w -= advanceWidth[0];
-            }
-            else {
+            } else {
                 w -= nonStandardFontGlyphWidth(c1);
             }
 
-            if (w < 0) break;
+            if (w < 0) {
+                break;
+            }
         }
 
         return i;
     }
-
 
     private int getStandardFontFitChars(String str, float width) {
         float w = width;
@@ -629,7 +587,7 @@ public class Font {
                 if (c2 < firstChar || c2 > lastChar) {
                     c2 = 32;
                 }
-    
+
                 for (int j = 2; j < metrics[c1].length; j += 2) {
                     if (metrics[c1][j] == c2) {
                         w -= metrics[c1][j + 1];
@@ -647,27 +605,21 @@ public class Font {
         return i;
     }
 
-
     protected int mapUnicodeChar(int c1) {
 
         int[] codes = null;
 
         if (codePage == CodePage.CP1250) {
             codes = CP1250.codes;
-        }
-        else if (codePage == CodePage.CP1251) {
+        } else if (codePage == CodePage.CP1251) {
             codes = CP1251.codes;
-        }
-        else if (codePage == CodePage.CP1252) {
+        } else if (codePage == CodePage.CP1252) {
             codes = CP1252.codes;
-        }
-        else if (codePage == CodePage.CP1253) {
+        } else if (codePage == CodePage.CP1253) {
             codes = CP1253.codes;
-        }
-        else if (codePage == CodePage.CP1254) {
+        } else if (codePage == CodePage.CP1254) {
             codes = CP1254.codes;
-        }
-        else if (codePage == CodePage.CP1257) {
+        } else if (codePage == CodePage.CP1257) {
             codes = CP1257.codes;
         }
 
@@ -682,25 +634,23 @@ public class Font {
         return 0x0020;
     }
 
-
     /**
-     * Sets the skew15 private variable.
-     * When the variable is set to 'true' all glyphs in the font are skewed on 15 degrees.
-     * This makes a regular font look like an italic type font.
-     * Use this method when you don't have real italic font in the font family,
-     * or when you want to generate smaller PDF files.
-     * For example you could embed only the Regular and Bold fonts and synthesize the RegularItalic and BoldItalic.
-     * 
+     * Sets the skew15 private variable. When the variable is set to 'true' all
+     * glyphs in the font are skewed on 15 degrees. This makes a regular font
+     * look like an italic type font. Use this method when you don't have real
+     * italic font in the font family, or when you want to generate smaller PDF
+     * files. For example you could embed only the Regular and Bold fonts and
+     * synthesize the RegularItalic and BoldItalic.
+     *
      * @param skew15 the skew flag.
      */
     public void setItalic(boolean skew15) {
         this.skew15 = skew15;
     }
 
-
     /**
      * Returns the width of a string drawn using two fonts.
-     * 
+     *
      * @param font2 the fallback font.
      * @param str the string.
      * @return the width.
@@ -719,8 +669,7 @@ public class Font {
                     buf = new StringBuilder();
                     usingFont1 = true;
                 }
-            }
-            else {
+            } else {
                 if (usingFont1) {
                     width += stringWidth(buf.toString());
                     buf = new StringBuilder();
@@ -732,8 +681,7 @@ public class Font {
 
         if (usingFont1) {
             width += stringWidth(buf.toString());
-        }
-        else {
+        } else {
             width += font2.stringWidth(buf.toString());
         }
 

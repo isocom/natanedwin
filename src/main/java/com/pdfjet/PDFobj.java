@@ -27,7 +27,6 @@
  */
 package com.pdfjet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.*;
 
 /**
@@ -35,7 +34,6 @@ import java.util.*;
  * document. See the PDF specification for more information.
  *
  */
-@SuppressFBWarnings
 public class PDFobj {
 
     public static final String TYPE = "/Type";
