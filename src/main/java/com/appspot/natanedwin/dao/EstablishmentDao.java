@@ -34,6 +34,12 @@ public class EstablishmentDao implements Dao<Establishment> {
         return byUUID(uuid.toString());
     }
 
+    /**
+     * 
+     * 
+     * @param uuid
+     * @return null if notfound
+     */
     public Establishment byUUID(final String uuid) {
         return ofy.ofy().load().type(Establishment.class).filter("uuid = ", uuid).first().now();
     }
