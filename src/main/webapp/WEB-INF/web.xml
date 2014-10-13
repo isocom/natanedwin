@@ -20,7 +20,17 @@
         <filter-name>ObjectifyFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+
+    <!-- Fiscal Printer -->
+    <!-- <servlet>
+        <servlet-name>FiscalPrinterServlet</servlet-name>
+        <servlet-class>com.appspot.natanedwin.servlet.FiscalPrinterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FiscalPrinterServlet</servlet-name>
+        <url-pattern>/fps/2014/0618/fps.jsp</url-pattern>
+    </servlet-mapping> -->
+
     <!-- Metrics -->
     <servlet>
         <servlet-name>MetricsAdminServlet</servlet-name>
@@ -126,13 +136,12 @@
     <!-- ******************************************************************* -->
 
     <!-- ******************************************************************* -->
-    <!-- Vaadin configuration -->
+    <!-- *********************** Vaadin ************************************ -->
     <context-param>
         <description>Vaadin production mode</description>
         <param-name>productionMode</param-name>
         <param-value>true</param-value>
     </context-param>
-    <!-- Vaadin servlet -->
     <servlet>
         <servlet-name>VaadinApplication</servlet-name>
         <servlet-class>com.vaadin.server.GAEVaadinServlet</servlet-class>
@@ -142,16 +151,10 @@
             <param-value>com.appspot.natanedwin.app.AppUI</param-value>
         </init-param>
     </servlet>
-    <!-- Vaadin application mapping -->
     <servlet-mapping>
         <servlet-name>VaadinApplication</servlet-name>
         <url-pattern>/app/*</url-pattern>
     </servlet-mapping>
-    <!-- Vaadin CORE mapping -->
-    <!-- <servlet-mapping>
-        <servlet-name>VaadinApplication</servlet-name>
-        <url-pattern>/VAADIN/*</url-pattern>
-    </servlet-mapping> -->
     <!-- ******************************************************************* -->
 
     <servlet>

@@ -7,7 +7,6 @@
         <title>Wydruk paragonu</title>
     </head>
     <body>
-        <div>Ensure that relevant rxtxSerial.dll is in c:\Windows\System32 folder</div>
         <div>
             <applet code="applet.Applet" width=400 height=250 archive="fps-applet-1.0.jar">
                 <param name="api-key" value="<%= request.getParameter("api-key") %>" />
