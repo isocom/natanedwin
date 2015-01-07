@@ -9,7 +9,8 @@
     <body>
         <div>
             <applet code="applet.Applet" width=400 height=250 archive="fps-applet-1.0.jar">
-                <%= com.appspot.natanedwin.webapp.fps.AppletParamUtil.toString(request) %>
+                <param name="api-key" value="<%= request.getParameter("api-key") %>" />
+                <param name="documentId" value="<%= request.getParameter("documentId") %>" />
             </applet>
         </div>
     </body>
