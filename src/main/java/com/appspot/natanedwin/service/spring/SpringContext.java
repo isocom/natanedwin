@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.spring;
 
 import org.springframework.context.ApplicationContext;
@@ -9,7 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 /**
  *
- * @author prokob01
+ * @author Bartłomiej P. Prokop
  */
 public enum SpringContext {
 

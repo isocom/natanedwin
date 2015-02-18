@@ -1,4 +1,4 @@
-package com.appspot.natanedwin.app;
+package com.appspot.natanedwin;
 
 import com.appspot.natanedwin.service.spring.SpringContext;
 import com.codahale.metrics.MetricRegistry;

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class Metrics {
+public class MetricsConfiguration {
 
     @Bean
     public MetricRegistry metricRegistry() {

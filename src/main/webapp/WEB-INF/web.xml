@@ -8,7 +8,7 @@
     </welcome-file-list>
     
     <listener>
-        <listener-class>com.appspot.natanedwin.app.WarmupListener</listener-class>
+        <listener-class>com.appspot.natanedwin.WarmupListener</listener-class>
     </listener>
     
     <!-- ******************************************************************* -->

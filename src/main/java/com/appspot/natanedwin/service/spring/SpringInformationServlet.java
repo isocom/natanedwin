@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.appspot.natanedwin.service.spring;
 
 import java.io.BufferedReader;
@@ -11,8 +7,6 @@ import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +38,8 @@ public class SpringInformationServlet extends HttpServlet {
 
         out.println("<html><body>");
 
+        SpringTestService springTestService = SpringContext.INSTANCE.getBean(SpringTestService.class);
+        out.println(outKeyValue("Spring Magic Test Value:", springTestService.getTestValue()));
         try {
             out.println("<h1>Information servlet</h1>");
 
@@ -204,5 +200,9 @@ public class SpringInformationServlet extends HttpServlet {
             out.println("<li>" + entry.getKey() + " = " + entry.getValue());
         }
         out.println("</ul>");
+    }
+
+    private static String outKeyValue(String key, Object value) {
+        return "<b>" + key + "</b>: " + value;
     }
 }
