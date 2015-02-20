@@ -38,7 +38,7 @@ public class PingController {
         return sb.toString();
     }
 
-    private Map<String, String> log = new HashMap<>();
+    private final Map<String, String> log = new HashMap<>();
 
     /**
      * Example:
@@ -47,15 +47,15 @@ public class PingController {
      * curl -6 http://21.natanedwin.appspot.com/api/ping/iptrack?key=dev6
      * </pre>
      *
-     * @param req
+     * @param request
      * @param key
      * @return
      */
     @ResponseBody
-    @RequestMapping("/iptrack")
+    @RequestMapping(value = "/iptrack", produces = "text/plain; charset=utf-8")
     public String iptrack(HttpServletRequest request, @RequestParam(value = "key", required = false) String key) {
         if (key != null) {
-            log.put(key, request.getRemoteAddr() + " = " + request.getRemoteHost());
+            log.put(key, request.getRemoteAddr());
         }
         StringBuilder retVal = new StringBuilder();
         for (Map.Entry<String, String> e : log.entrySet()) {
